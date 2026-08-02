@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b2a10e0c5d04c4ebec4dd6d47295be, type: 3}
+  m_Name: Wood
+  m_EditorClassIdentifier: 
+  surfaceType: 0
+  impactClip: {fileID: 8300000, guid: aa968d0060a71e648a89a0e750ced426, type: 3}
+  minimumSpeed: 0.25
+  fullSpeed: 8
+  slowPitch: 0.72
+  fastPitch: 1.18
+  slowLowPass: 1100
+  fastLowPass: 19000
+  minimumGain: 0.08
+  tailScale: 1
+  resonance: 330
+  decay: 5.2
+  brightness: 0.38
+  noise: 0.32
+  emissionResponse: 1
+  outlineResponse: 0.8
+  rimResponse: 0.5
+  iridescenceResponse: 0.2
+  vertexResponse: 0.6
