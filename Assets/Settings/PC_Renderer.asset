@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9121927131357207915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d69a19d29ef66464ea0afc7cd84fd6c2, type: 3}
+  m_Name: VolumetricFogRendererFeature
+  m_EditorClassIdentifier: com.cqf.urpvolumetricfog.runtime::VolumetricFogRendererFeature
+  m_Active: 1
+  downsampleDepthShader: {fileID: 4800000, guid: cffeaeec0396a2c4dad475266cc8dfeb, type: 3}
+  volumetricFogShader: {fileID: 4800000, guid: 08f816187f9af0244a95556ee0cab83f, type: 3}
 --- !u!114 &-5216011597210567072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +80,8 @@ MonoBehaviour:
   - {fileID: -760765651750418178}
   - {fileID: -5216011597210567072}
   - {fileID: 3651740866917699313}
-  m_RendererFeatureMap: ad6b866f10d7b46cfe0819a2ab3771f5603ef28316019db7f10e6880f896ad32
+  - {fileID: -9121927131357207915}
+  m_RendererFeatureMap: ad6b866f10d7b46cfe0819a2ab3771f5603ef28316019db7f10e6880f896ad3295a274a49a676881
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
