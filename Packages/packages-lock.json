@@ -1,11 +1,10 @@
 {
   "dependencies": {
     "com.cqf.urpvolumetricfog": {
-      "version": "https://github.com/Skyshin1/UnityURPVolumeFog.git",
+      "version": "file:com.cqf.urpvolumetricfog",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "ee9fe591e6af0b39857e7b3aa3cd4296a900db66"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.ai.navigation": {
       "version": "2.0.9",

@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.cqf.urpvolumetricfog": "https://github.com/Skyshin1/UnityURPVolumeFog.git",
+    "com.cqf.urpvolumetricfog": "file:com.cqf.urpvolumetricfog",
     "com.unity.ai.navigation": "2.0.9",
     "com.unity.collab-proxy": "2.12.4",
     "com.unity.ide.rider": "3.0.39",
