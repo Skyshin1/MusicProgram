@@ -199,8 +199,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c8bca95f7c947b4db5fb152a0d693d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: com.cqf.urpvolumetricfog.runtime::VolumetricAdditionalLight
-  anisotropy: 0.25
-  scattering: 0.36
+  anisotropy: 1
+  scattering: 3.04
   radius: 0.2
 --- !u!114 &546044315
 MonoBehaviour:
@@ -476,7 +476,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.16148481, g: 0.4383224, b: 0.44654083, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
