@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: AbyssalWater_PC_VR_High
   m_EditorClassIdentifier: Assembly-CSharp::MusicProgram.AbyssalWater.AbyssalWaterProfile
   quality: 0
-  showAdvanced: 0
-  waveHeight: 0.9
-  waveScale: 1
-  waveSpeed: 1
-  windDirection: 28
-  windSpeed: 11
-  choppiness: 0.62
-  spectrumBands: 8
+  showAdvanced: 1
+  waveHeight: 0.83
+  waveScale: 1.23
+  waveSpeed: 0.43
+  windDirection: 75
+  windSpeed: 11.7
+  choppiness: 0.48
+  spectrumBands: 5
   minimumWavelength: 0.45
   maximumWavelength: 42
-  directionSpread: 28
+  directionSpread: 48.2
   spectrumSeed: 8128
   amplitudeByWavelength:
     serializedVersion: 2
@@ -93,61 +93,61 @@ MonoBehaviour:
     m_RotationOrder: 4
   manualWaves: []
   enableAntiTiling: 1
-  phaseWarpStrength: 0.65
-  phaseWarpPatchSize: 55
+  phaseWarpStrength: 0.87
+  phaseWarpPatchSize: 45
   stochasticNormalBlend: 1
-  antiTilingSeed: 19373
+  antiTilingSeed: 19107
   enableMicroSpectrum: 1
-  microWaveCount: 8
-  microWaveAmplitude: 0.055
-  microMinimumWavelength: 0.35
-  microMaximumWavelength: 2.8
-  microDirectionSpread: 150
-  microChoppiness: 0.22
-  microWaveSpeed: 1.15
-  microSpectrumSeed: 27183
+  microWaveCount: 4
+  microWaveAmplitude: 0.012
+  microMinimumWavelength: 0.7
+  microMaximumWavelength: 0.86
+  microDirectionSpread: 131
+  microChoppiness: 0.085
+  microWaveSpeed: 1.2
+  microSpectrumSeed: 26721
   transmittanceColor: {r: 0.12, g: 0.62, b: 0.72, a: 1}
-  transmittanceReferenceDistance: 8
+  transmittanceReferenceDistance: 2.2
   scatteringColor: {r: 0.025, g: 0.32, b: 0.42, a: 1}
-  scatteringStrength: 0.72
+  scatteringStrength: 1.08
   scatteringAnisotropy: 0.18
   maximumOpticalDepth: 180
-  indexOfRefraction: 1.333
+  indexOfRefraction: 1.061
   refractionStrength: 0.025
-  reflectionStrength: 0.82
+  reflectionStrength: 0.73
   smoothness: 0.94
   normalStrength: 1
-  crestTransmission: 1.2
+  crestTransmission: 0.76
   crestTransmissionColor: {r: 0.05, g: 0.65, b: 0.72, a: 1}
-  crestTransmissionPower: 4
-  foamColor: {r: 0.86, g: 0.96, b: 1, a: 1}
-  foamStrength: 0.35
-  crestFoamThreshold: 0.9
-  crestFoamFeather: 0.08
-  shorelineFoamDistance: 0.55
-  contactFoamStrength: 1.25
-  meniscusWidth: 0.18
-  causticIntensity: 0.5
+  crestTransmissionPower: 1.37
+  foamColor: {r: 1, g: 1, b: 1, a: 1}
+  foamStrength: 0.42
+  crestFoamThreshold: 1.17
+  crestFoamFeather: 0.36
+  shorelineFoamDistance: 0.44
+  contactFoamStrength: 1.34
+  meniscusWidth: 0.21
+  causticIntensity: 0.14
   causticColor: {r: 0.24, g: 0.72, b: 0.78, a: 1}
-  causticScale: 1
-  causticFocus: 1.45
-  causticChromaticAberration: 0.12
-  causticMaximumDepth: 45
-  underwaterDistortion: 0.14
-  waterlineThickness: 0.045
-  waterlineMeniscus: 0.38
-  underwaterFogMultiplier: 1
+  causticScale: 2.55
+  causticFocus: 0.81
+  causticChromaticAberration: 1.28
+  causticMaximumDepth: 25
+  underwaterDistortion: 0.17
+  waterlineThickness: 0.416
+  waterlineMeniscus: 0.63
+  underwaterFogMultiplier: 0.11
   enableGodRays: 1
-  godRayStrength: 0.32
+  godRayStrength: 0
   enableDynamicWaves: 1
-  dynamicResolution: 256
-  dynamicWorldSize: 96
-  dynamicWaveSpeed: 2.5
-  dynamicDamping: 0.34
+  dynamicResolution: 261
+  dynamicWorldSize: 83
+  dynamicWaveSpeed: 2.86
+  dynamicDamping: 0.88
   dynamicDisplacement: 1
   dynamicSubsteps: 2
-  maximumImpulsesPerStep: 32
+  maximumImpulsesPerStep: 31
   lodLevels: 6
-  verticesPerLevel: 64
-  baseLodSize: 48
-  skirtDepth: 1.5
+  verticesPerLevel: 77
+  baseLodSize: 55
+  skirtDepth: 1.84
