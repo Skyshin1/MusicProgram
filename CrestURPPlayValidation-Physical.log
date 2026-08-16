@@ -1,0 +1,1653 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.3/staging' branch; Version is '6000.3.7f1 (696ec25a53d1) revision 6909634'; Using compiler version '194234433'; Build Type 'Release'
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-sky" at "2026-08-15T17:07:58.999258Z"
+OS: 'Windows 11  (10.0.26100) CoreCountrySpecific' Language: 'zh' Physical Memory: 16064 MB
+BatchMode: 0, IsHumanControllingUs: 1, StartBugReporterOnCrash: 1, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-08-15T17:07:58Z
+
+COMMAND LINE ARGUMENTS:
+D:\6000.3.7f1\Editor\Unity.exe
+-accept-apiupdate
+-force-d3d11
+-projectPath
+D:\Unity\MusicProgram
+-executeMethod
+MusicProgram.CrestURP.Editor.CrestURPValidation.RunPlayModeVisualTest
+-logFile
+D:\Unity\MusicProgram\CrestURPPlayValidation-Physical.log
+Successfully changed project path to: D:\Unity\MusicProgram
+D:/Unity/MusicProgram
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+Player connection [35108]  Target information:
+
+Player connection [35108]  * "[IP] 10.111.222.1 [Port] 55504 [Flags] 2 [Guid] 2517754501 [EditorId] 2517754501 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-IMVTMRTI) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [35108]  * "[IP] 192.168.1.17 [Port] 55504 [Flags] 2 [Guid] 2517754501 [EditorId] 2517754501 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-IMVTMRTI) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [35108] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [35108] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-43900" after 0.2 seconds.
+[Licensing::Module] Licensing is not yet initialized.
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.4+4293ba1
+  Session Id:              c629188d422343f69450fbb3d42dd09d
+  Correlation Id:          05d8473e383ed6afe5c6b24e8d9fb853
+  External correlation Id: 5062227994024162496
+  Machine Id:              5UnFQpROGOfGDSAtBHZYa09mijo=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-sky" (connect: 0.00s, validation: 0.00s, handshake: 1.54s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-sky-notifications" at "2026-08-15T17:08:00.5371552Z"
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-HRTB-F4MD-W58T-3Y4S-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: 2026-08-17T05:38:19Z
+[Licensing::Module] License group:
+  Id: ewogICJzdWJzR3JvdXAiIDogInVuaXR5IGVkaXRvciIsCiAgIm5hbWVzcGFjZSIgOiAidW5pdHlfZWRpdG9yIiwKICAidHlwZSIgOiAiRURJVE9SIiwKICAidGFnIiA6ICJVbml0eVBlcnNvbmFsXXXX
+  Product: Unity Personal Version
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.00
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-HRTB-F4MD-W58T-3Y4S-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: 2026-08-17T05:38:19Z
+[Licensing::Module] License group:
+  Id: ewogICJzdWJzR3JvdXAiIDogInVuaXR5IGVkaXRvciIsCiAgIm5hbWVzcGFjZSIgOiAidW5pdHlfZWRpdG9yIiwKICAidHlwZSIgOiAiRURJVE9SIiwKICAidGFnIiA6ICJVbml0eVBlcnNvbmFsXXXX
+  Product: Unity Personal Version
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Module] Licensing Background thread has ended after 1.55s
+[Licensing::Module] Licensing is initialized (took 1.16s).
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-HRTB-F4MD-W58T-3Y4S-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: 2026-08-17T05:38:19Z
+[Licensing::Module] License group:
+  Id: ewogICJzdWJzR3JvdXAiIDogInVuaXR5IGVkaXRvciIsCiAgIm5hbWVzcGFjZSIgOiAidW5pdHlfZWRpdG9yIiwKICAidHlwZSIgOiAiRURJVE9SIiwKICAidGFnIiA6ICJVbml0eVBlcnNvbmFsXXXX
+  Product: Unity Personal Version
+  Type: Assigned
+  Expiration: Unlimited
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Artifact Garbage Collection - Removed 3 unused hashed content files
+Refreshing native plugins compatible for Editor in 0.54 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 6000.3.7f1 (696ec25a53d1)
+[Subsystems] Discovering subsystems at path D:/6000.3.7f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Unity/MusicProgram/Assets
+Forcing GfxDevice: Direct3D 11
+GfxDevice: creating device client; kGfxThreadingModeThreaded
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 4060 Laptop GPU (ID=0x28e0)
+    Vendor:   NVIDIA
+    VRAM:     7956 MB
+    Driver:   32.0.16.1047
+[D3D12 Device Filter] Vendor Name: NVIDIA
+[D3D12 Device Filter] Device Name: NVIDIA GeForce RTX 4060 Laptop GPU
+[D3D12 Device Filter] Driver Version: 32.0.16.1047
+[D3D12 Device Filter] Feature Level: 12.2
+[D3D12 Device Filter] Graphics Memory: 7956 MB
+[D3D12 Device Filter] Processor Count: 32
+[D3D12 Device Filter] Device Type: Discrete
+Initialize mono
+Mono path[0] = 'D:/6000.3.7f1/Editor/Data/Managed'
+Mono path[1] = 'D:/6000.3.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/6000.3.7f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56900
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/6000.3.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001219 seconds.
+- Loaded All Assemblies, in  0.306 seconds
+Native extension for WindowsStandalone target not found
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Package Manager log level set to [2]
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.262 seconds
+Domain Reload Profiling: 568ms
+	BeginReloadAssembly (132ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (9ms)
+	RebuildCommonClasses (25ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (26ms)
+	LoadAllAssembliesAndSetupDomain (113ms)
+		LoadAssemblies (124ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (111ms)
+			TypeCache.Refresh (109ms)
+				TypeCache.ScanAssembly (99ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (262ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (235ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (28ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (53ms)
+			ProcessInitializeOnLoadAttributes (97ms)
+			ProcessInitializeOnLoadMethodAttributes (55ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-HRTB-F4MD-W58T-3Y4S-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: 2026-08-17T05:38:19Z
+[Licensing::Module] License group:
+  Id: ewogICJzdWJzR3JvdXAiIDogInVuaXR5IGVkaXRvciIsCiAgIm5hbWVzcGFjZSIgOiAidW5pdHlfZWRpdG9yIiwKICAidHlwZSIgOiAiRURJVE9SIiwKICAidGFnIiA6ICJVbml0eVBlcnNvbmFsXXXX
+  Product: Unity Personal Version
+  Type: Assigned
+  Expiration: Unlimited
+Application.AssetDatabase Initial Refresh Start
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 63 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.ai.navigation@2.0.9 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.ai.navigation@5218e4bf7edc)
+    com.unity.collab-proxy@2.12.4 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.collab-proxy@0b1559bcd34e)
+    com.unity.ide.rider@3.0.39 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.ide.rider@4504839d03f7)
+    com.unity.ide.visualstudio@2.0.26 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.ide.visualstudio@a99d56dec63f)
+    com.unity.inputsystem@1.18.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.inputsystem@57d0e36f6123)
+    com.unity.timeline@1.8.10 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.timeline@7f8b2fb101b6)
+    com.unity.visualscripting@1.9.9 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.visualscripting@191c0d7e3b69)
+    com.unity.xr.interaction.toolkit@3.3.1 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.xr.interaction.toolkit@5f736ad4ccd8)
+    com.unity.xr.management@4.5.4 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.xr.management@e3a3882b360a)
+    com.unity.xr.openxr@1.16.1 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.xr.openxr@ef0033a586bf)
+    com.unity.xr.core-utils@2.5.3 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.xr.core-utils@f0450cbac8d6)
+    com.unity.xr.legacyinputhelpers@2.1.13 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.xr.legacyinputhelpers@9535ff2c27ac)
+    com.unity.mathematics@1.3.3 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.mathematics@19a9377c4ffa)
+    com.unity.searcher@4.9.4 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.searcher@d45a78918735)
+    com.unity.burst@1.8.27 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.burst@973857688024)
+    com.unity.collections@2.6.2 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.collections@aea9d3bd5e19)
+    com.unity.nuget.mono-cecil@1.11.6 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.nuget.mono-cecil@ecb9724e46ff)
+    com.unity.test-framework.performance@3.2.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.test-framework.performance@0840f58e4562)
+  Built-in packages:
+    com.unity.multiplayer.center@1.0.1 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.multiplayer.center@f01f4ba8d00a)
+    com.unity.render-pipelines.universal@17.3.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.render-pipelines.universal@a6e30d1f59f5)
+    com.unity.test-framework@1.6.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.test-framework@0b7a23ab2e1d)
+    com.unity.ugui@2.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.ugui@11343a6274f3)
+    com.unity.modules.accessibility@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.accessibility)
+    com.unity.modules.adaptiveperformance@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.adaptiveperformance)
+    com.unity.modules.ai@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.physics2d)
+    com.unity.modules.screencapture@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vectorgraphics@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.vectorgraphics)
+    com.unity.modules.vehicles@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.video)
+    com.unity.modules.vr@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.vr)
+    com.unity.modules.wind@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.modules.hierarchycore)
+    com.unity.ext.nunit@2.0.5 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.ext.nunit@d8c07649098d)
+    com.unity.render-pipelines.core@17.3.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.render-pipelines.core@d6dfd1e235d5)
+    com.unity.shadergraph@17.3.0 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.shadergraph@0afb4c072efd)
+    com.unity.render-pipelines.universal-config@17.0.3 (location: D:\Unity\MusicProgram\Library\PackageCache\com.unity.render-pipelines.universal-config@8dc1aab4af1d)
+  Embedded packages:
+    com.cqf.urpvolumetricfog@file:D:\Unity\MusicProgram\Packages\com.cqf.urpvolumetricfog (location: D:\Unity\MusicProgram\Packages\com.cqf.urpvolumetricfog)
+[Subsystems] Looking for new subsystems at path D:\Unity\MusicProgram\Library\PackageCache\com.unity.xr.openxr@ef0033a586bf
+[Subsystems] Novel subsystem found at Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/UnitySubsystemsManifest.json
+[Subsystems] Discovering subsystems at path D:/6000.3.7f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Unity/MusicProgram/Assets
+[Subsystems] Discovering subsystems at path D:\Unity\MusicProgram\Library\PackageCache\com.unity.xr.openxr@ef0033a586bf
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'inputs' descriptors matched in Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/UnitySubsystemsManifest.json
+[Subsystems] 1 'displays' descriptors matched in Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/UnitySubsystemsManifest.json
+[Subsystems] No descriptors matched for  meshings in Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/UnitySubsystemsManifest.json.
+[Package Manager] Done registering packages in 0.03 seconds
+Starting: D:\6000.3.7f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aEDbg.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: D:/Unity/MusicProgram
+Starting: D:\6000.3.7f1\Editor\Data\netcorerun\netcorerun.exe "D:\6000.3.7f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aEDbg.dag.json" "Library/Bee/1900b0aEDbg-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: D:/Unity/MusicProgram
+ExitCode: 4 Duration: 0s223ms
+[ 975/1273  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aEDbg-inputdata.json
+*** Tundra requires additional run (0.19 seconds), 1 items updated, 974 evaluated
+ExitCode: 0 Duration: 0s798ms
+Starting: D:\6000.3.7f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aEDbg.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aEDbg.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: D:/Unity/MusicProgram
+ExitCode: 0 Duration: 0s399ms
+Finished compiling graph: 1277 nodes, 26050 flattened edges (20960 ToBuild, 210 ToUse), maximum node priority 1488
+[ 975/1273  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra build success (0.38 seconds), 1 items updated, 1273 evaluated
+AssetDatabase: script compilation time: 1.911634s
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.784 seconds
+'Assets/ThirdParty/CrestWater4/Scripts/LodData/RegisterLodDataInput.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Assets/ThirdParty/CrestWater4/Scripts/LodData/RegisterLodDataInput.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+Refreshing native plugins compatible for Editor in 10.31 ms, found 10 plugins.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 9.70 ms, found 10 plugins.
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.881 seconds
+Domain Reload Profiling: 4664ms
+	BeginReloadAssembly (291ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (8ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (153ms)
+	RebuildCommonClasses (24ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (441ms)
+		LoadAssemblies (352ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (200ms)
+			TypeCache.Refresh (137ms)
+				TypeCache.ScanAssembly (126ms)
+			BuildScriptInfoCaches (49ms)
+			ResolveRequiredComponents (9ms)
+	FinalizeReload (3881ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (3666ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (13ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (166ms)
+			ProcessInitializeOnLoadAttributes (3412ms)
+			ProcessInitializeOnLoadMethodAttributes (69ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (15ms)
+Asset Pipeline Refresh (id=34bb6d3b58e9a974d9ab41b773975134): Total: 7.303 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=4455 ms
+		Asset DB Callback time: managed=23 ms, native=36 ms
+		Scripting: domain reloads=1, domain reload time=784 ms, compile time=1913 ms, other=89 ms
+		Project Asset Count: scripts=1777, non-scripts=2910
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 39.707ms
+	ApplyChangesToAssetFolders: 0.729ms
+	Scan: 203.525ms
+	OnSourceAssetsModified: 0.002ms
+	CategorizeAssetsWithTransientArtifact: 47.232ms
+	ProcessAssetsWithTransientArtifactChanges: 73.759ms
+	CategorizeAssets: 45.240ms
+	ImportOutOfDateAssets: 3910.617ms (1996.115ms without children)
+		CompileScripts: 1912.634ms
+		ReloadNativeAssets: 0.034ms
+		UnloadImportedAssets: 0.965ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.555ms
+		InitializingProgressBar: 0.000ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 0.314ms
+	PostProcessAllAssets: 23.253ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.003ms
+	UnloadStreamsBegin: 2.690ms
+	PersistCurrentRevisions: 0.095ms
+	UnloadStreamsEnd: 0.001ms
+	GenerateScriptTypeHashes: 3.188ms
+	Untracked: 2955.679ms
+
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+Scanning for USB devices : 9.691ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-VR-test
+Unloading 36 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/CrestURP/Samples/CrestURPShowcase.unity'
+	Deserialize:            11.507 ms
+	Integration:            250.971 ms
+	Integration of assets:  0.166 ms
+	Thread Wait Time:       0.022 ms
+	Total Operation Time:   262.666 ms
+Unloading 7807 unused Assets / (8.4 MB). Loaded Objects now: 9210.
+Memory consumption went from 265.9 MB to 257.5 MB.
+Total: 11.415600 ms (FindLiveObjects: 0.781800 ms CreateObjectMapping: 0.239500 ms MarkObjects: 7.190900 ms  DeleteObjects: 3.202600 ms)
+
+[LAYOUT] About to load UserSettings\Layouts\default-6000.dwlt, keepMainWindow=False
+[LAYOUT] About to save layout D:\Unity\MusicProgram\UserSettings\Layouts\default-6000.dwlt
+[LAYOUT] About to save layout C:/Users/sky/AppData/Roaming/Unity/Editor-5.x/Preferences\Layouts\current\default-6000.dwlt
+[MODES] ModeService[default].InitializeCurrentMode
+[MODES] ModeService[default].RaiseModeChanged(default, default)
+This project uses Input Manager, which is marked for deprecation. To manage input in your project, use the <a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@latest">Input System package</a> instead.
+Opening scene 'Assets/CrestURP/Samples/CrestURPShowcase.unity'
+Unloading 27 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/CrestURP/Samples/CrestURPShowcase.unity'
+	Deserialize:            4.630 ms
+	Integration:            242.546 ms
+	Integration of assets:  0.005 ms
+	Thread Wait Time:       0.011 ms
+	Total Operation Time:   247.191 ms
+Unloading 2 unused Assets / (23.1 MB). Loaded Objects now: 9401.
+Memory consumption went from 361.0 MB to 337.9 MB.
+Total: 14.394600 ms (FindLiveObjects: 0.513200 ms CreateObjectMapping: 0.113700 ms MarkObjects: 13.741400 ms  DeleteObjects: 0.025100 ms)
+
+<RI> Initializing input.
+Using Windows.Gaming.Input
+<RI> Input initialized.
+[Project] Loading completed in 13.212 seconds
+	Project init time: 				11.311 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		1.392 seconds
+		Asset Database init time: 		0.674 seconds
+		Global illumination init time: 	0.002 seconds
+		Assemblies load time: 			0.580 seconds
+		Unity extensions init time: 	0.009 seconds
+		Asset Database refresh time: 	7.303 seconds
+	Scene opening time: 			1.755 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1786813692178,"processId":43900,"projectLoad":13.212202300000002,"projectInit":11.3112075,"templateInit":0.0,"packageManagerInit":1.392017,"assetDatabaseInit":0.6737081,"globalIlluminationInit":0.0023867,"assembliesLoad":0.579553,"unityExtensionsInit":0.0087112,"assetDatabaseRefresh":7.3026547,"sceneOpening":1.7550571}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1786813692178,"processId":43900,"editorVersion":"6000.3.7f1 (696ec25a53d1)","branch":"6000.3/staging","buildType":"Release","platform":"Windows"}
+Reloading assemblies for play mode.
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 57 unused Assets / (17.0 MB). Loaded Objects now: 10340.
+Memory consumption went from 0.69 GB to 0.68 GB.
+Total: 21.933500 ms (FindLiveObjects: 0.540900 ms CreateObjectMapping: 0.269500 ms MarkObjects: 18.018800 ms  DeleteObjects: 3.103000 ms)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 0 unused Assets / (3.8 KB). Loaded Objects now: 10340.
+Memory consumption went from 0.68 GB to 0.68 GB.
+Total: 16.756400 ms (FindLiveObjects: 0.524400 ms CreateObjectMapping: 0.139200 ms MarkObjects: 16.083300 ms  DeleteObjects: 0.009000 ms)
+
+- Loaded All Assemblies, in  0.879 seconds
+Refreshing native plugins compatible for Editor in 9.28 ms, found 10 plugins.
+Native extension for WindowsStandalone target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.489 seconds
+Domain Reload Profiling: 2371ms
+	BeginReloadAssembly (616ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (88ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (319ms)
+	RebuildCommonClasses (25ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (212ms)
+		LoadAssemblies (176ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (143ms)
+			TypeCache.Refresh (5ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (124ms)
+			ResolveRequiredComponents (9ms)
+	FinalizeReload (1489ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (654ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (11ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (149ms)
+			ProcessInitializeOnLoadAttributes (419ms)
+			ProcessInitializeOnLoadMethodAttributes (69ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (525ms)
+Asset Pipeline Refresh (id=ba87bf6b06261b54d933638902d4906d): Total: 2.505 seconds - Initiated by StopAssetImportingV2(ForceSynchronousImport | ForceDomainReload)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=1593 ms
+		Asset DB Callback time: managed=18 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=891 ms, compile time=1 ms, other=0 ms
+		Project Asset Count: scripts=1777, non-scripts=2910
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 3.863ms
+	ApplyChangesToAssetFolders: 0.231ms
+	Scan: 0.001ms
+	OnSourceAssetsModified: 0.002ms
+	CategorizeAssetsWithTransientArtifact: 0.002ms
+	ProcessAssetsWithTransientArtifactChanges: 4.152ms
+	CategorizeAssets: 44.503ms
+	ImportOutOfDateAssets: 1513.584ms (1509.954ms without children)
+		CompileScripts: 0.761ms
+		CollectScriptTypesHashes: 1.245ms
+		ReloadNativeAssets: 0.841ms
+		UnloadImportedAssets: 0.142ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.412ms
+		InitializingProgressBar: 0.000ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 0.230ms
+	PostProcessAllAssets: 18.609ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.102ms
+	UnloadStreamsBegin: 0.932ms
+	PersistCurrentRevisions: 0.105ms
+	UnloadStreamsEnd: 0.001ms
+	GenerateScriptTypeHashes: 4.502ms
+	Untracked: 918.969ms
+
+Refreshing native plugins compatible for Editor in 9.35 ms, found 10 plugins.
+[XR] Time interace not found - delta time prediction disabled.
+[Subsystems] OpenXR XR Plugin successfully registered Provider for OpenXR Display
+[Subsystems] OpenXR XR Plugin successfully registered Provider for OpenXR Input
+[Subsystems] OpenXR XR Plugin successfully registered Provider for OpenXR Display
+Start importing Assets/XR/Settings/OpenXRPackageSettings.asset using Guid(90bff579ae6159449b1eb68eaf9abb61) (NativeFormatImporter) -> (artifact id: 'c3c5d6b528abde5d031b5abc0863a91a') in 0.0070042 seconds
+Refreshing native plugins compatible for Editor in 9.11 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=b9f79a44c52348a4e8a6bec509b1fa74): Total: 0.107 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Loading OpenXR loader library at path: D:\Unity\MusicProgram\Library\PackageCache\com.unity.xr.openxr@ef0033a586bf\RuntimeLoaders\windows\x64\openxr_loader.dll
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:LoadOpenXRSymbols () (at ./Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/OpenXRLoader.cs:558)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:InitializeInternal () (at ./Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/OpenXRLoader.cs:235)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:Initialize () (at ./Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/OpenXRLoader.cs:205)
+UnityEngine.XR.Management.XRManagerSettings:InitializeLoaderSync () (at ./Library/PackageCache/com.unity.xr.management@e3a3882b360a/Runtime/XRManagerSettings.cs:186)
+UnityEngine.XR.Management.XRGeneralSettings:InitXRSDK () (at ./Library/PackageCache/com.unity.xr.management@e3a3882b360a/Runtime/XRGeneralSettings.cs:172)
+UnityEngine.XR.Management.XRGeneralSettings:AttemptInitializeXRSDKOnLoad () (at ./Library/PackageCache/com.unity.xr.management@e3a3882b360a/Runtime/XRGeneralSettings.cs:145)
+
+(Filename: ./Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/OpenXRLoader.cs Line: 558)
+
+[Subsystems] Loading plugin UnityOpenXR for subsystem OpenXR Display...
+[XR] [35108] [01:08:16.540][Error  ] xrEnumerateInstanceExtensionProperties: XR_ERROR_RUNTIME_UNAVAILABLE
+[XR] [35108] [01:08:16.541][Error  ] xrEnumerateInstanceExtensionProperties: XR_ERROR_RUNTIME_UNAVAILABLE
+[XR] [35108] [01:08:16.543][Error  ] xrEnumerateInstanceExtensionProperties: XR_ERROR_RUNTIME_UNAVAILABLE
+[XR] [35108] [01:08:16.544][Error  ] xrEnumerateInstanceExtensionProperties: XR_ERROR_RUNTIME_UNAVAILABLE
+[XR] [35108] [01:08:16.544][Info   ] Available Layers: (0)
+[XR] [35108] [01:08:16.546][Error  ] xrCreateInstance: XR_ERROR_RUNTIME_UNAVAILABLE
+[Subsystems] Failed to initialize subsystem OpenXR Display [error: 1]
+[XR] [35108] [01:08:16.547][Error  ] xrPollEvent: XR_ERROR_FUNCTION_UNSUPPORTED
+[XR] [35108] [01:08:16.547][Info   ] 
+
+==== Start Unity OpenXR Diagnostic Report ====
+
+
+[XR] [35108] [01:08:16.547][Info   ] ==== Report Reason: System Shutdown ====
+
+
+[XR] [35108] [01:08:16.547][Info   ] ==== OpenXR Settings ====
+[XR] [35108] [01:08:16.547][Info   ] 
+[XR] [35108] [01:08:16.547][Info   ] Symmetric Projection: False
+[XR] [35108] [01:08:16.547][Info   ] Stereo Rendering Mode: SinglePassInstanced
+[XR] [35108] [01:08:16.547][Info   ] Latency Optimization: PrioritizeRendering
+[XR] [35108] [01:08:16.547][Info   ] Color Submission Modes: kRenderTextureFormatGroup8888
+[XR] [35108] [01:08:16.547][Info   ] Depth Submission Mode: None
+[XR] [35108] [01:08:16.547][Info   ] Space Warp Motion Vector Texture Format: RGBA16f
+[XR] [35108] [01:08:16.547][Info   ] Optimize Buffer Discards: False
+[XR] [35108] [01:08:16.547][Info   ] Multiview Render Regions Optimization Mode: None
+[XR] [35108] [01:08:16.547][Info   ] Use OpenXR Predicted Time: False
+[XR] [35108] [01:08:16.547][Info   ] Foveated Rendering API: Legacy
+[XR] [35108] [01:08:16.547][Info   ] 
+[XR] [35108] [01:08:16.547][Info   ] ==== OpenXR Provider Info ====
+[XR] [35108] [01:08:16.547][Info   ] 
+[XR] [35108] [01:08:16.547][Info   ] Provider Version: 1.16.0-18-gc7a9defb
+[XR] [35108] [01:08:16.547][Info   ] App: VR-test #1521753221
+[XR] [35108] [01:08:16.547][Info   ] Engine: 6000.3.7f1 #87061505
+[XR] [35108] [01:08:16.547][Info   ] 
+[XR] [35108] [01:08:16.547][Info   ] ==== OpenXR Runtime Info ====
+[XR] [35108] [01:08:16.547][Info   ] 
+[XR] [35108] [01:08:16.547][Info   ] Available Layers: (0)
+[XR] [35108] [01:08:16.547][Info   ] 
+[XR] [35108] [01:08:16.547][Info   ] ==== Last 20 non-XR_SUCCESS returns ====
+[XR] [35108] [01:08:16.547][Info   ] [FAILURE] xrEnumerateInstanceExtensionProperties: XR_ERROR_RUNTIME_UNAVAILABLE (4x)
+[XR] [35108] [01:08:16.547][Info   ] [FAILURE] xrCreateInstance: XR_ERROR_RUNTIME_UNAVAILABLE (1x)
+[XR] [35108] [01:08:16.547][Info   ] [FAILURE] xrPollEvent: XR_ERROR_FUNCTION_UNSUPPORTED (1x)
+[XR] [35108] [01:08:16.547][Info   ] 
+[XR] [35108] [01:08:16.547][Info   ] ==== Last 20 Events ====
+[XR] [35108] [01:08:16.547][Info   ] 
+
+==== End Unity OpenXR Diagnostic Report ====
+
+
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            2.890 ms
+	Integration:            516.999 ms
+	Integration of assets:  0.019 ms
+	Thread Wait Time:       0.007 ms
+	Total Operation Time:   519.915 ms
+Asset Pipeline Refresh (id=329e1d346c9621c45a18916c3bdb3cfd): Total: 0.014 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=2352d16230121204e8d3e9e419e40f51): Total: 0.036 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Created GICache directory at C:/Users/sky/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.025s, timestamps: [18.688 - 18.713]
+Start importing Assets/CrestURP/Shaders/CrestOceanURP.shader using Guid(3ee513aabfa1b414fb36226958a3f839) (ShaderImporter) -> (artifact id: 'd199bd11000cb58726de5054a90aa87d') in 0.0564913 seconds
+Refreshing native plugins compatible for Editor in 11.14 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=82f82b9e3f8cc1a43a2403844f4446ba): Total: 0.360 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=72 ms
+		Asset DB Callback time: managed=9 ms, native=278 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=1777, non-scripts=2910
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 4
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 0.000ms
+	ApplyChangesToAssetFolders: 0.095ms
+	Scan: 8.037ms
+	OnSourceAssetsModified: 0.001ms
+	CategorizeAssetsWithTransientArtifact: 0.009ms
+	ProcessAssetsWithTransientArtifactChanges: 0.044ms
+	CategorizeAssets: 1.556ms
+	ImportOutOfDateAssets: 59.405ms (-0.334ms without children)
+		ImportManagerImport: 58.297ms (0.936ms without children)
+			ImportInProcess: 57.148ms
+			UpdateCategorizedAssets: 0.214ms
+		ReloadNativeAssets: 0.082ms
+		UnloadImportedAssets: 0.249ms
+		ReloadImportedAssets: 0.550ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.296ms
+		InitializingProgressBar: 0.005ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 0.259ms
+	PostProcessAllAssets: 272.385ms
+	Hotreload: 15.582ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.126ms
+	UnloadStreamsBegin: 1.353ms
+	PersistCurrentRevisions: 0.094ms
+	UnloadStreamsEnd: 0.001ms
+	Untracked: 1.538ms
+
+Start importing Assets/CrestURP/Shaders/CrestUnderwaterURP.shader using Guid(9d92642b74d930f4588c9e19609c604b) (ShaderImporter) -> (artifact id: 'a105b458c28f65b942f6c834ca631143') in 0.0102046 seconds
+Refreshing native plugins compatible for Editor in 12.66 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=d777c756ec3c87347a44d1201dd4b525): Total: 0.325 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=38 ms
+		Asset DB Callback time: managed=9 ms, native=277 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=1777, non-scripts=2910
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 4
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 0.001ms
+	ApplyChangesToAssetFolders: 0.169ms
+	Scan: 16.351ms
+	OnSourceAssetsModified: 0.001ms
+	CategorizeAssetsWithTransientArtifact: 0.015ms
+	ProcessAssetsWithTransientArtifactChanges: 0.145ms
+	CategorizeAssets: 3.818ms
+	ImportOutOfDateAssets: 13.280ms (-0.352ms without children)
+		ImportManagerImport: 12.101ms (0.908ms without children)
+			ImportInProcess: 11.042ms
+			UpdateCategorizedAssets: 0.150ms
+		ReloadNativeAssets: 0.078ms
+		UnloadImportedAssets: 0.190ms
+		ReloadImportedAssets: 0.587ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.401ms
+		InitializingProgressBar: 0.006ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.268ms
+	PostProcessAllAssets: 265.747ms
+	Hotreload: 21.107ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.142ms
+	UnloadStreamsBegin: 0.002ms
+	PersistCurrentRevisions: 0.111ms
+	UnloadStreamsEnd: 0.001ms
+	Untracked: 4.109ms
+
+Start importing Assets/CrestURP/Samples/CrestURPValidationReport.txt using Guid(1e24cc1e4134f0a448d8e63d900539de) (TextScriptImporter) -> (artifact id: '8d11179f7bd66e4310257edc3982f0c3') in 0.0023426 seconds
+Refreshing native plugins compatible for Editor in 9.47 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=5f0bfc3986c09e14989b6df3c2d2a907): Total: 0.064 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+InvalidOperationException: This cannot be used during play mode, please use SceneManager.LoadScene()/SceneManager.LoadSceneAsync() instead.
+  at (wrapper managed-to-native) UnityEditor.SceneManagement.EditorSceneManager.OpenScene_Injected(UnityEngine.Bindings.ManagedSpanWrapper&,UnityEditor.SceneManagement.OpenSceneMode,UnityEngine.SceneManagement.Scene&)
+  at UnityEditor.SceneManagement.EditorSceneManager.OpenScene (System.String scenePath, UnityEditor.SceneManagement.OpenSceneMode mode) [0x0002a] in <2348e9bf86984d808478203ec94ae526>:0 
+  at MusicProgram.CrestURP.Editor.CrestURPValidation.ValidateAndCapture () [0x00019] in D:\Unity\MusicProgram\Assets\CrestURP\Editor\CrestURPValidation.cs:88 
+  at MusicProgram.CrestURP.Editor.CrestURPValidation.ValidateAfterImport () [0x00067] in D:\Unity\MusicProgram\Assets\CrestURP\Editor\CrestURPValidation.cs:69 
+UnityEngine.DebugLogHandler:Internal_LogException_Injected(Exception, IntPtr)
+UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
+UnityEngine.DebugLogHandler:LogException(Exception, Object)
+UnityEngine.Logger:LogException(Exception, Object)
+UnityEngine.Debug:LogException(Exception)
+MusicProgram.CrestURP.Editor.CrestURPValidation:ValidateAfterImport() (at Assets\CrestURP\Editor\CrestURPValidation.cs:76)
+UnityEditor.EditorApplication:Internal_CallDelayFunctions()
+
+(Filename: Assets/CrestURP/Editor/CrestURPValidation.cs Line: 76)
+
+Start importing Assets/CrestURP/Samples/Materials/CrestURP_Underwater.mat using Guid(1beb8d1665aef4547bb8f6dc0416adca) (NativeFormatImporter) -> (artifact id: '1ec1081259d01c70267599cd59147904') in 0.0018295 seconds
+Start importing Assets/XR/Settings/OpenXRPackageSettings.asset using Guid(90bff579ae6159449b1eb68eaf9abb61) (NativeFormatImporter) -> (artifact id: 'c3c5d6b528abde5d031b5abc0863a91a') in 0.0016542 seconds
+Start importing Assets/CrestURP/Samples/CrestURP_OceanSpectrum.asset using Guid(317b24b3f64964f458329c38ebff280f) (NativeFormatImporter) -> (artifact id: 'cbf6ef9dd2364b57571c80cafafb83d0') in 0.00153 seconds
+Start importing Assets/Settings/PC_Renderer.asset using Guid(f288ae1f4751b564a96ac7587541f7a2) (NativeFormatImporter) -> (artifact id: '36733cf91188a29df1a33556aefdeb63') in 0.0015991 seconds
+Refreshing native plugins compatible for Editor in 10.05 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=4a33e8ac636a9e34cae2422b8cbd29e5): Total: 0.039 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start Indexing on Editor startup
+[Indexing] Starting Initial Indexing for Assets
+[Licensing::Client] Successfully updated the access token
+[Licensing::Module] Successfully updated access token: "CXSG2B6A"... (expires: 2026-08-15T17:10:24Z)
+Unloading 11 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            1.963 ms
+	Integration:            209.701 ms
+	Integration of assets:  0.001 ms
+	Thread Wait Time:       0.015 ms
+	Total Operation Time:   211.680 ms
+Unloading 133 unused Assets / (150.3 MB). Loaded Objects now: 10431.
+Memory consumption went from 1.00 GB to 0.85 GB.
+Total: 21.807000 ms (FindLiveObjects: 0.530900 ms CreateObjectMapping: 0.114500 ms MarkObjects: 17.525200 ms  DeleteObjects: 3.635400 ms)
+
+Start importing Assets/CrestURP/Samples/CrestURPPlayModePreview.png using Guid(55fde3c1929ae9c4e81a336fdec0d7b9) (TextureImporter) -> (artifact id: '9042933ee7ba1d0ceec1f42f3406a00c') in 0.024877 seconds
+Refreshing native plugins compatible for Editor in 9.53 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=ec184c183a8b61d449b40d7f52e731da): Total: 0.093 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPPlayModeValidation.txt using Guid(8d0357fea68374d4f9284c1d50fd2c96) (TextScriptImporter) -> (artifact id: '996c1adb6f61f9ec258559e71005825f') in 0.002151 seconds
+Refreshing native plugins compatible for Editor in 10.45 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=0ad0f5e561765c74d88bf2fd281569ec): Total: 0.044 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPValidationReport.txt using Guid(1e24cc1e4134f0a448d8e63d900539de) (TextScriptImporter) -> (artifact id: '07763a23eb048804ec49de0f5a715e46') in 0.0024082 seconds
+Refreshing native plugins compatible for Editor in 10.19 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=96eb6510fd229024887de03f4e820d27): Total: 0.046 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPCausticGainDebug.png using Guid(e266af38d4d07a44a92d02b1652e24eb) (TextureImporter) -> (artifact id: '31ba91797ae10a4e970568a544d59576') in 0.0232464 seconds
+Start importing Assets/CrestURP/Samples/CrestURPPhysicalCausticsPreview.png using Guid(33be5d70f9d5d8f4faa44180fda25f6a) (TextureImporter) -> (artifact id: '7bf3fdab193056efad12e58d2d21537f') in 0.0247662 seconds
+Start importing Assets/CrestURP/Samples/CrestURPDisplacementHeightDebug.png using Guid(a6ec7ba321d4a00408ebb9dc3ae7ed08) (TextureImporter) -> (artifact id: '6d9e8262e6a636975405ea09027c3b28') in 0.0230392 seconds
+Start importing Assets/CrestURP/Samples/CrestURPWaveSlopeDebug.png using Guid(f6af0efe872e5d04883a5ba0294ea073) (TextureImporter) -> (artifact id: '1b72e0cac3756b7b6196e50afca932bf') in 0.0247013 seconds
+Refreshing native plugins compatible for Editor in 10.27 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=9f305a44dc61d5d4286519878f312aef): Total: 0.148 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Shaders/CrestOceanURP.shader using Guid(3ee513aabfa1b414fb36226958a3f839) (ShaderImporter) -> (artifact id: 'd199bd11000cb58726de5054a90aa87d') in 0.0115093 seconds
+Refreshing native plugins compatible for Editor in 12.38 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=14e2bd91c8c5a91478b28f3b6042d05a): Total: 0.327 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=24 ms
+		Asset DB Callback time: managed=4 ms, native=297 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=1777, non-scripts=2910
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 4
+	InvokeCustomDependenciesCallbacks: 0.000ms
+	InvokePackagesCallback: 0.000ms
+	ApplyChangesToAssetFolders: 0.101ms
+	Scan: 7.944ms
+	OnSourceAssetsModified: 0.000ms
+	CategorizeAssetsWithTransientArtifact: 0.005ms
+	ProcessAssetsWithTransientArtifactChanges: 0.038ms
+	CategorizeAssets: 1.244ms
+	ImportOutOfDateAssets: 14.130ms (-0.274ms without children)
+		ImportManagerImport: 12.985ms (0.752ms without children)
+			ImportInProcess: 12.057ms
+			UpdateCategorizedAssets: 0.176ms
+		ReloadNativeAssets: 0.060ms
+		UnloadImportedAssets: 0.301ms
+		ReloadImportedAssets: 0.479ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.302ms
+		InitializingProgressBar: 0.005ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.271ms
+	PostProcessAllAssets: 286.068ms
+	Hotreload: 15.818ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.100ms
+	UnloadStreamsBegin: 0.001ms
+	PersistCurrentRevisions: 0.092ms
+	UnloadStreamsEnd: 0.001ms
+	Untracked: 1.394ms
+
+Start importing Assets/CrestURP/Shaders/CrestUnderwaterURP.shader using Guid(9d92642b74d930f4588c9e19609c604b) (ShaderImporter) -> (artifact id: 'a105b458c28f65b942f6c834ca631143') in 0.0088806 seconds
+Refreshing native plugins compatible for Editor in 11.14 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=ed83ecd81fc3ede47824e75aeddb7c35): Total: 0.304 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=35 ms
+		Asset DB Callback time: managed=5 ms, native=262 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=1777, non-scripts=2910
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 4
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 0.001ms
+	ApplyChangesToAssetFolders: 0.182ms
+	Scan: 16.806ms
+	OnSourceAssetsModified: 0.001ms
+	CategorizeAssetsWithTransientArtifact: 0.012ms
+	ProcessAssetsWithTransientArtifactChanges: 0.088ms
+	CategorizeAssets: 2.650ms
+	ImportOutOfDateAssets: 11.782ms (-0.409ms without children)
+		ImportManagerImport: 10.671ms (0.950ms without children)
+			ImportInProcess: 9.592ms
+			UpdateCategorizedAssets: 0.129ms
+		ReloadNativeAssets: 0.068ms
+		UnloadImportedAssets: 0.207ms
+		ReloadImportedAssets: 0.650ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.315ms
+		InitializingProgressBar: 0.007ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.272ms
+	PostProcessAllAssets: 252.912ms
+	Hotreload: 14.984ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.116ms
+	UnloadStreamsBegin: 0.002ms
+	PersistCurrentRevisions: 0.103ms
+	UnloadStreamsEnd: 0.000ms
+	Untracked: 3.971ms
+
+Opening scene 'Assets/CrestURP/Samples/CrestURPShowcase.unity'
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/CrestURP/Samples/CrestURPShowcase.unity'
+	Deserialize:            4.972 ms
+	Integration:            214.108 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.010 ms
+	Total Operation Time:   219.092 ms
+Unloading 44 unused Assets / (110.3 MB). Loaded Objects now: 10552.
+Memory consumption went from 0.89 GB to 0.78 GB.
+Total: 19.283900 ms (FindLiveObjects: 0.562000 ms CreateObjectMapping: 0.286500 ms MarkObjects: 18.314400 ms  DeleteObjects: 0.120300 ms)
+
+Start importing Assets/CrestURP/Samples/CrestURPValidationReport.txt using Guid(1e24cc1e4134f0a448d8e63d900539de) (TextScriptImporter) -> (artifact id: '7da3e3e26bd214a9e8d71a469c7fa974') in 0.0023221 seconds
+Refreshing native plugins compatible for Editor in 9.99 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=a465a4b99678bf74ab7f8c490be1115d): Total: 0.073 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPShowcasePreview.png using Guid(52d59592d53503e47ae80d353d85ca06) (TextureImporter) -> (artifact id: '49682d16bf6f585969a59eed27295bff') in 0.0222191 seconds
+Refreshing native plugins compatible for Editor in 10.52 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=53d76606fd942be45ae26e5be26e3c91): Total: 0.067 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPSurfacePreview.png using Guid(a338fc435ec245e4696005c832096ac6) (TextureImporter) -> (artifact id: 'f51d6590b86a00dfa2b8f0b0b2ffcaee') in 0.022437 seconds
+Refreshing native plugins compatible for Editor in 10.13 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=c867f36c8cb81d44ab271fa40eaff36e): Total: 0.068 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPPhysicalCausticsPreview.png using Guid(33be5d70f9d5d8f4faa44180fda25f6a) (TextureImporter) -> (artifact id: '7c4aed48ede7321d2a21db53f2b0d318') in 0.0219068 seconds
+Refreshing native plugins compatible for Editor in 9.68 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=b7477ce74fa0e7a4e9c74a004a646de1): Total: 0.070 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPCausticGainDebug.png using Guid(e266af38d4d07a44a92d02b1652e24eb) (TextureImporter) -> (artifact id: '87187812e379f7742de1ee51f11b4eb6') in 0.0186941 seconds
+Refreshing native plugins compatible for Editor in 10.76 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=e8796933c46a34b4090036459f2ec4d7): Total: 0.063 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPWaveSlopeDebug.png using Guid(f6af0efe872e5d04883a5ba0294ea073) (TextureImporter) -> (artifact id: 'ec4f4f0385ba2908ab2a9d82ca87ac6c') in 0.0190909 seconds
+Refreshing native plugins compatible for Editor in 10.32 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=0def6c9b89760af4fa008662f2545c1e): Total: 0.065 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPDisplacementHeightDebug.png using Guid(a6ec7ba321d4a00408ebb9dc3ae7ed08) (TextureImporter) -> (artifact id: '1a42d704346022b94d35edefab48f6e6') in 0.0182272 seconds
+Refreshing native plugins compatible for Editor in 10.21 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=939ae428b6e7e1c4cbbd7908da5bc563): Total: 0.064 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/Materials/CrestURP_Underwater.mat using Guid(1beb8d1665aef4547bb8f6dc0416adca) (NativeFormatImporter) -> (artifact id: '1ec1081259d01c70267599cd59147904') in 0.0021976 seconds
+Start importing Assets/CrestURP/Samples/CrestURP_OceanSpectrum.asset using Guid(317b24b3f64964f458329c38ebff280f) (NativeFormatImporter) -> (artifact id: 'cbf6ef9dd2364b57571c80cafafb83d0') in 0.0019143 seconds
+Start importing Assets/Settings/PC_Renderer.asset using Guid(f288ae1f4751b564a96ac7587541f7a2) (NativeFormatImporter) -> (artifact id: '36733cf91188a29df1a33556aefdeb63') in 0.0018337 seconds
+Refreshing native plugins compatible for Editor in 9.32 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=e5c7c242521c00145995ec6b6bc98ec9): Total: 0.036 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Crest URP validation reported errors. See Assets/CrestURP/Samples/CrestURPValidationReport.txt
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+MusicProgram.CrestURP.Editor.CrestURPValidation:ValidateAndCapture () (at Assets/CrestURP/Editor/CrestURPValidation.cs:195)
+MusicProgram.CrestURP.Editor.CrestURPValidation:OnPlayModeStateChanged (UnityEditor.PlayModeStateChange) (at Assets/CrestURP/Editor/CrestURPValidation.cs:263)
+UnityEditor.EditorApplication:Internal_PlayModeStateChanged (UnityEditor.PlayModeStateChange)
+
+(Filename: Assets/CrestURP/Editor/CrestURPValidation.cs Line: 195)
+
+Starting new worker id: 0 with log in D:/Unity/MusicProgram/Logs/AssetImportWorker0.log
+Starting new worker id: 1 with log in D:/Unity/MusicProgram/Logs/AssetImportWorker1.log
+Project ID request failed, Reason: The requested URL returned error: 403 (403).
+Unknown Unity Connect error (400). Please contact support at support@unity.com while processing request "https://services.unity.com/api/unity/legacy/v1/projects/24d54049-bdc2-4fbf-808f-4bc05942875c", HTTP error code 403
+.Worker ready: AssetImportWorker0 0
+Worker ready: AssetImportWorker1 1
+[Worker1] Start importing Assets/CrestURP/Shaders/CrestUnderwaterURP.shader using Guid(9d92642b74d930f4588c9e19609c604b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) 
+[Worker1] (ScriptedImporter)
+[Worker0] Start importing Assets/CrestURP/Samples/CrestURPValidationReport.txt using Guid(1e24cc1e4134f0a448d8e63d900539de) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) 
+[Worker0] (ScriptedImporter)
+[Worker0]  -> (artifact id: '126c0dcd59f74e09a18d9c9f706d8b63') in 0.0574623 seconds
+[Worker1]  -> (artifact id: 'e56a08189daeb723ae0f9bf11d24015c') in 0.0867537 seconds
+Starting new worker id: 2 with log in D:/Unity/MusicProgram/Logs/AssetImportWorker2.log
+Starting new worker id: 3 with log in D:/Unity/MusicProgram/Logs/AssetImportWorker3.log
+[Worker0] Start importing Assets/CrestURP/Samples/CrestURPPlayModePreview.png using Guid(55fde3c1929ae9c4e81a336fdec0d7b9) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) 
+[Worker0] (ScriptedImporter)
+[Worker1] Start importing Assets/CrestURP/Samples/CrestURPPlayModeValidation.txt using Guid(8d0357fea68374d4f9284c1d50fd2c96) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) 
+[Worker1] (ScriptedImporter)
+[Worker1]  -> (artifact id: 'd5244e37dba8eea046129131973e3165') in 0.0132744 seconds
+[Worker0]  -> (artifact id: '991bcb2353b3d198f9097c5f31d5b98d') in 0.079503 seconds
+[Worker1] Start importing Assets/CrestURP/Samples/CrestURPWaveSlopeDebug.png using Guid(f6af0efe872e5d04883a5ba0294ea073) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) 
+[Worker1] (ScriptedImporter)
+[Worker0] Start importing Assets/CrestURP/Samples/CrestURPSurfacePreview.png using Guid(a338fc435ec245e4696005c832096ac6) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) 
+[Worker0] (ScriptedImporter)
+[Worker1]  -> (artifact id: 'c0fd7497737427be7cec5ebcfb576db3') in 0.0638527 seconds
+[Worker0]  -> (artifact id: 'a24b9697a00a4440cc0ec1f2005e9b16') in 0.0200917 seconds
+[Worker1] Start importing Assets/CrestURP/Samples/CrestURPDisplacementHeightDebug.png using Guid(a6ec7ba321d4a00408ebb9dc3ae7ed08) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) 
+[Worker1] (ScriptedImporter)
+[Worker0] Start importing Assets/CrestURP/Samples/CrestURPCausticGainDebug.png using Guid(e266af38d4d07a44a92d02b1652e24eb) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) 
+[Worker0] (ScriptedImporter)
+[Worker1]  -> (artifact id: 'ed60acc7f31e87ca21d8ecc6ca199cb4') in 0.0189976 seconds
+[Worker0]  -> (artifact id: '7383383415fd17df12f9258a82b01fae') in 0.0201746 seconds
+[Worker1] Start importing Assets/CrestURP/Samples/CrestURPShowcasePreview.png using Guid(52d59592d53503e47ae80d353d85ca06) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) 
+[Worker1] (ScriptedImporter)
+[Worker0] Start importing Assets/CrestURP/Samples/CrestURPPhysicalCausticsPreview.png using Guid(33be5d70f9d5d8f4faa44180fda25f6a) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) 
+[Worker0] (ScriptedImporter)
+[Worker1]  -> (artifact id: '0fd5b3620f49e3f7482ce0622e281b02') in 0.0219507 seconds
+[Worker0]  -> (artifact id: '465b9c7f7ac2127ec1f2181ba5a5e3e9') in 0.0209335 seconds
+Worker ready: AssetImportWorker3 3
+Worker ready: AssetImportWorker2 2
+TrimDiskCacheJob: Current cache size 2132mb
+[Licensing::Client] Successfully updated the access token
+[Licensing::Module] Successfully updated access token: "e7A2k5GC"... (expires: 2026-08-15T19:10:09Z)
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+UnityConnectWebRequestException: Token Exchange failed due a failure with the web request.
+  at UnityEditor.Connect.TokenExchange.VerifyTokenExchangeResponse (UnityEngine.Networking.UnityWebRequest exchangeRequest) [0x00019] in <2348e9bf86984d808478203ec94ae526>:0 
+  at UnityEditor.Connect.TokenExchange.TokenExchangeRequestAsync (UnityEditor.Connect.TokenExchangeRequest tokenExchangeRequest, System.Threading.CancellationToken cancellationToken) [0x001da] in <2348e9bf86984d808478203ec94ae526>:0 
+  at UnityEditor.Connect.TokenExchange.GetServiceTokenAsync (System.String genesisToken, System.Threading.CancellationToken cancellationToken) [0x00089] in <2348e9bf86984d808478203ec94ae526>:0 
+  at UnityEditor.Connect.ServiceToken.GetServiceTokenAsync (System.String genesisToken, System.Threading.CancellationToken cancellationToken) [0x0014e] in <2348e9bf86984d808478203ec94ae526>:0 
+  at UnityEditor.Connect.UnityConnect.RequestNewServiceToken () [0x0009e] in <2348e9bf86984d808478203ec94ae526>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+<>c.<ThrowAsync>b__7_0 (System.Object state) [0x00000] in <1eb9db207454431c84a47bcd81e79c37>:0 
+  at UnityEngine.UnitySynchronizationContext+WorkRequest.Invoke () [0x00002] in <b7840b1dfe7b4a73b466889f96810c49>:0 
+  at UnityEngine.UnitySynchronizationContext.Exec () [0x0005d] in <b7840b1dfe7b4a73b466889f96810c49>:0 
+  at UnityEngine.UnitySynchronizationContext.ExecuteTasks () [0x00014] in <b7840b1dfe7b4a73b466889f96810c49>:0 
+
+Project ID request failed, Reason: The requested URL returned error: 401 (401).
+Unknown Unity Connect error (400). Please contact support at support@unity.com while processing request "https://services.unity.com/api/unity/legacy/v1/projects/24d54049-bdc2-4fbf-808f-4bc05942875c", HTTP error code 401
+.Scanning for USB devices : 26.959ms
+Scanning for USB devices : 11.514ms
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+AssetDatabase: script compilation time: 0.000877s
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-HRTB-F4MD-W58T-3Y4S-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: 2026-08-17T05:38:19Z
+[Licensing::Module] License group:
+  Id: ewogICJzdWJzR3JvdXAiIDogInVuaXR5IGVkaXRvciIsCiAgIm5hbWVzcGFjZSIgOiAidW5pdHlfZWRpdG9yIiwKICAidHlwZSIgOiAiRURJVE9SIiwKICAidGFnIiA6ICJVbml0eVBlcnNvbmFsXXXX
+  Product: Unity Personal Version
+  Type: Assigned
+  Expiration: Unlimited
+Starting: D:\6000.3.7f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aEDbg.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: D:/Unity/MusicProgram
+ExitCode: 0 Duration: 2s15ms
+[ 974/1273  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[1269/1273  1s] Csc Library/Bee/artifacts/1900b0aEDbg.dag/Assembly-CSharp-Editor.dll (+2 others)
+[1270/1273  0s] ILPostProcess Library/Bee/artifacts/1900b0aEDbg.dag/post-processed/Assembly-CSharp-Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aEDbg.dag/Assembly-CSharp-Editor.dll, with 139 defines and 371 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1271/1273  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+[1272/1273  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+*** Tundra build success (1.99 seconds), 5 items updated, 1273 evaluated
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+Unloading 28 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 45 unused Assets / (505.5 KB). Loaded Objects now: 10475.
+Memory consumption went from 0.77 GB to 0.77 GB.
+Total: 20.554300 ms (FindLiveObjects: 0.657800 ms CreateObjectMapping: 0.282300 ms MarkObjects: 19.454500 ms  DeleteObjects: 0.159000 ms)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 0 unused Assets / (346.1 KB). Loaded Objects now: 10475.
+Memory consumption went from 0.77 GB to 0.77 GB.
+Total: 18.985400 ms (FindLiveObjects: 0.528500 ms CreateObjectMapping: 0.135500 ms MarkObjects: 18.309700 ms  DeleteObjects: 0.010300 ms)
+
+- Loaded All Assemblies, in  1.222 seconds
+Refreshing native plugins compatible for Editor in 9.97 ms, found 10 plugins.
+Native extension for WindowsStandalone target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.831 seconds
+Domain Reload Profiling: 3057ms
+	BeginReloadAssembly (911ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (90ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (549ms)
+	RebuildCommonClasses (33ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (22ms)
+	LoadAllAssembliesAndSetupDomain (250ms)
+		LoadAssemblies (233ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (168ms)
+			TypeCache.Refresh (8ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (146ms)
+			ResolveRequiredComponents (10ms)
+	FinalizeReload (1831ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (735ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (13ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (248ms)
+			ProcessInitializeOnLoadAttributes (391ms)
+			ProcessInitializeOnLoadMethodAttributes (78ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (692ms)
+Refreshing native plugins compatible for Editor in 12.16 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=04a319920f9ff3e48bad60a7d23b1d1d): Total: 5.574 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=1982 ms
+		Asset DB Callback time: managed=107 ms, native=16 ms
+		Scripting: domain reloads=1, domain reload time=1235 ms, compile time=2231 ms, other=0 ms
+		Project Asset Count: scripts=1777, non-scripts=2910
+		Asset File Changes: new=0, changed=1, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 5.398ms
+	ApplyChangesToAssetFolders: 0.437ms
+	Scan: 9.059ms
+	OnSourceAssetsModified: 0.053ms
+	CategorizeAssetsWithTransientArtifact: 0.022ms
+	ProcessAssetsWithTransientArtifactChanges: 6.126ms
+	CategorizeAssets: 56.558ms
+	ImportOutOfDateAssets: 1859.465ms (-375.905ms without children)
+		CompileScripts: 2231.420ms
+		CollectScriptTypesHashes: 0.942ms
+		ReloadNativeAssets: 1.193ms
+		UnloadImportedAssets: 0.298ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.929ms
+		InitializingProgressBar: 0.000ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.586ms
+	PostProcessAllAssets: 109.211ms
+	Hotreload: 14.444ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.170ms
+	UnloadStreamsBegin: 0.044ms
+	PersistCurrentRevisions: 0.093ms
+	UnloadStreamsEnd: 0.001ms
+	GenerateScriptTypeHashes: 5.075ms
+	Untracked: 3512.871ms
+
+Asset Pipeline Refresh (id=1dd2a56e986e7bb49bcc7707bdb14904): Total: 0.006 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+[Licensing::Client] Successfully resolved entitlement details
+Start importing Assets/XR/Settings/OpenXRPackageSettings.asset using Guid(90bff579ae6159449b1eb68eaf9abb61) (NativeFormatImporter) -> (artifact id: 'c3c5d6b528abde5d031b5abc0863a91a') in 0.0061135 seconds
+Refreshing native plugins compatible for Editor in 10.87 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=3b38fa3f3ca65794ba4c6cf7869edd22): Total: 0.045 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[Licensing::Client] Successfully resolved entitlement details
+Start importing Assets/CrestURP/Shaders/CrestOceanURP.shader using Guid(3ee513aabfa1b414fb36226958a3f839) (ShaderImporter) -> (artifact id: 'd199bd11000cb58726de5054a90aa87d') in 0.0126003 seconds
+Refreshing native plugins compatible for Editor in 11.29 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=847c7066383214047bca261b6d8d219f): Total: 0.330 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=28 ms
+		Asset DB Callback time: managed=2 ms, native=299 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=1777, non-scripts=2910
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 4
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 0.001ms
+	ApplyChangesToAssetFolders: 0.114ms
+	Scan: 8.796ms
+	OnSourceAssetsModified: 0.001ms
+	CategorizeAssetsWithTransientArtifact: 0.008ms
+	ProcessAssetsWithTransientArtifactChanges: 0.041ms
+	CategorizeAssets: 1.360ms
+	ImportOutOfDateAssets: 16.198ms (-0.281ms without children)
+		ImportManagerImport: 14.576ms (0.943ms without children)
+			ImportInProcess: 13.401ms
+			UpdateCategorizedAssets: 0.233ms
+		ReloadNativeAssets: 0.089ms
+		UnloadImportedAssets: 0.428ms
+		ReloadImportedAssets: 0.556ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.465ms
+		InitializingProgressBar: 0.007ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.357ms
+	PostProcessAllAssets: 289.402ms
+	Hotreload: 12.478ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.108ms
+	UnloadStreamsBegin: 0.002ms
+	PersistCurrentRevisions: 0.095ms
+	UnloadStreamsEnd: 0.001ms
+	Untracked: 1.832ms
+
+Start importing Assets/CrestURP/Shaders/CrestUnderwaterURP.shader using Guid(9d92642b74d930f4588c9e19609c604b) (ShaderImporter) -> (artifact id: 'a105b458c28f65b942f6c834ca631143') in 0.0072524 seconds
+Refreshing native plugins compatible for Editor in 11.59 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=6884b94a4af43ed44b7d3304bfc8c676): Total: 0.306 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=33 ms
+		Asset DB Callback time: managed=2 ms, native=269 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=1777, non-scripts=2910
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 4
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 0.001ms
+	ApplyChangesToAssetFolders: 0.190ms
+	Scan: 16.507ms
+	OnSourceAssetsModified: 0.001ms
+	CategorizeAssetsWithTransientArtifact: 0.011ms
+	ProcessAssetsWithTransientArtifactChanges: 0.078ms
+	CategorizeAssets: 2.919ms
+	ImportOutOfDateAssets: 9.916ms (-0.216ms without children)
+		ImportManagerImport: 8.754ms (0.756ms without children)
+			ImportInProcess: 7.865ms
+			UpdateCategorizedAssets: 0.133ms
+		ReloadNativeAssets: 0.080ms
+		UnloadImportedAssets: 0.174ms
+		ReloadImportedAssets: 0.464ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.353ms
+		InitializingProgressBar: 0.006ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.300ms
+	PostProcessAllAssets: 259.723ms
+	Hotreload: 12.763ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.120ms
+	UnloadStreamsBegin: 0.002ms
+	PersistCurrentRevisions: 0.109ms
+	UnloadStreamsEnd: 0.000ms
+	Untracked: 4.095ms
+
+Opening scene 'Assets/CrestURP/Samples/CrestURPShowcase.unity'
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/CrestURP/Samples/CrestURPShowcase.unity'
+	Deserialize:            4.970 ms
+	Integration:            257.306 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.011 ms
+	Total Operation Time:   262.289 ms
+Unloading 90 unused Assets / (143.2 MB). Loaded Objects now: 10460.
+Memory consumption went from 0.92 GB to 0.78 GB.
+Total: 21.766900 ms (FindLiveObjects: 0.732700 ms CreateObjectMapping: 0.129000 ms MarkObjects: 18.367100 ms  DeleteObjects: 2.537100 ms)
+
+Start importing Assets/CrestURP/Samples/CrestURPValidationReport.txt using Guid(1e24cc1e4134f0a448d8e63d900539de) (TextScriptImporter) -> (artifact id: '4191b5569751e6d6498a9176133cf993') in 0.0028084 seconds
+Refreshing native plugins compatible for Editor in 11.78 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=c1d06d6d9fa9f3743996dc4ddae3a734): Total: 0.080 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPShowcasePreview.png using Guid(52d59592d53503e47ae80d353d85ca06) (TextureImporter) -> (artifact id: 'd173ee1b5fe48f7d892fdfa7c9a54f70') in 0.0252479 seconds
+Refreshing native plugins compatible for Editor in 11.54 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=451578ae287025d4ca76b07fb4fbf8ec): Total: 0.072 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPSurfacePreview.png using Guid(a338fc435ec245e4696005c832096ac6) (TextureImporter) -> (artifact id: 'c14b409d296787e27732fe0e887eedf0') in 0.023864 seconds
+Refreshing native plugins compatible for Editor in 13.30 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=f456c30e9453c9e439940347f587089d): Total: 0.073 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPPhysicalCausticsPreview.png using Guid(33be5d70f9d5d8f4faa44180fda25f6a) (TextureImporter) -> (artifact id: 'bcf99b474ded3246779b54a422869526') in 0.0217315 seconds
+Refreshing native plugins compatible for Editor in 10.04 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=e1a648105ede4d440a230005b8dd80cd): Total: 0.068 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPCausticGainDebug.png using Guid(e266af38d4d07a44a92d02b1652e24eb) (TextureImporter) -> (artifact id: '6801f897abd6f2dda0fcdba6a841cb15') in 0.0187892 seconds
+Refreshing native plugins compatible for Editor in 10.96 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=3dcf9831ad8f2ab45903066844e2ec67): Total: 0.062 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPWaveSlopeDebug.png using Guid(f6af0efe872e5d04883a5ba0294ea073) (TextureImporter) -> (artifact id: '88170f46c780493f8904e1c316788f54') in 0.0195745 seconds
+Refreshing native plugins compatible for Editor in 10.24 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=5f6ba814256b0be45b930f2e5f333ba8): Total: 0.063 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPDisplacementHeightDebug.png using Guid(a6ec7ba321d4a00408ebb9dc3ae7ed08) (TextureImporter) -> (artifact id: '8cd96a8e9cef666990e79ab6026667a5') in 0.0180516 seconds
+Refreshing native plugins compatible for Editor in 10.16 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=d31ccc140ba37cd42b3f2542bac904fc): Total: 0.058 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/Materials/CrestURP_Underwater.mat using Guid(1beb8d1665aef4547bb8f6dc0416adca) (NativeFormatImporter) -> (artifact id: '1ec1081259d01c70267599cd59147904') in 0.0021954 seconds
+Start importing Assets/CrestURP/Samples/CrestURP_OceanSpectrum.asset using Guid(317b24b3f64964f458329c38ebff280f) (NativeFormatImporter) -> (artifact id: 'cbf6ef9dd2364b57571c80cafafb83d0') in 0.0016895 seconds
+Start importing Assets/Settings/PC_Renderer.asset using Guid(f288ae1f4751b564a96ac7587541f7a2) (NativeFormatImporter) -> (artifact id: '36733cf91188a29df1a33556aefdeb63') in 0.0017324 seconds
+Refreshing native plugins compatible for Editor in 9.78 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=482a50f929de19d49a56365528f29717): Total: 0.036 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Crest URP validation reported errors. See Assets/CrestURP/Samples/CrestURPValidationReport.txt
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+MusicProgram.CrestURP.Editor.CrestURPValidation:ValidateAndCapture () (at Assets/CrestURP/Editor/CrestURPValidation.cs:203)
+MusicProgram.CrestURP.Editor.CrestURPValidation:ValidateAfterImport () (at Assets/CrestURP/Editor/CrestURPValidation.cs:71)
+UnityEditor.EditorApplication:Internal_CallDelayFunctions ()
+
+(Filename: Assets/CrestURP/Editor/CrestURPValidation.cs Line: 203)
+
+Opening scene 'Assets/CrestURP/Samples/CrestURPShowcase.unity'
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/CrestURP/Samples/CrestURPShowcase.unity'
+	Deserialize:            4.384 ms
+	Integration:            246.697 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.018 ms
+	Total Operation Time:   251.101 ms
+Unloading 41 unused Assets / (38.2 KB). Loaded Objects now: 10553.
+Memory consumption went from 0.78 GB to 0.78 GB.
+Total: 13.161200 ms (FindLiveObjects: 0.581600 ms CreateObjectMapping: 0.290000 ms MarkObjects: 12.249000 ms  DeleteObjects: 0.039900 ms)
+
+Start importing Assets/CrestURP/Samples/CrestURP_OceanSpectrum.asset using Guid(317b24b3f64964f458329c38ebff280f) (NativeFormatImporter) -> (artifact id: 'cbf6ef9dd2364b57571c80cafafb83d0') in 0.0020247 seconds
+Start importing Assets/Settings/PC_Renderer.asset using Guid(f288ae1f4751b564a96ac7587541f7a2) (NativeFormatImporter) -> (artifact id: '36733cf91188a29df1a33556aefdeb63') in 0.0018595 seconds
+Refreshing native plugins compatible for Editor in 9.70 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=f094b64c54a628c4c9030fedbf7faa2f): Total: 0.042 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[Licensing::Client] Successfully resolved entitlement details
+Reloading assemblies for play mode.
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 141 unused Assets / (507.4 KB). Loaded Objects now: 10484.
+Memory consumption went from 0.78 GB to 0.78 GB.
+Total: 21.119600 ms (FindLiveObjects: 0.617400 ms CreateObjectMapping: 0.172100 ms MarkObjects: 20.012700 ms  DeleteObjects: 0.316300 ms)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 0 unused Assets / (453.3 KB). Loaded Objects now: 10484.
+Memory consumption went from 0.78 GB to 0.78 GB.
+Total: 19.850300 ms (FindLiveObjects: 0.613600 ms CreateObjectMapping: 0.154300 ms MarkObjects: 19.069100 ms  DeleteObjects: 0.012300 ms)
+
+- Loaded All Assemblies, in  1.021 seconds
+Refreshing native plugins compatible for Editor in 11.54 ms, found 10 plugins.
+Native extension for WindowsStandalone target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.558 seconds
+Domain Reload Profiling: 2583ms
+	BeginReloadAssembly (752ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (94ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (443ms)
+	RebuildCommonClasses (26ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (218ms)
+		LoadAssemblies (175ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (150ms)
+			TypeCache.Refresh (5ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (130ms)
+			ResolveRequiredComponents (10ms)
+	FinalizeReload (1559ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (655ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (11ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (147ms)
+			ProcessInitializeOnLoadAttributes (424ms)
+			ProcessInitializeOnLoadMethodAttributes (67ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (550ms)
+Asset Pipeline Refresh (id=590f4028d7b850f4f897f4eb184d4e83): Total: 2.718 seconds - Initiated by StopAssetImportingV2(ForceSynchronousImport | ForceDomainReload)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=1662 ms
+		Asset DB Callback time: managed=19 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=1033 ms, compile time=1 ms, other=0 ms
+		Project Asset Count: scripts=1777, non-scripts=2910
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 4.164ms
+	ApplyChangesToAssetFolders: 0.331ms
+	Scan: 0.001ms
+	OnSourceAssetsModified: 0.002ms
+	CategorizeAssetsWithTransientArtifact: 0.003ms
+	ProcessAssetsWithTransientArtifactChanges: 5.117ms
+	CategorizeAssets: 44.175ms
+	ImportOutOfDateAssets: 1585.903ms (1582.444ms without children)
+		CompileScripts: 0.748ms
+		CollectScriptTypesHashes: 0.602ms
+		ReloadNativeAssets: 0.908ms
+		UnloadImportedAssets: 0.346ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.471ms
+		InitializingProgressBar: 0.000ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 0.384ms
+	PostProcessAllAssets: 19.638ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.106ms
+	UnloadStreamsBegin: 0.089ms
+	PersistCurrentRevisions: 0.090ms
+	UnloadStreamsEnd: 0.001ms
+	GenerateScriptTypeHashes: 3.675ms
+	Untracked: 1058.262ms
+
+Refreshing native plugins compatible for Editor in 9.93 ms, found 10 plugins.
+Start importing Assets/XR/Settings/OpenXRPackageSettings.asset using Guid(90bff579ae6159449b1eb68eaf9abb61) (NativeFormatImporter) -> (artifact id: 'c3c5d6b528abde5d031b5abc0863a91a') in 0.004958 seconds
+Refreshing native plugins compatible for Editor in 11.33 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=c5b574d5ff0523b4a9c6381265cda760): Total: 0.075 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Loading OpenXR loader library at path: D:\Unity\MusicProgram\Library\PackageCache\com.unity.xr.openxr@ef0033a586bf\RuntimeLoaders\windows\x64\openxr_loader.dll
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:LoadOpenXRSymbols () (at ./Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/OpenXRLoader.cs:558)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:InitializeInternal () (at ./Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/OpenXRLoader.cs:235)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:Initialize () (at ./Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/OpenXRLoader.cs:205)
+UnityEngine.XR.Management.XRManagerSettings:InitializeLoaderSync () (at ./Library/PackageCache/com.unity.xr.management@e3a3882b360a/Runtime/XRManagerSettings.cs:186)
+UnityEngine.XR.Management.XRGeneralSettings:InitXRSDK () (at ./Library/PackageCache/com.unity.xr.management@e3a3882b360a/Runtime/XRGeneralSettings.cs:172)
+UnityEngine.XR.Management.XRGeneralSettings:AttemptInitializeXRSDKOnLoad () (at ./Library/PackageCache/com.unity.xr.management@e3a3882b360a/Runtime/XRGeneralSettings.cs:145)
+
+(Filename: ./Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/OpenXRLoader.cs Line: 558)
+
+[Subsystems] Loading plugin UnityOpenXR for subsystem OpenXR Display...
+[XR] [35108] [01:26:14.989][Error  ] xrEnumerateInstanceExtensionProperties: XR_ERROR_RUNTIME_UNAVAILABLE
+[XR] [35108] [01:26:14.990][Error  ] xrEnumerateInstanceExtensionProperties: XR_ERROR_RUNTIME_UNAVAILABLE
+[XR] [35108] [01:26:14.991][Error  ] xrEnumerateInstanceExtensionProperties: XR_ERROR_RUNTIME_UNAVAILABLE
+[XR] [35108] [01:26:14.993][Error  ] xrEnumerateInstanceExtensionProperties: XR_ERROR_RUNTIME_UNAVAILABLE
+[XR] [35108] [01:26:14.993][Info   ] Available Layers: (0)
+[XR] [35108] [01:26:14.994][Error  ] xrCreateInstance: XR_ERROR_RUNTIME_UNAVAILABLE
+[Subsystems] Failed to initialize subsystem OpenXR Display [error: 1]
+[XR] [35108] [01:26:14.995][Error  ] xrPollEvent: XR_ERROR_FUNCTION_UNSUPPORTED
+[XR] [35108] [01:26:14.996][Info   ] 
+
+==== Start Unity OpenXR Diagnostic Report ====
+
+
+[XR] [35108] [01:26:14.996][Info   ] ==== Report Reason: System Shutdown ====
+
+
+[XR] [35108] [01:26:14.996][Info   ] ==== OpenXR Settings ====
+[XR] [35108] [01:26:14.996][Info   ] 
+[XR] [35108] [01:26:14.996][Info   ] Symmetric Projection: False
+[XR] [35108] [01:26:14.996][Info   ] Stereo Rendering Mode: SinglePassInstanced
+[XR] [35108] [01:26:14.996][Info   ] Latency Optimization: PrioritizeRendering
+[XR] [35108] [01:26:14.996][Info   ] Color Submission Modes: kRenderTextureFormatGroup8888
+[XR] [35108] [01:26:14.996][Info   ] Depth Submission Mode: None
+[XR] [35108] [01:26:14.996][Info   ] Space Warp Motion Vector Texture Format: RGBA16f
+[XR] [35108] [01:26:14.996][Info   ] Optimize Buffer Discards: False
+[XR] [35108] [01:26:14.996][Info   ] Multiview Render Regions Optimization Mode: None
+[XR] [35108] [01:26:14.996][Info   ] Use OpenXR Predicted Time: False
+[XR] [35108] [01:26:14.996][Info   ] Foveated Rendering API: Legacy
+[XR] [35108] [01:26:14.996][Info   ] 
+[XR] [35108] [01:26:14.996][Info   ] ==== OpenXR Provider Info ====
+[XR] [35108] [01:26:14.996][Info   ] 
+[XR] [35108] [01:26:14.996][Info   ] Provider Version: 1.16.0-18-gc7a9defb
+[XR] [35108] [01:26:14.996][Info   ] App: VR-test #1521753221
+[XR] [35108] [01:26:14.996][Info   ] Engine: 6000.3.7f1 #87061505
+[XR] [35108] [01:26:14.996][Info   ] 
+[XR] [35108] [01:26:14.996][Info   ] ==== OpenXR Runtime Info ====
+[XR] [35108] [01:26:14.996][Info   ] 
+[XR] [35108] [01:26:14.996][Info   ] Available Layers: (0)
+[XR] [35108] [01:26:14.996][Info   ] 
+[XR] [35108] [01:26:14.996][Info   ] ==== Last 20 non-XR_SUCCESS returns ====
+[XR] [35108] [01:26:14.996][Info   ] [FAILURE] xrEnumerateInstanceExtensionProperties: XR_ERROR_RUNTIME_UNAVAILABLE (4x)
+[XR] [35108] [01:26:14.996][Info   ] [FAILURE] xrCreateInstance: XR_ERROR_RUNTIME_UNAVAILABLE (1x)
+[XR] [35108] [01:26:14.996][Info   ] [FAILURE] xrPollEvent: XR_ERROR_FUNCTION_UNSUPPORTED (1x)
+[XR] [35108] [01:26:14.996][Info   ] 
+[XR] [35108] [01:26:14.996][Info   ] ==== Last 20 Events ====
+[XR] [35108] [01:26:14.996][Info   ] 
+
+==== End Unity OpenXR Diagnostic Report ====
+
+
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            2.630 ms
+	Integration:            503.843 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.011 ms
+	Total Operation Time:   506.485 ms
+Start importing Assets/CrestURP/Samples/Materials/CrestURP_Underwater.mat using Guid(1beb8d1665aef4547bb8f6dc0416adca) (NativeFormatImporter) -> (artifact id: '1ec1081259d01c70267599cd59147904') in 0.0021327 seconds
+Start importing Assets/XR/Settings/OpenXRPackageSettings.asset using Guid(90bff579ae6159449b1eb68eaf9abb61) (NativeFormatImporter) -> (artifact id: 'c3c5d6b528abde5d031b5abc0863a91a') in 0.0021567 seconds
+Start importing Assets/CrestURP/Samples/CrestURP_OceanSpectrum.asset using Guid(317b24b3f64964f458329c38ebff280f) (NativeFormatImporter) -> (artifact id: 'cbf6ef9dd2364b57571c80cafafb83d0') in 0.0019132 seconds
+Start importing Assets/Settings/PC_Renderer.asset using Guid(f288ae1f4751b564a96ac7587541f7a2) (NativeFormatImporter) -> (artifact id: '36733cf91188a29df1a33556aefdeb63') in 0.0018476 seconds
+Refreshing native plugins compatible for Editor in 9.42 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=2013b0bf41ae7e5408f1c2236aefa845): Total: 0.046 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            1.996 ms
+	Integration:            224.738 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.008 ms
+	Total Operation Time:   226.743 ms
+Unloading 132 unused Assets / (136.1 MB). Loaded Objects now: 10522.
+Memory consumption went from 0.95 GB to 0.82 GB.
+Total: 21.592300 ms (FindLiveObjects: 0.551000 ms CreateObjectMapping: 0.117800 ms MarkObjects: 17.528700 ms  DeleteObjects: 3.393800 ms)
+
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-HRTB-F4MD-W58T-3Y4S-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: 2026-08-17T05:38:19Z
+[Licensing::Module] License group:
+  Id: ewogICJzdWJzR3JvdXAiIDogInVuaXR5IGVkaXRvciIsCiAgIm5hbWVzcGFjZSIgOiAidW5pdHlfZWRpdG9yIiwKICAidHlwZSIgOiAiRURJVE9SIiwKICAidGFnIiA6ICJVbml0eVBlcnNvbmFsXXXX
+  Product: Unity Personal Version
+  Type: Assigned
+  Expiration: Unlimited
+Start importing Assets/CrestURP/Samples/CrestURPPlayModePreview.png using Guid(55fde3c1929ae9c4e81a336fdec0d7b9) (TextureImporter) -> (artifact id: '155081ddc5a563ab8eb4543989b881bc') in 0.0255889 seconds
+Refreshing native plugins compatible for Editor in 9.97 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=935be2ad300a031448b8177f6df018a7): Total: 0.099 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPPlayModeValidation.txt using Guid(8d0357fea68374d4f9284c1d50fd2c96) (TextScriptImporter) -> (artifact id: '2265f485898d9d3c76094946ecdb4bec') in 0.0027686 seconds
+Refreshing native plugins compatible for Editor in 10.82 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=a52d27315f85758489490c4636a57276): Total: 0.046 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPValidationReport.txt using Guid(1e24cc1e4134f0a448d8e63d900539de) (TextScriptImporter) -> (artifact id: '09e030ca91d658034f5d6546d1aa602e') in 0.0023521 seconds
+Refreshing native plugins compatible for Editor in 10.08 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=f4a57e7eec59c7f47a6fd87a84f7e9db): Total: 0.045 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPCausticGainDebug.png using Guid(e266af38d4d07a44a92d02b1652e24eb) (TextureImporter) -> (artifact id: 'b779013459074e8e0f9162837ba4056a') in 0.0239697 seconds
+Start importing Assets/CrestURP/Samples/CrestURPPhysicalCausticsPreview.png using Guid(33be5d70f9d5d8f4faa44180fda25f6a) (TextureImporter) -> (artifact id: 'e2597b9af48913fb576361361d839a0e') in 0.0259196 seconds
+Start importing Assets/CrestURP/Samples/CrestURPDisplacementHeightDebug.png using Guid(a6ec7ba321d4a00408ebb9dc3ae7ed08) (TextureImporter) -> (artifact id: '1337fd52ff1254069d96f3e8d80722b5') in 0.0249664 seconds
+Start importing Assets/CrestURP/Samples/CrestURPWaveSlopeDebug.png using Guid(f6af0efe872e5d04883a5ba0294ea073) (TextureImporter) -> (artifact id: '716b59b1d00b1eb39f8f6bfb76d7245b') in 0.0266632 seconds
+Refreshing native plugins compatible for Editor in 10.25 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=6be07b185dd49f64cabc4459caada22d): Total: 0.154 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Shaders/CrestOceanURP.shader using Guid(3ee513aabfa1b414fb36226958a3f839) (ShaderImporter) -> (artifact id: 'd199bd11000cb58726de5054a90aa87d') in 0.010848 seconds
+Refreshing native plugins compatible for Editor in 12.32 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=5502f4c36143db24c9dc85f1b474df58): Total: 0.325 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=25 ms
+		Asset DB Callback time: managed=6 ms, native=292 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=1777, non-scripts=2910
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 4
+	InvokeCustomDependenciesCallbacks: 0.000ms
+	InvokePackagesCallback: 0.000ms
+	ApplyChangesToAssetFolders: 0.116ms
+	Scan: 8.685ms
+	OnSourceAssetsModified: 0.001ms
+	CategorizeAssetsWithTransientArtifact: 0.005ms
+	ProcessAssetsWithTransientArtifactChanges: 0.043ms
+	CategorizeAssets: 1.194ms
+	ImportOutOfDateAssets: 13.662ms (-0.330ms without children)
+		ImportManagerImport: 12.520ms (0.843ms without children)
+			ImportInProcess: 11.487ms
+			UpdateCategorizedAssets: 0.190ms
+		ReloadNativeAssets: 0.060ms
+		UnloadImportedAssets: 0.254ms
+		ReloadImportedAssets: 0.538ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.307ms
+		InitializingProgressBar: 0.024ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.289ms
+	PostProcessAllAssets: 281.084ms
+	Hotreload: 18.007ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.140ms
+	UnloadStreamsBegin: 0.002ms
+	PersistCurrentRevisions: 0.094ms
+	UnloadStreamsEnd: 0.001ms
+	Untracked: 1.599ms
+
+Start importing Assets/CrestURP/Shaders/CrestUnderwaterURP.shader using Guid(9d92642b74d930f4588c9e19609c604b) (ShaderImporter) -> (artifact id: 'a105b458c28f65b942f6c834ca631143') in 0.0078845 seconds
+Refreshing native plugins compatible for Editor in 11.33 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=7d2851f9e18cdd3428be9b933e91816d): Total: 0.316 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=34 ms
+		Asset DB Callback time: managed=5 ms, native=275 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=1777, non-scripts=2910
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 4
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 0.001ms
+	ApplyChangesToAssetFolders: 0.205ms
+	Scan: 16.068ms
+	OnSourceAssetsModified: 0.001ms
+	CategorizeAssetsWithTransientArtifact: 0.012ms
+	ProcessAssetsWithTransientArtifactChanges: 0.098ms
+	CategorizeAssets: 3.082ms
+	ImportOutOfDateAssets: 10.834ms (-0.154ms without children)
+		ImportManagerImport: 9.570ms (0.884ms without children)
+			ImportInProcess: 8.543ms
+			UpdateCategorizedAssets: 0.143ms
+		ReloadNativeAssets: 0.064ms
+		UnloadImportedAssets: 0.215ms
+		ReloadImportedAssets: 0.485ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.326ms
+		InitializingProgressBar: 0.007ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.320ms
+	PostProcessAllAssets: 265.478ms
+	Hotreload: 15.345ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.146ms
+	UnloadStreamsBegin: 0.002ms
+	PersistCurrentRevisions: 0.107ms
+	UnloadStreamsEnd: 0.001ms
+	Untracked: 4.492ms
+
+Opening scene 'Assets/CrestURP/Samples/CrestURPShowcase.unity'
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/CrestURP/Samples/CrestURPShowcase.unity'
+	Deserialize:            5.042 ms
+	Integration:            219.695 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.014 ms
+	Total Operation Time:   224.753 ms
+Unloading 44 unused Assets / (5.6 MB). Loaded Objects now: 10643.
+Memory consumption went from 0.79 GB to 0.78 GB.
+Total: 15.432100 ms (FindLiveObjects: 0.613700 ms CreateObjectMapping: 0.136000 ms MarkObjects: 14.574700 ms  DeleteObjects: 0.107100 ms)
+
+Start importing Assets/CrestURP/Samples/CrestURPValidationReport.txt using Guid(1e24cc1e4134f0a448d8e63d900539de) (TextScriptImporter) -> (artifact id: '3c0d318292c337a4a082f02611e7f534') in 0.0021316 seconds
+Refreshing native plugins compatible for Editor in 9.78 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=24ddf83fe7a187b4ca012846d0ff0237): Total: 0.070 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPShowcasePreview.png using Guid(52d59592d53503e47ae80d353d85ca06) (TextureImporter) -> (artifact id: '49b04e0df5e787bfee8b2ffb63b7f672') in 0.0217891 seconds
+Refreshing native plugins compatible for Editor in 9.89 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=e66126159f51cbd4c86d706408a4e909): Total: 0.066 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPSurfacePreview.png using Guid(a338fc435ec245e4696005c832096ac6) (TextureImporter) -> (artifact id: 'de9bda9b026090737ec739af31ae137d') in 0.0204388 seconds
+Refreshing native plugins compatible for Editor in 10.21 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=b0c08f17fc4e5b3499b1e2d082579079): Total: 0.066 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPPhysicalCausticsPreview.png using Guid(33be5d70f9d5d8f4faa44180fda25f6a) (TextureImporter) -> (artifact id: 'e2597b9af48913fb576361361d839a0e') in 0.0243618 seconds
+Refreshing native plugins compatible for Editor in 10.07 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=8b49fbc580d5cf74cbe9cb11442cf9b5): Total: 0.052 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPCausticGainDebug.png using Guid(e266af38d4d07a44a92d02b1652e24eb) (TextureImporter) -> (artifact id: 'b779013459074e8e0f9162837ba4056a') in 0.022669 seconds
+Refreshing native plugins compatible for Editor in 10.39 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=507f329f775145f45b53289dee8411b1): Total: 0.049 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPWaveSlopeDebug.png using Guid(f6af0efe872e5d04883a5ba0294ea073) (TextureImporter) -> (artifact id: '716b59b1d00b1eb39f8f6bfb76d7245b') in 0.0245371 seconds
+Refreshing native plugins compatible for Editor in 10.20 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=973e8a4dd85330f42a5e8e9ac580c8ff): Total: 0.053 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/CrestURPDisplacementHeightDebug.png using Guid(a6ec7ba321d4a00408ebb9dc3ae7ed08) (TextureImporter) -> (artifact id: '1337fd52ff1254069d96f3e8d80722b5') in 0.0250931 seconds
+Refreshing native plugins compatible for Editor in 10.00 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=8f1dd40331047be48892cd67cf888780): Total: 0.052 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/CrestURP/Samples/Materials/CrestURP_Underwater.mat using Guid(1beb8d1665aef4547bb8f6dc0416adca) (NativeFormatImporter) -> (artifact id: '1ec1081259d01c70267599cd59147904') in 0.0020607 seconds
+Start importing Assets/CrestURP/Samples/CrestURP_OceanSpectrum.asset using Guid(317b24b3f64964f458329c38ebff280f) (NativeFormatImporter) -> (artifact id: 'cbf6ef9dd2364b57571c80cafafb83d0') in 0.0017509 seconds
+Start importing Assets/Settings/PC_Renderer.asset using Guid(f288ae1f4751b564a96ac7587541f7a2) (NativeFormatImporter) -> (artifact id: '36733cf91188a29df1a33556aefdeb63') in 0.0018187 seconds
+Refreshing native plugins compatible for Editor in 10.58 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=60e05caad566e4f4c9f7aabeef50b3aa): Total: 0.036 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Crest URP validation passed. Preview: Assets/CrestURP/Samples/CrestURPShowcasePreview.png
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MusicProgram.CrestURP.Editor.CrestURPValidation:ValidateAndCapture () (at Assets/CrestURP/Editor/CrestURPValidation.cs:207)
+MusicProgram.CrestURP.Editor.CrestURPValidation:OnPlayModeStateChanged (UnityEditor.PlayModeStateChange) (at Assets/CrestURP/Editor/CrestURPValidation.cs:274)
+UnityEditor.EditorApplication:Internal_PlayModeStateChanged (UnityEditor.PlayModeStateChange)
+
+(Filename: Assets/CrestURP/Editor/CrestURPValidation.cs Line: 207)
+
+Scanning for USB devices : 6.928ms
+Scanning for USB devices : 35.005ms
+Scanning for USB devices : 10.347ms
+Asset Pipeline Refresh (id=2898b639caad4a64895b4f025b26e674): Total: 0.018 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Asset Pipeline Refresh (id=6672b6d7db1cb4548a0c58a82bf9bbef): Total: 0.007 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Request Asset Garbage Collect because used heap size increased from 0.78 GB to 1.03 GB, exceeding the threshold of 256.0 MB.
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 43 unused Assets / (1.9 KB). Loaded Objects now: 11346.
+Memory consumption went from 1.03 GB to 1.03 GB.
+Total: 18.080600 ms (FindLiveObjects: 0.633900 ms CreateObjectMapping: 0.357500 ms MarkObjects: 17.006000 ms  DeleteObjects: 0.082000 ms)
+
+Asset Pipeline Refresh (id=84350845589848e439f7374bf3665165): Total: 0.005 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Asset Pipeline Refresh (id=f6ad5626d6408bd40a8bd07f0958d7d0): Total: 0.005 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Scanning for USB devices : 6.591ms
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-HRTB-F4MD-W58T-3Y4S-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: 2026-08-17T05:38:19Z
+[Licensing::Module] License group:
+  Id: ewogICJzdWJzR3JvdXAiIDogInVuaXR5IGVkaXRvciIsCiAgIm5hbWVzcGFjZSIgOiAidW5pdHlfZWRpdG9yIiwKICAidHlwZSIgOiAiRURJVE9SIiwKICAidGFnIiA6ICJVbml0eVBlcnNvbmFsXXXX
+  Product: Unity Personal Version
+  Type: Assigned
+  Expiration: Unlimited
+Scanning for USB devices : 6.509ms
+Scanning for USB devices : 6.389ms
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-HRTB-F4MD-W58T-3Y4S-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: 2026-08-17T05:38:19Z
+[Licensing::Module] License group:
+  Id: ewogICJzdWJzR3JvdXAiIDogInVuaXR5IGVkaXRvciIsCiAgIm5hbWVzcGFjZSIgOiAidW5pdHlfZWRpdG9yIiwKICAidHlwZSIgOiAiRURJVE9SIiwKICAidGFnIiA6ICJVbml0eVBlcnNvbmFsXXXX
+  Product: Unity Personal Version
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated the access token
+[Licensing::Module] Successfully updated access token: "eZjJ8vH8"... (expires: 2026-08-15T21:09:35Z)
+Project ID request failed, Reason: The requested URL returned error: 403 (403).
+Unknown Unity Connect error (400). Please contact support at support@unity.com while processing request "https://services.unity.com/api/unity/legacy/v1/projects/24d54049-bdc2-4fbf-808f-4bc05942875c", HTTP error code 403
+.Project ID request failed, Reason: The requested URL returned error: 403 (403).
+Unknown Unity Connect error (400). Please contact support at support@unity.com while processing request "https://services.unity.com/api/unity/legacy/v1/projects/24d54049-bdc2-4fbf-808f-4bc05942875c", HTTP error code 403
+.Scanning for USB devices : 22.785ms
+Scanning for USB devices : 10.196ms
+Asset Pipeline Refresh (id=39ac3c53885394242a1f55808282103e): Total: 0.008 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Start importing Assets/CrestURP/Samples/Materials/CrestURP_Underwater.mat using Guid(1beb8d1665aef4547bb8f6dc0416adca) (NativeFormatImporter) -> (artifact id: '1ec1081259d01c70267599cd59147904') in 0.0020423 seconds
+Refreshing native plugins compatible for Editor in 12.59 ms, found 10 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=7ef56063057c4b047850f119faf9ca4a): Total: 0.061 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=b15055e284d82ca448d7653332bfa8cd): Total: 0.014 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Crest: Flow is not enabled on the ocean material and will not be visible. Tick the <i>Enable</i> option in the <i>Flow</i> parameter section on the material currently assigned to the <i>OceanRenderer</i> component.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
+UnityEngine.Debug:LogWarning (object,UnityEngine.Object)
+Crest.LodDataMgrFlow:Start () (at Assets/ThirdParty/CrestWater4/Scripts/LodData/LodDataMgrFlow.cs:51)
+Crest.LodDataMgrFlow:.ctor (Crest.OceanRenderer) (at Assets/ThirdParty/CrestWater4/Scripts/LodData/LodDataMgrFlow.cs:39)
+Crest.OceanRenderer:CreateDestroySubSystems () (at Assets/ThirdParty/CrestWater4/Scripts/OceanRenderer.cs:881)
+Crest.OceanRenderer:RunUpdate () (at Assets/ThirdParty/CrestWater4/Scripts/OceanRenderer.cs:1132)
+Crest.OceanRenderer:EditorUpdate () (at Assets/ThirdParty/CrestWater4/Scripts/OceanRenderer.cs:806)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/ThirdParty/CrestWater4/Scripts/LodData/LodDataMgrFlow.cs Line: 51)
+
+Asset Pipeline Refresh (id=22d83336cf4aba940a70678bb1e468a5): Total: 0.008 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Asset Pipeline Refresh (id=382003d29e173f549bdd966bf4ca3373): Total: 0.005 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Scanning for USB devices : 8.332ms
+Scanning for USB devices : 33.194ms
+Scanning for USB devices : 10.244ms
+Asset Pipeline Refresh (id=7556b5cf893fc83419f856a13877548a): Total: 0.008 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Scanning for USB devices : 7.117ms
+Scanning for USB devices : 8.980ms
+Scanning for USB devices : 11.318ms
+Asset Pipeline Refresh (id=b13fc97c05e56a2428022ccae2d8dd9a): Total: 0.006 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Asset Pipeline Refresh (id=0b21d158e43bcca4b874e90adfcea8bd): Total: 0.005 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-HRTB-F4MD-W58T-3Y4S-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: 2026-08-17T05:38:19Z
+[Licensing::Module] License group:
+  Id: ewogICJzdWJzR3JvdXAiIDogInVuaXR5IGVkaXRvciIsCiAgIm5hbWVzcGFjZSIgOiAidW5pdHlfZWRpdG9yIiwKICAidHlwZSIgOiAiRURJVE9SIiwKICAidGFnIiA6ICJVbml0eVBlcnNvbmFsXXXX
+  Product: Unity Personal Version
+  Type: Assigned
+  Expiration: Unlimited
+Scanning for USB devices : 6.872ms

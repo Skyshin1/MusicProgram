@@ -1,0 +1,73 @@
+#pragma kernel Clear
+#pragma kernel Step
+#pragma kernel Shift
+
+RWTexture2D<float> _ClearTarget;
+Texture2D<float> _Previous;
+Texture2D<float> _Current;
+RWTexture2D<float> _Next;
+Texture2D<float> _ShiftSource;
+RWTexture2D<float> _ShiftTarget;
+
+StructuredBuffer<float4> _Impulses;
+int _ImpulseCount;
+int _Resolution;
+int2 _ShiftPixels;
+float _TimeStep;
+float _WaveCoefficient;
+float _Damping;
+
+[numthreads(8, 8, 1)]
+void Clear(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= (uint)_Resolution || id.y >= (uint)_Resolution) return;
+    _ClearTarget[id.xy] = 0.0;
+}
+
+[numthreads(8, 8, 1)]
+void Shift(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= (uint)_Resolution || id.y >= (uint)_Resolution) return;
+    int2 source = int2(id.xy) + _ShiftPixels;
+    float value = 0.0;
+    if (all(source >= 0) && all(source < _Resolution))
+        value = _ShiftSource.Load(int3(source, 0));
+    _ShiftTarget[id.xy] = value;
+}
+
+[numthreads(8, 8, 1)]
+void Step(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= (uint)_Resolution || id.y >= (uint)_Resolution) return;
+    int2 pixel = int2(id.xy);
+    if (pixel.x == 0 || pixel.y == 0 || pixel.x == _Resolution - 1 || pixel.y == _Resolution - 1)
+    {
+        _Next[pixel] = 0.0;
+        return;
+    }
+
+    float current = _Current.Load(int3(pixel, 0));
+    float previous = _Previous.Load(int3(pixel, 0));
+    float laplacian = _Current.Load(int3(pixel + int2(1, 0), 0)) +
+                      _Current.Load(int3(pixel + int2(-1, 0), 0)) +
+                      _Current.Load(int3(pixel + int2(0, 1), 0)) +
+                      _Current.Load(int3(pixel + int2(0, -1), 0)) - current * 4.0;
+    float next = (2.0 * current - previous + _WaveCoefficient * laplacian) /
+                 (1.0 + max(0.0, _Damping) * _TimeStep);
+
+    float2 uv = (float2(pixel) + 0.5) / _Resolution;
+    [loop]
+    for (int i = 0; i < _ImpulseCount; i++)
+    {
+        float4 impulse = _Impulses[i];
+        float radius = max(impulse.z, 1.0 / _Resolution);
+        float distanceSquared = dot(uv - impulse.xy, uv - impulse.xy);
+        float gaussian = exp(-distanceSquared / max(2.0 * radius * radius, 1e-7));
+        next += impulse.w * gaussian * min(1.0, _TimeStep * 30.0);
+    }
+
+    // A soft absorbing boundary suppresses square reflections from the local domain.
+    float2 edgeDistance = min(uv, 1.0 - uv);
+    float boundaryFade = smoothstep(0.0, 0.055, min(edgeDistance.x, edgeDistance.y));
+    _Next[pixel] = next * boundaryFade;
+}

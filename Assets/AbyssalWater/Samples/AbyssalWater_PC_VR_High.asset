@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b2852c71500f843be65842eacf1ce1, type: 3}
+  m_Name: AbyssalWater_PC_VR_High
+  m_EditorClassIdentifier: Assembly-CSharp::MusicProgram.AbyssalWater.AbyssalWaterProfile
+  quality: 0
+  showAdvanced: 0
+  waveHeight: 0.9
+  waveScale: 1
+  waveSpeed: 1
+  windDirection: 28
+  windSpeed: 11
+  choppiness: 0.62
+  spectrumBands: 8
+  minimumWavelength: 0.45
+  maximumWavelength: 42
+  directionSpread: 28
+  spectrumSeed: 8128
+  amplitudeByWavelength:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.08
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.28
+      value: 0.26
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.65
+      value: 0.72
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  directionSpreadByWavelength:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: -0.8
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.2
+      inSlope: -0.8
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  manualWaves: []
+  enableAntiTiling: 1
+  phaseWarpStrength: 0.65
+  phaseWarpPatchSize: 55
+  stochasticNormalBlend: 1
+  antiTilingSeed: 19373
+  enableMicroSpectrum: 1
+  microWaveCount: 8
+  microWaveAmplitude: 0.055
+  microMinimumWavelength: 0.35
+  microMaximumWavelength: 2.8
+  microDirectionSpread: 150
+  microChoppiness: 0.22
+  microWaveSpeed: 1.15
+  microSpectrumSeed: 27183
+  transmittanceColor: {r: 0.12, g: 0.62, b: 0.72, a: 1}
+  transmittanceReferenceDistance: 8
+  scatteringColor: {r: 0.025, g: 0.32, b: 0.42, a: 1}
+  scatteringStrength: 0.72
+  scatteringAnisotropy: 0.18
+  maximumOpticalDepth: 180
+  indexOfRefraction: 1.333
+  refractionStrength: 0.025
+  reflectionStrength: 0.82
+  smoothness: 0.94
+  normalStrength: 1
+  crestTransmission: 1.2
+  crestTransmissionColor: {r: 0.05, g: 0.65, b: 0.72, a: 1}
+  crestTransmissionPower: 4
+  foamColor: {r: 0.86, g: 0.96, b: 1, a: 1}
+  foamStrength: 0.35
+  crestFoamThreshold: 0.9
+  crestFoamFeather: 0.08
+  shorelineFoamDistance: 0.55
+  contactFoamStrength: 1.25
+  meniscusWidth: 0.18
+  causticIntensity: 0.5
+  causticColor: {r: 0.24, g: 0.72, b: 0.78, a: 1}
+  causticScale: 1
+  causticFocus: 1.45
+  causticChromaticAberration: 0.12
+  causticMaximumDepth: 45
+  underwaterDistortion: 0.14
+  waterlineThickness: 0.045
+  waterlineMeniscus: 0.38
+  underwaterFogMultiplier: 1
+  enableGodRays: 1
+  godRayStrength: 0.32
+  enableDynamicWaves: 1
+  dynamicResolution: 256
+  dynamicWorldSize: 96
+  dynamicWaveSpeed: 2.5
+  dynamicDamping: 0.34
+  dynamicDisplacement: 1
+  dynamicSubsteps: 2
+  maximumImpulsesPerStep: 32
+  lodLevels: 6
+  verticesPerLevel: 64
+  baseLodSize: 48
+  skirtDepth: 1.5

@@ -15,6 +15,21 @@ MonoBehaviour:
   m_Active: 1
   downsampleDepthShader: {fileID: 4800000, guid: cffeaeec0396a2c4dad475266cc8dfeb, type: 3}
   volumetricFogShader: {fileID: 4800000, guid: 08f816187f9af0244a95556ee0cab83f, type: 3}
+--- !u!114 &-6055455191028818117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b39ecac06ab2e14d9bcb6978e3e7bfb, type: 3}
+  m_Name: "Abyssal Underwater \u2014 Absorption Waterline Caustics"
+  m_EditorClassIdentifier: Assembly-CSharp::MusicProgram.AbyssalWater.AbyssalUnderwaterRendererFeature
+  m_Active: 1
+  underwaterShader: {fileID: 4800000, guid: 58d07e9f5d2d4b3459390e091da4f65f, type: 3}
+  injectionPoint: 500
 --- !u!114 &-5216011597210567072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32,6 +47,26 @@ MonoBehaviour:
   fetchColorBuffer: 1
   requirements: 1
   passMaterial: {fileID: 2100000, guid: a9e92b48f920d0d4e9bd94c39fdb1464, type: 2}
+  passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
+--- !u!114 &-4201091623170649572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
+  m_Name: Crest URP Underwater + Waterline
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.FullScreenPassRendererFeature
+  m_Active: 1
+  injectionPoint: 450
+  fetchColorBuffer: 1
+  requirements: 1
+  passMaterial: {fileID: 2100000, guid: 1beb8d1665aef4547bb8f6dc0416adca, type: 2}
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1
@@ -81,7 +116,9 @@ MonoBehaviour:
   - {fileID: -5216011597210567072}
   - {fileID: 3651740866917699313}
   - {fileID: -9121927131357207915}
-  m_RendererFeatureMap: ad6b866f10d7b46cfe0819a2ab3771f5603ef28316019db7f10e6880f896ad3295a274a49a676881
+  - {fileID: -4201091623170649572}
+  - {fileID: -6055455191028818117}
+  m_RendererFeatureMap: ad6b866f10d7b46cfe0819a2ab3771f5603ef28316019db7f10e6880f896ad3295a274a49a6768811c520b546db9b2c53b9f6e4196b3f6ab
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
