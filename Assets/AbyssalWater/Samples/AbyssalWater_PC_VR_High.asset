@@ -134,8 +134,8 @@ MonoBehaviour:
   causticChromaticAberration: 1.28
   causticMaximumDepth: 25
   underwaterDistortion: 0.17
-  waterlineThickness: 0.416
-  waterlineMeniscus: 0.63
+  waterlineThickness: 0.001
+  waterlineMeniscus: 0
   underwaterFogMultiplier: 0.11
   enableGodRays: 1
   godRayStrength: 0
