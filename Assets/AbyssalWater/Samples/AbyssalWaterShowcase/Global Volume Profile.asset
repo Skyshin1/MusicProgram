@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: com.cqf.urpvolumetricfog.runtime::VolumetricFogVolumeComponent
   active: 1
   distance:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 64
   baseHeight:
     m_OverrideState: 1
@@ -29,8 +29,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   density:
-    m_OverrideState: 0
-    m_Value: 0.2
+    m_OverrideState: 1
+    m_Value: 1
   attenuationDistance:
     m_OverrideState: 0
     m_Value: 128
@@ -42,7 +42,7 @@ MonoBehaviour:
     m_Value: 1
   enableMainLightContribution:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   anisotropy:
     m_OverrideState: 0
     m_Value: 0.4
@@ -63,7 +63,7 @@ MonoBehaviour:
     m_Value: 2
   enabled:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   renderPassEvent:
     m_OverrideState: 0
     m_Value: 550
