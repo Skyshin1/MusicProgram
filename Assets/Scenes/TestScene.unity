@@ -323,6 +323,7 @@ GameObject:
   - component: {fileID: 558294257}
   - component: {fileID: 558294256}
   - component: {fileID: 558294259}
+  - component: {fileID: 558294260}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -448,6 +449,25 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &558294260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558294255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119b050f2d344074e8ee32e2b910b6c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VolumetricFogPulseEmitter
+  triggerKey: 20
+  triggerStrength: 1
+  origin: {fileID: 0}
+  propagationSpeed: 12
+  ringWidth: 0.45
+  maximumRadius: 45
+  endFadeDuration: 0.25
 --- !u!1 &2083663860
 GameObject:
   m_ObjectHideFlags: 0

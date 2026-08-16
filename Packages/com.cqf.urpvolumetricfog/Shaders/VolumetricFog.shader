@@ -125,6 +125,7 @@ Shader "Hidden/VolumetricFog"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
             #include "./DepthAwareUpsample.hlsl"
+            #include "./VolumetricFogPulses.hlsl"
 
             #pragma target 4.5
 
@@ -140,6 +141,9 @@ Shader "Hidden/VolumetricFog"
 
                 float4 volumetricFog = DepthAwareUpsample(input.texcoord, _VolumetricFogTexture);
                 float4 cameraColor = SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_BlitTexture, input.texcoord);
+                float fogClear = VolumetricFogPulseClearAt(input.texcoord);
+                volumetricFog.rgb *= 1.0 - fogClear;
+                volumetricFog.a = lerp(volumetricFog.a, 1.0, fogClear);
 
                 return float4(cameraColor.rgb * volumetricFog.a + volumetricFog.rgb, cameraColor.a);
             }
@@ -175,6 +179,7 @@ Shader "Hidden/VolumetricFog"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
             #include "./DepthAwareUpsample.hlsl"
+            #include "./VolumetricFogPulses.hlsl"
 
             #pragma vertex Vert
             #pragma fragment Frag
@@ -188,6 +193,9 @@ Shader "Hidden/VolumetricFog"
 
                 float4 volumetricFog = DepthAwareUpsample(input.texcoord, _VolumetricFogTexture);
                 float4 cameraColor = SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_BlitTexture, input.texcoord);
+                float fogClear = VolumetricFogPulseClearAt(input.texcoord);
+                volumetricFog.rgb *= 1.0 - fogClear;
+                volumetricFog.a = lerp(volumetricFog.a, 1.0, fogClear);
 
                 return float4(cameraColor.rgb * volumetricFog.a + volumetricFog.rgb, cameraColor.a);
             }

@@ -890,6 +890,7 @@ GameObject:
   m_Component:
   - component: {fileID: 468616587}
   - component: {fileID: 468616588}
+  - component: {fileID: 468616589}
   m_Layer: 0
   m_Name: Right
   m_TagString: Untagged
@@ -982,6 +983,35 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+--- !u!114 &468616589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468616586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b9cf54c47f40ee9c3eb30ea8eb89b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Hands::UnityEngine.XR.Hands.XRHandTrackingEvents
+  m_Handedness: 1
+  m_UpdateType: 1
+  m_PoseUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JointsUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_TrackingAcquired:
+    m_PersistentCalls:
+      m_Calls: []
+  m_TrackingLost:
+    m_PersistentCalls:
+      m_Calls: []
+  m_TrackingChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &638289248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,7 +1511,7 @@ Transform:
   m_GameObject: {fileID: 982286561}
   serializedVersion: 2
   m_LocalRotation: {x: 0.11676408, y: 0.25912946, z: 0.030624053, w: 0.9582694}
-  m_LocalPosition: {x: 9, y: -6.8, z: 10}
+  m_LocalPosition: {x: 2.53, y: 0.43, z: 5.44}
   m_LocalScale: {x: 3.2, y: 2.2, z: 4.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1512,7 +1542,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 498bb7758f0b4744fafac91ac1629144, type: 2}
+  - {fileID: 2100000, guid: 2f1992a95faddb44bbfa3ee1e7349e70, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1579,6 +1609,7 @@ GameObject:
   - component: {fileID: 992355301}
   - component: {fileID: 992355305}
   - component: {fileID: 992355304}
+  - component: {fileID: 992355306}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1836,6 +1867,25 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &992355306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992355299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119b050f2d344074e8ee32e2b910b6c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VolumetricFogPulseEmitter
+  triggerKey: 20
+  triggerStrength: 1
+  origin: {fileID: 692856415}
+  propagationSpeed: 12
+  ringWidth: 0.45
+  maximumRadius: 45
+  endFadeDuration: 0.25
 --- !u!1 &992404184
 GameObject:
   m_ObjectHideFlags: 0
@@ -2146,7 +2196,7 @@ Transform:
   m_GameObject: {fileID: 1183845274}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35745695, y: 0.7738226, z: -0.40919006, w: 0.32555574}
-  m_LocalPosition: {x: -5, y: -6.9, z: 33}
+  m_LocalPosition: {x: -15.6, y: -50.1, z: 24.5}
   m_LocalScale: {x: 4.2, y: 2.2, z: 2.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2576,6 +2626,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1325165742}
   - component: {fileID: 1325165743}
+  - component: {fileID: 1325165744}
   m_Layer: 0
   m_Name: left
   m_TagString: Untagged
@@ -2668,6 +2719,35 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+--- !u!114 &1325165744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325165741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b9cf54c47f40ee9c3eb30ea8eb89b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Hands::UnityEngine.XR.Hands.XRHandTrackingEvents
+  m_Handedness: 1
+  m_UpdateType: 1
+  m_PoseUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JointsUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_TrackingAcquired:
+    m_PersistentCalls:
+      m_Calls: []
+  m_TrackingLost:
+    m_PersistentCalls:
+      m_Calls: []
+  m_TrackingChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1385652554
 GameObject:
   m_ObjectHideFlags: 0
@@ -2951,6 +3031,10 @@ PrefabInstance:
     - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_Name
       value: XR Interaction Simulator
+      objectReference: {fileID: 0}
+    - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8518324294302271954, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3677,7 +3761,7 @@ Transform:
   m_GameObject: {fileID: 2080806944}
   serializedVersion: 2
   m_LocalRotation: {x: 0.23828247, y: 0.47830918, z: -0.004104592, w: 0.84523666}
-  m_LocalPosition: {x: -17, y: -5.8, z: 18}
+  m_LocalPosition: {x: -17.71, y: -8.47, z: 16.8}
   m_LocalScale: {x: 4.2, y: 1.4, z: 2.6}
   m_ConstrainProportionsScale: 0
   m_Children: []

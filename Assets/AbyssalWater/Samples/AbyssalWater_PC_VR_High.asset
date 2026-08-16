@@ -136,7 +136,7 @@ MonoBehaviour:
   underwaterDistortion: 0.17
   waterlineThickness: 0.001
   waterlineMeniscus: 0
-  underwaterFogMultiplier: 0.11
+  underwaterFogMultiplier: 0.82
   enableGodRays: 1
   godRayStrength: 0
   enableDynamicWaves: 1
