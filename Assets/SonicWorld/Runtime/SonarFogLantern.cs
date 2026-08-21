@@ -1,0 +1,71 @@
+using UnityEngine;
+
+/// <summary>
+/// Clears volumetric fog inside a configurable, forward-facing horizontal
+/// cylinder. It intentionally does not alter sonar hits or white outlines.
+/// </summary>
+[DisallowMultipleComponent]
+public sealed class SonarFogLantern : MonoBehaviour
+{
+    private static readonly int EnabledId = Shader.PropertyToID("_SonarFogLanternEnabled");
+    private static readonly int PositionId = Shader.PropertyToID("_SonarFogLanternPosition");
+    private static readonly int ForwardId = Shader.PropertyToID("_SonarFogLanternForward");
+    private static readonly int ShapeId = Shader.PropertyToID("_SonarFogLanternShape");
+    private static readonly int HeightId = Shader.PropertyToID("_SonarFogLanternHeight");
+
+    [Header("Follow Target")]
+    [SerializeField]
+    [Tooltip("In VR, use the Main Camera's tracked pose so the light follows the actual player/headset position and facing direction.")]
+    private bool followMainCamera = true;
+    [SerializeField]
+    [Tooltip("Optional explicit source. When set, it takes priority over Follow Main Camera.")]
+    private Transform origin;
+
+    [Header("Fog-Free Cylinder")]
+    [SerializeField] private bool activeLantern = true;
+    [SerializeField, Min(0f)] private float forwardOffset = 1f;
+    [SerializeField, Min(0.01f)] private float radius = 2f;
+    [SerializeField, Min(0.001f)] private float edgeFadeWidth = 0.45f;
+    [SerializeField] private float bottomOffset = -0.9f;
+    [SerializeField, Min(0.01f)] private float height = 2.4f;
+
+    private void OnEnable() => Upload();
+    private void LateUpdate() => Upload();
+
+    private void OnDisable()
+    {
+        Shader.SetGlobalFloat(EnabledId, 0f);
+    }
+
+    private void Upload()
+    {
+        Transform source = ResolveSource();
+        Vector3 forward = Vector3.ProjectOnPlane(source.forward, Vector3.up).normalized;
+        if (forward.sqrMagnitude < 0.001f)
+            forward = Vector3.forward;
+
+        Shader.SetGlobalFloat(EnabledId, activeLantern ? 1f : 0f);
+        Shader.SetGlobalVector(PositionId, source.position);
+        Shader.SetGlobalVector(ForwardId, forward);
+        Shader.SetGlobalVector(ShapeId, new Vector4(forwardOffset, radius, edgeFadeWidth, 0f));
+        Shader.SetGlobalVector(HeightId, new Vector4(bottomOffset, height, 0f, 0f));
+    }
+
+    private Transform ResolveSource()
+    {
+        if (origin != null)
+            return origin;
+
+        if (followMainCamera && Camera.main != null)
+            return Camera.main.transform;
+
+        return transform;
+    }
+
+    private void OnValidate()
+    {
+        radius = Mathf.Max(0.01f, radius);
+        edgeFadeWidth = Mathf.Max(0.001f, edgeFadeWidth);
+        height = Mathf.Max(0.01f, height);
+    }
+}

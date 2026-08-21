@@ -30,6 +30,21 @@ MonoBehaviour:
   m_Active: 1
   underwaterShader: {fileID: 4800000, guid: 58d07e9f5d2d4b3459390e091da4f65f, type: 3}
   injectionPoint: 500
+--- !u!114 &-5655313601071342084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ef10f3abf703842bea0659d982b2f4, type: 3}
+  m_Name: Sonar White Outlines
+  m_EditorClassIdentifier: Assembly-CSharp::SonarWhiteOutlineRendererFeature
+  m_Active: 1
+  outlineWidth: 0.025
+  injectionPoint: 600
 --- !u!114 &-5216011597210567072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,6 +133,7 @@ MonoBehaviour:
   - {fileID: -9121927131357207915}
   - {fileID: -4201091623170649572}
   - {fileID: -6055455191028818117}
+  - {fileID: -5655313601071342084}
   m_RendererFeatureMap: ad6b866f10d7b46cfe0819a2ab3771f5603ef28316019db7f10e6880f896ad3295a274a49a6768811c520b546db9b2c53b9f6e4196b3f6ab
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}

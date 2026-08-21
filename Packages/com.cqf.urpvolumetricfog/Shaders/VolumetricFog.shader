@@ -141,7 +141,7 @@ Shader "Hidden/VolumetricFog"
 
                 float4 volumetricFog = DepthAwareUpsample(input.texcoord, _VolumetricFogTexture);
                 float4 cameraColor = SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_BlitTexture, input.texcoord);
-                float fogClear = VolumetricFogPulseClearAt(input.texcoord);
+                float fogClear = max(VolumetricFogPulseClearAt(input.texcoord), SonarFogLanternClearAt(input.texcoord));
                 volumetricFog.rgb *= 1.0 - fogClear;
                 volumetricFog.a = lerp(volumetricFog.a, 1.0, fogClear);
 
@@ -193,7 +193,7 @@ Shader "Hidden/VolumetricFog"
 
                 float4 volumetricFog = DepthAwareUpsample(input.texcoord, _VolumetricFogTexture);
                 float4 cameraColor = SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_BlitTexture, input.texcoord);
-                float fogClear = VolumetricFogPulseClearAt(input.texcoord);
+                float fogClear = max(VolumetricFogPulseClearAt(input.texcoord), SonarFogLanternClearAt(input.texcoord));
                 volumetricFog.rgb *= 1.0 - fogClear;
                 volumetricFog.a = lerp(volumetricFog.a, 1.0, fogClear);
 

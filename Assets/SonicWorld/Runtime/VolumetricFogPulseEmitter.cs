@@ -9,13 +9,36 @@ using UnityEngine.InputSystem;
 [DisallowMultipleComponent]
 public sealed class VolumetricFogPulseEmitter : MonoBehaviour
 {
+    public readonly struct PulseState
+    {
+        public readonly int Id;
+        public readonly Vector3 Origin;
+        public readonly float Radius;
+        public readonly float Width;
+        public readonly float Strength;
+        public readonly float EndFade;
+
+        public PulseState(int id, Vector3 origin, float radius, float width, float strength, float endFade)
+        {
+            Id = id;
+            Origin = origin;
+            Radius = radius;
+            Width = width;
+            Strength = strength;
+            EndFade = endFade;
+        }
+    }
+
     private struct Pulse
     {
         public bool active;
+        public int id;
         public Vector3 origin;
         public float age;
         public float speed;
         public float width;
+        public float maximumRadius;
+        public float endFadeDuration;
         public float strength;
     }
 
@@ -29,6 +52,11 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
         Shader.PropertyToID("_VolumetricFogPulseParams");
 
     public static VolumetricFogPulseEmitter Instance { get; private set; }
+    public Transform OriginTransform => origin != null ? origin : transform;
+    public static event System.Action<PulseState> PulseStarted;
+    public static event System.Action<PulseState> PulseUpdated;
+    public static event System.Action<PulseState> PulseEnded;
+    public static event System.Action AllPulsesEnded;
 
     [Header("Input")]
     [SerializeField] private Key triggerKey = Key.F;
@@ -47,6 +75,7 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
     private readonly Vector4[] shaderOrigins = new Vector4[PulseCapacity];
     private readonly Vector4[] shaderParams = new Vector4[PulseCapacity];
     private int nextPulse;
+    private int nextPulseId = 1;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void EnsureInstance()
@@ -94,20 +123,55 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
         Instance?.Emit(worldOrigin, strength);
     }
 
+    /// <summary>
+    /// Emits a pulse with its own ring shape. This is intended for gameplay
+    /// sources such as collisions, while the keyboard pulse keeps its defaults.
+    /// </summary>
+    public static void EmitAt(
+        Vector3 worldOrigin,
+        float strength,
+        float speed,
+        float width,
+        float radius,
+        float fadeDuration)
+    {
+        if (Instance == null)
+            EnsureInstance();
+        Instance?.Emit(worldOrigin, strength, speed, width, radius, fadeDuration);
+    }
+
     public void Emit(Vector3 worldOrigin, float strength = 1f)
+    {
+        Emit(worldOrigin, strength, propagationSpeed, ringWidth, maximumRadius, endFadeDuration);
+    }
+
+    public void Emit(
+        Vector3 worldOrigin,
+        float strength,
+        float speed,
+        float width,
+        float radius,
+        float fadeDuration)
     {
         if (strength <= 0.001f)
             return;
 
+        if (pulses[nextPulse].active)
+            PulseEnded?.Invoke(ToState(pulses[nextPulse], pulses[nextPulse].maximumRadius, 0f));
+
         pulses[nextPulse] = new Pulse
         {
             active = true,
+            id = nextPulseId++,
             origin = worldOrigin,
             age = 0f,
-            speed = propagationSpeed,
-            width = ringWidth,
+            speed = Mathf.Max(0.01f, speed),
+            width = Mathf.Max(0.01f, width),
+            maximumRadius = Mathf.Max(0.01f, radius),
+            endFadeDuration = Mathf.Max(0f, fadeDuration),
             strength = Mathf.Clamp01(strength)
         };
+        PulseStarted?.Invoke(ToState(pulses[nextPulse], 0f, 1f));
         nextPulse = (nextPulse + 1) % PulseCapacity;
     }
 
@@ -123,6 +187,7 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
     private void UploadActivePulses()
     {
         int activeCount = 0;
+        bool endedAnyPulse = false;
         float deltaTime = Time.unscaledDeltaTime;
 
         for (int i = 0; i < pulses.Length; i++)
@@ -133,29 +198,32 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
 
             pulse.age += deltaTime;
             float radius = pulse.age * Mathf.Max(0.01f, pulse.speed);
-            float fadeAge = Mathf.Max(0f, radius - maximumRadius) /
+            float fadeAge = Mathf.Max(0f, radius - pulse.maximumRadius) /
                 Mathf.Max(0.01f, pulse.speed);
-            if (fadeAge > endFadeDuration)
+            if (fadeAge > pulse.endFadeDuration)
             {
                 pulse.active = false;
                 pulses[i] = pulse;
+                PulseEnded?.Invoke(ToState(pulse, pulse.maximumRadius, 0f));
+                endedAnyPulse = true;
                 continue;
             }
 
-            float endFade = endFadeDuration <= 0f
+            float endFade = pulse.endFadeDuration <= 0f
                 ? 1f
-                : 1f - Mathf.SmoothStep(0f, 1f, fadeAge / endFadeDuration);
+                : 1f - Mathf.SmoothStep(0f, 1f, fadeAge / pulse.endFadeDuration);
             shaderOrigins[activeCount] = new Vector4(
                 pulse.origin.x,
                 pulse.origin.y,
                 pulse.origin.z,
-                Mathf.Min(radius, maximumRadius));
+                Mathf.Min(radius, pulse.maximumRadius));
             shaderParams[activeCount] = new Vector4(
                 Mathf.Max(0.01f, pulse.width),
                 pulse.strength,
                 endFade,
                 0f);
             activeCount++;
+            PulseUpdated?.Invoke(ToState(pulse, Mathf.Min(radius, pulse.maximumRadius), endFade));
             pulses[i] = pulse;
         }
 
@@ -165,5 +233,13 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
             Shader.SetGlobalVectorArray(PulseOriginsId, shaderOrigins);
             Shader.SetGlobalVectorArray(PulseParamsId, shaderParams);
         }
+
+        if (endedAnyPulse && activeCount == 0)
+            AllPulsesEnded?.Invoke();
+    }
+
+    private static PulseState ToState(Pulse pulse, float radius, float endFade)
+    {
+        return new PulseState(pulse.id, pulse.origin, radius, pulse.width, pulse.strength, endFade);
     }
 }
