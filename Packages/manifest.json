@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.abstractocclusion.webgpuwater": "file:com.abstractocclusion.webgpuwater",
     "com.cqf.urpvolumetricfog": "file:com.cqf.urpvolumetricfog",
     "com.unity.ai.navigation": "2.0.9",
     "com.unity.collab-proxy": "2.12.4",

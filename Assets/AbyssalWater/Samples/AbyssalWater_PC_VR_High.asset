@@ -98,7 +98,7 @@ MonoBehaviour:
   stochasticNormalBlend: 1
   antiTilingSeed: 19107
   enableMicroSpectrum: 1
-  microWaveCount: 4
+  microWaveCount: 8
   microWaveAmplitude: 0.012
   microMinimumWavelength: 0.7
   microMaximumWavelength: 0.86
@@ -140,7 +140,7 @@ MonoBehaviour:
   enableGodRays: 1
   godRayStrength: 0
   enableDynamicWaves: 1
-  dynamicResolution: 261
+  dynamicResolution: 256
   dynamicWorldSize: 83
   dynamicWaveSpeed: 2.86
   dynamicDamping: 0.88
@@ -148,6 +148,6 @@ MonoBehaviour:
   dynamicSubsteps: 2
   maximumImpulsesPerStep: 31
   lodLevels: 6
-  verticesPerLevel: 77
+  verticesPerLevel: 64
   baseLodSize: 55
   skirtDepth: 1.84
