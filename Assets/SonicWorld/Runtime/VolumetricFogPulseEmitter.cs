@@ -3,8 +3,9 @@ using UnityEngine.InputSystem;
 
 /// <summary>
 /// Standalone gameplay pulse. Pressing its configured key emits a world-space
-/// ring that clears volumetric fog only where the ring intersects visible
-/// geometry. It does not read or subscribe to any SonicWorld audio system.
+/// shell that clears WebGPU Water's underwater visibility only where it
+/// intersects visible geometry. The legacy type name is intentionally kept so
+/// existing player prefabs, collision emitters and gameplay code keep working.
 /// </summary>
 [DisallowMultipleComponent]
 public sealed class VolumetricFogPulseEmitter : MonoBehaviour
@@ -44,12 +45,16 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
 
     private const int PulseCapacity = 12;
 
+    // These names deliberately differ from the old Volumetric Fog package's globals.
+    // Water sonar must not also clear a legacy fog renderer still installed in the project.
     private static readonly int PulseCountId =
-        Shader.PropertyToID("_VolumetricFogPulseCount");
+        Shader.PropertyToID("_WaterSonarPulseCount");
     private static readonly int PulseOriginsId =
-        Shader.PropertyToID("_VolumetricFogPulseOrigins");
+        Shader.PropertyToID("_WaterSonarPulseOrigins");
     private static readonly int PulseParamsId =
-        Shader.PropertyToID("_VolumetricFogPulseParams");
+        Shader.PropertyToID("_WaterSonarPulseParams");
+    private static readonly int LegacyPulseCountId =
+        Shader.PropertyToID("_VolumetricFogPulseCount");
 
     public static VolumetricFogPulseEmitter Instance { get; private set; }
     public Transform OriginTransform => origin != null ? origin : transform;
@@ -65,7 +70,7 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
     [Tooltip("Optional gameplay origin. If empty, the Main Camera emits the pulse.")]
     private Transform origin;
 
-    [Header("Fog Clearing Ring")]
+    [Header("Water Sonar Shell")]
     [SerializeField, Range(1f, 40f)] private float propagationSpeed = 12f;
     [SerializeField, Range(0.05f, 3f)] private float ringWidth = 0.45f;
     [SerializeField, Range(1f, 150f)] private float maximumRadius = 45f;
@@ -92,6 +97,9 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
     {
         Instance = this;
         Shader.SetGlobalInt(PulseCountId, 0);
+        // Fast Enter Play Mode keeps shader globals alive. Explicitly neutralize
+        // the retired route so a previous session cannot keep legacy fog clearing.
+        Shader.SetGlobalInt(LegacyPulseCountId, 0);
     }
 
     private void OnDisable()
@@ -99,6 +107,7 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
         if (Instance == this)
             Instance = null;
         Shader.SetGlobalInt(PulseCountId, 0);
+        Shader.SetGlobalInt(LegacyPulseCountId, 0);
     }
 
     private void Update()

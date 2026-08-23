@@ -1,17 +1,20 @@
 using UnityEngine;
 
 /// <summary>
-/// Clears volumetric fog inside a configurable, forward-facing horizontal
-/// cylinder. It intentionally does not alter sonar hits or white outlines.
+/// Clears WebGPU Water's underwater fog and depth darkening inside a
+/// configurable, forward-facing horizontal cylinder. It intentionally does
+/// not alter sonar hits or white outlines. The legacy component name remains
+/// so configured player prefabs stay valid.
 /// </summary>
 [DisallowMultipleComponent]
 public sealed class SonarFogLantern : MonoBehaviour
 {
-    private static readonly int EnabledId = Shader.PropertyToID("_SonarFogLanternEnabled");
-    private static readonly int PositionId = Shader.PropertyToID("_SonarFogLanternPosition");
-    private static readonly int ForwardId = Shader.PropertyToID("_SonarFogLanternForward");
-    private static readonly int ShapeId = Shader.PropertyToID("_SonarFogLanternShape");
-    private static readonly int HeightId = Shader.PropertyToID("_SonarFogLanternHeight");
+    private static readonly int EnabledId = Shader.PropertyToID("_WaterSonarLanternEnabled");
+    private static readonly int PositionId = Shader.PropertyToID("_WaterSonarLanternPosition");
+    private static readonly int ForwardId = Shader.PropertyToID("_WaterSonarLanternForward");
+    private static readonly int ShapeId = Shader.PropertyToID("_WaterSonarLanternShape");
+    private static readonly int HeightId = Shader.PropertyToID("_WaterSonarLanternHeight");
+    private static readonly int LegacyEnabledId = Shader.PropertyToID("_SonarFogLanternEnabled");
 
     [Header("Follow Target")]
     [SerializeField]
@@ -21,7 +24,7 @@ public sealed class SonarFogLantern : MonoBehaviour
     [Tooltip("Optional explicit source. When set, it takes priority over Follow Main Camera.")]
     private Transform origin;
 
-    [Header("Fog-Free Cylinder")]
+    [Header("Water Visibility Cylinder")]
     [SerializeField] private bool activeLantern = true;
     [SerializeField, Min(0f)] private float forwardOffset = 1f;
     [SerializeField, Min(0.01f)] private float radius = 2f;
@@ -29,12 +32,19 @@ public sealed class SonarFogLantern : MonoBehaviour
     [SerializeField] private float bottomOffset = -0.9f;
     [SerializeField, Min(0.01f)] private float height = 2.4f;
 
-    private void OnEnable() => Upload();
+    private void OnEnable()
+    {
+        // Do not let a retained global from an earlier Fast Enter Play session
+        // keep the old volumetric-fog lantern alive.
+        Shader.SetGlobalFloat(LegacyEnabledId, 0f);
+        Upload();
+    }
     private void LateUpdate() => Upload();
 
     private void OnDisable()
     {
         Shader.SetGlobalFloat(EnabledId, 0f);
+        Shader.SetGlobalFloat(LegacyEnabledId, 0f);
     }
 
     private void Upload()

@@ -16,6 +16,10 @@ public sealed class SonarWaveVisualSystem : MonoBehaviour
     [SerializeField] private bool showWireSphere = false;
 
     [Header("Wire Sphere")]
+    [Tooltip("Visual-only radius multiplier. Raise this when the displayed shell appears slower or smaller than the Water Volume reveal.")]
+    [SerializeField, Range(0.5f, 2f)] private float visualRadiusMultiplier = 1.15f;
+    [Tooltip("Visual-only forward offset in metres. It makes the line shell lead the exact gameplay shell without changing hit timing.")]
+    [SerializeField, Range(0f, 3f)] private float visualLeadMeters = 0.2f;
     [SerializeField, Range(3, 16)] private int latitudeLines = 7;
     [SerializeField, Range(4, 20)] private int longitudeLines = 10;
     [SerializeField, Range(16, 96)] private int segmentsPerLine = 48;
@@ -141,7 +145,8 @@ public sealed class SonarWaveVisualSystem : MonoBehaviour
     private void Apply(WaveVisual visual, VolumetricFogPulseEmitter.PulseState pulse)
     {
         visual.Root.transform.position = pulse.Origin;
-        visual.Root.transform.localScale = Vector3.one * Mathf.Max(0.001f, pulse.Radius);
+        float displayRadius = pulse.Radius * visualRadiusMultiplier + visualLeadMeters;
+        visual.Root.transform.localScale = Vector3.one * Mathf.Max(0.001f, displayRadius);
         Color color = waveColor;
         color.a *= pulse.Strength * pulse.EndFade;
         foreach (LineRenderer line in visual.Lines)

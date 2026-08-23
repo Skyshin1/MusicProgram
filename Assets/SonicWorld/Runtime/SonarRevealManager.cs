@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Tracks renderers swept by standalone volumetric-fog sonar shells. Renderers
+/// Tracks renderers swept by standalone Water Volume sonar shells. Renderers
 /// keep their original materials; the renderer feature reads this registry to
 /// draw only a temporary white outline.
 /// </summary>

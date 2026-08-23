@@ -2,25 +2,27 @@
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Unity.XR.CoreUtils;
+using AbstractOcclusion.WebGpuWater;
 
 /// <summary>One-click installer for the sonar sphere renderer feature and scene-side controls.</summary>
 public static class SonarSphereSystemInstaller
 {
-    private const string PcRendererPath = "Assets/Settings/PC_Renderer.asset";
-
+    [MenuItem("Tools/Sonar/Install Water Volume Sonar, Outlines And Lantern")]
     [MenuItem("Tools/Sonar/Install Sphere Sonar, Outlines And Lantern")]
     private static void Install()
     {
-        InstallRendererFeature();
+        InstallRendererFeatures();
         InstallSceneComponents();
         AssetDatabase.SaveAssets();
         EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         EditorUtility.DisplayDialog(
-            "Sphere Sonar Installed",
-            "Installed the white-outline renderer feature and added scene controls.\n\n" +
+            "Water Volume Sonar Installed",
+            "Installed the Water Volume fog feature, white-outline renderer feature and scene controls.\n\n" +
             "Use F for the player sonar. Put objects that should reveal on the Sonar Reveal Manager target layer mask.\n" +
-            "The lantern is attached to the sonar origin and defaults to a 2m forward cylinder.",
+            "The lantern follows the XR camera and clears Water Volume visibility in a 2m forward cylinder.",
             "OK");
     }
 
@@ -88,14 +90,41 @@ public static class SonarSphereSystemInstaller
             "OK");
     }
 
-    private static void InstallRendererFeature()
+    [MenuItem("Tools/VR/Install Left Stick Locomotion To XR Origins")]
+    private static void InstallLeftStickLocomotion()
     {
-        ScriptableRendererData rendererData = AssetDatabase.LoadAssetAtPath<ScriptableRendererData>(PcRendererPath);
+        XROrigin[] origins = Object.FindObjectsByType<XROrigin>(FindObjectsInactive.Exclude,
+            FindObjectsSortMode.None);
+        int added = 0;
+        foreach (XROrigin origin in origins)
+        {
+            if (origin == null || origin.GetComponent<QuestLeftStickLocomotion>() != null)
+                continue;
+            Undo.AddComponent<QuestLeftStickLocomotion>(origin.gameObject);
+            added++;
+        }
+
+        if (added > 0)
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+
+        EditorUtility.DisplayDialog(
+            "Quest Left Stick Locomotion",
+            added > 0
+                ? $"Added head-relative left-stick movement to {added} XR Origin(s). Select the XR Origin to tune speed and dead zone."
+                : "Every active XR Origin already has Quest Left Stick Locomotion.",
+            "OK");
+    }
+
+    private static void InstallRendererFeatures()
+    {
+        ScriptableRendererData rendererData = ResolveActiveRendererData();
         if (rendererData == null)
         {
-            Debug.LogError($"Sonar installer could not find the renderer data at {PcRendererPath}.");
+            Debug.LogError("Sonar installer could not resolve the active URP Renderer Data.");
             return;
         }
+
+        EnsureWaterUnderwaterFog(rendererData);
 
         foreach (ScriptableRendererFeature feature in rendererData.rendererFeatures)
         {
@@ -115,6 +144,67 @@ public static class SonarSphereSystemInstaller
         outline.SetActive(true);
         outline.Create();
         EditorUtility.SetDirty(outline);
+        EditorUtility.SetDirty(rendererData);
+    }
+
+    private static ScriptableRendererData ResolveActiveRendererData()
+    {
+        UniversalRenderPipelineAsset pipeline = QualitySettings.renderPipeline as UniversalRenderPipelineAsset;
+        if (pipeline == null)
+            pipeline = GraphicsSettings.currentRenderPipeline as UniversalRenderPipelineAsset;
+        if (pipeline != null)
+        {
+            // Unity 6.3 no longer exposes scriptableRendererData publicly.
+            // Read the same default renderer reference from the URP asset's
+            // serialized renderer list, which also works with renderer-indexed
+            // quality assets.
+            SerializedObject serializedPipeline = new SerializedObject(pipeline);
+            SerializedProperty rendererList = serializedPipeline.FindProperty("m_RendererDataList");
+            SerializedProperty defaultRenderer = serializedPipeline.FindProperty("m_DefaultRendererIndex");
+            if (rendererList != null && rendererList.isArray && rendererList.arraySize > 0)
+            {
+                int index = defaultRenderer != null ? defaultRenderer.intValue : 0;
+                index = Mathf.Clamp(index, 0, rendererList.arraySize - 1);
+                ScriptableRendererData active =
+                    rendererList.GetArrayElementAtIndex(index).objectReferenceValue as ScriptableRendererData;
+                if (active != null)
+                    return active;
+            }
+        }
+
+        // Fallback for an editor session with no active quality pipeline yet.
+        const string MobileRendererPath = "Assets/Settings/Mobile_Renderer.asset";
+        ScriptableRendererData mobile = AssetDatabase.LoadAssetAtPath<ScriptableRendererData>(MobileRendererPath);
+        if (mobile != null)
+            return mobile;
+        return AssetDatabase.LoadAssetAtPath<ScriptableRendererData>("Assets/Settings/PC_Renderer.asset");
+    }
+
+    private static void EnsureWaterUnderwaterFog(ScriptableRendererData rendererData)
+    {
+        foreach (ScriptableRendererFeature feature in rendererData.rendererFeatures)
+        {
+            if (feature is WaterUnderwaterFogFeature)
+            {
+                feature.SetActive(true);
+                feature.Create();
+                EditorUtility.SetDirty(feature);
+                return;
+            }
+        }
+
+        WaterUnderwaterFogFeature fog = ScriptableObject.CreateInstance<WaterUnderwaterFogFeature>();
+        fog.name = "Water Underwater Fog";
+        SerializedObject serialized = new SerializedObject(fog);
+        SerializedProperty shader = serialized.FindProperty("underwaterFogShader");
+        if (shader != null)
+            shader.objectReferenceValue = Shader.Find("AbstractOcclusion/WebGpuWater/WaterUnderwaterFog");
+        serialized.ApplyModifiedPropertiesWithoutUndo();
+        AssetDatabase.AddObjectToAsset(fog, rendererData);
+        rendererData.rendererFeatures.Add(fog);
+        fog.SetActive(true);
+        fog.Create();
+        EditorUtility.SetDirty(fog);
         EditorUtility.SetDirty(rendererData);
     }
 

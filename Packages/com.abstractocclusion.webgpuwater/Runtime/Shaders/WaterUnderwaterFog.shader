@@ -31,6 +31,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
         #include "WaterExclusion.hlsl"  // dry-interior volumes: ExclusionRayLength carves them out of the fog
         #include "WaterExclusionMeshSpan.hlsl" // MESH volumes: the prepass dry span (URP-core only)
         #include "WaterWaterline.hlsl"  // SurfaceHeightAtXZ / SurfaceSignedGap: the displaced wavy waterline (verbatim move)
+        #include "WaterSonarEffects.hlsl" // gameplay sonar + lantern visibility clear
 
         float _UnderwaterSurfaceY;
         float _UnderwaterUnbounded; // 1 = ocean half-space, 0 = clip to this body's box (pond)
@@ -765,7 +766,10 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
             // awaiting a play-test, and the two must not travel together. (The out-param the debug
             // views actually read is classifyPushDist, via WaterFogDebugColor.)
             bool rayStartsWet = armWeight >= WATERLINE_COVERAGE_WET_MIN;
-            float3 sceneWorld = SceneWorldPos(uv);
+            // Reuse the resolved opaque depth for both the water segment and the sonar
+            // shell. A sky pixel has no scene surface, therefore a pulse must not clear it.
+            float rawSceneDepth = SampleSceneDepth(uv);
+            float3 sceneWorld = ComputeWorldSpacePosition(uv, rawSceneDepth, UNITY_MATRIX_I_VP);
             float pathLen;
             float deepestY;
             float surfaceRefY;
@@ -837,6 +841,13 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
             float clarity = WaterDepthClarity(ShoreShoalDepth(sceneWorld.xz));
             float density = _WaterFogDensity * lerp(CLARITY_FOG_DENSITY_MAX, 1.0, clarity);
             float3 transmittance = exp(-_WaterExtinction.rgb * (density * pathLen));
+            // The pulse only clears the exact visible surface swept by its shell.
+            // The lantern applies the same correction over its soft, player-facing cylinder.
+            // Both restore the whole water visibility term: Beer-Lambert absorption,
+            // in-scatter (derived from transmittance below), and depth darkening.
+            float visibilityClear = WaterSonarVisibilityClearAt(sceneWorld, rawSceneDepth);
+            transmittance = lerp(transmittance, float3(1.0, 1.0, 1.0), visibilityClear);
+            depthAttenuation = lerp(depthAttenuation, float3(1.0, 1.0, 1.0), visibilityClear);
             // Instrument LAST, off the finished numbers rather than off a re-derivation: this
             // pixel's span BEFORE the carve (wetSpanLen), what survived it (pathLen), and what the
             // waterline mask let through (armWeight). debugColor.a stays 0 - and every caller

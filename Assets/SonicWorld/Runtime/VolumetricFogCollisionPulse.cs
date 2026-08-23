@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// Emits a standalone volumetric-fog sonar pulse from a physics impact point.
+/// Emits a standalone Water Volume sonar pulse from a physics impact point.
 /// Attach this to an object that is allowed to create sonar when it collides.
 /// This component deliberately has no dependency on the SonicWorld audio system.
 /// </summary>
