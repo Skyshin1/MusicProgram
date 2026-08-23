@@ -57,6 +57,7 @@ Shader "AbstractOcclusion/WebGpuWater/SplashParticles"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_instancing
             #include "UnityCG.cginc"
             // Foam lighting + erosion dissolve, matched to WaterSurface/FoamParticles so
             // every foam-like element in the scene shades consistently.
@@ -95,13 +96,16 @@ Shader "AbstractOcclusion/WebGpuWater/SplashParticles"
             float _TransmissionStrength;
             float3 _LightDir; // globals published by the primary WaterVolume (toward the sun)
             // _SunColor comes from WaterFog.hlsl, reached TRANSITIVELY via WaterParticleFog.hlsl - declaring it here again is a redefinition.
-            sampler2D _CameraDepthTexture;
+            // In XR this is a Texture2DArray; Unity's macro supplies the matching
+            // sampler and selects the correct eye for SAMPLE_DEPTH_TEXTURE_LOD.
+            UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);
 
             struct appdata
             {
                 float4 vertex : POSITION;
                 fixed4 color  : COLOR;     // Shuriken per-particle color (incl. colorOverLifetime)
                 float2 uv     : TEXCOORD0; // Texture Sheet Animation writes the flipbook frame here
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f
@@ -115,6 +119,7 @@ Shader "AbstractOcclusion/WebGpuWater/SplashParticles"
                 float3 worldPos  : TEXCOORD4; // for the per-fragment exclusion dissolve
                 float3 fogMul    : TEXCOORD5; // camera->splash fog transmittance (1 when fog is off)
                 float3 fogAdd    : TEXCOORD6; // camera->splash fog in-scatter (0 when fog is off)
+                UNITY_VERTEX_OUTPUT_STEREO
             };
 
             // Sun direction expressed in the VerticalBillboard frame the lightmaps were
@@ -143,7 +148,9 @@ Shader "AbstractOcclusion/WebGpuWater/SplashParticles"
 
             v2f vert(appdata v)
             {
+                UNITY_SETUP_INSTANCE_ID(v);
                 v2f o;
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.color = v.color;
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
@@ -166,6 +173,7 @@ Shader "AbstractOcclusion/WebGpuWater/SplashParticles"
 
             fixed4 frag(v2f i) : SV_Target
             {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
                 float4 sprite = tex2D(_MainTex, i.uv);
                 float envelope = i.color.a;
 

@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/WebGpuWaterDemo/Scenes/WebGpuWaterInteractivePool.unity
     guid: dc75be3e3b2a214419fdcd15bed209e1
+  - enabled: 1
+    path: Assets/Scenes/1-VR.unity
+    guid: ee393b7b38469f54290778fa6700d328
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 86ce5fd40f606624a8353c9944297e33, type: 2}

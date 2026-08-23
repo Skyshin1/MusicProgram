@@ -32,6 +32,39 @@ public static class SonarSphereSystemInstaller
             Selection.activeGameObject = manager.gameObject;
     }
 
+    [MenuItem("Tools/Sonar/Hide Wire Sphere Visuals")]
+    private static void HideWireSphereVisuals()
+    {
+        SonarWaveVisualSystem visuals = Object.FindFirstObjectByType<SonarWaveVisualSystem>();
+        if (visuals == null)
+        {
+            EditorUtility.DisplayDialog(
+                "Sonar Wire Sphere",
+                "No Sonar Wave Visual System is currently loaded. The wire-sphere visual is already absent.",
+                "OK");
+            return;
+        }
+
+        Undo.RecordObject(visuals, "Hide Sonar Wire Sphere Visuals");
+        visuals.SetWireSphereVisible(false);
+        EditorUtility.SetDirty(visuals);
+        Selection.activeGameObject = visuals.gameObject;
+        EditorUtility.DisplayDialog(
+            "Sonar Wire Sphere Hidden",
+            "Only the white wire-sphere visual was hidden. Sonar pulses, collision triggers, fog interaction and white outlines remain enabled.",
+            "OK");
+    }
+
+    [MenuItem("Tools/Sonar/Select Wave Visual Controls")]
+    private static void SelectWaveVisualControls()
+    {
+        SonarWaveVisualSystem visuals = Object.FindFirstObjectByType<SonarWaveVisualSystem>();
+        if (visuals != null)
+            Selection.activeGameObject = visuals.gameObject;
+        else
+            EditorUtility.DisplayDialog("Sonar Wave Visuals", "Enter Play Mode once to create the runtime visual controller.", "OK");
+    }
+
     [MenuItem("Tools/Sonar/Add Collision Group To Selected Objects")]
     private static void AddCollisionGroupToSelection()
     {

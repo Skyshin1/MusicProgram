@@ -96,7 +96,7 @@ Shader "AbstractOcclusion/WebGpuWater/FoamParticles"
             float _SoftFadeDistance;
             float2 _ParticleFlipbookGrid; // atlas (cols, rows); (1,1) = plain texture, no flipbook
             float _ParticleFlipbookFps;   // 0 = static per-seed variant; >0 animates the atlas over age
-            sampler2D _CameraDepthTexture;
+            UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);
 
             struct v2f
             {

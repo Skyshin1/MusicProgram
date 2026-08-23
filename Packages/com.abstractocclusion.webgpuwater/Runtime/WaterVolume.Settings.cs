@@ -29,6 +29,10 @@ namespace AbstractOcclusion.WebGpuWater
         [SerializeField] internal Camera targetCamera;
         [SerializeField] internal Light sun;             // directional light: drives water, caustics AND real shadows
 
+        /// <summary>The camera this water body follows and uses for underwater state.
+        /// XR scenes should assign the camera owned by their XROrigin, not a legacy desktop camera.</summary>
+        public Camera TargetCamera { get => targetCamera; set => targetCamera = value; }
+
         [Header("Textures")]
         // All author-time texture inputs for the water SURFACE look live under this one section (the
         // inspector's "Textures" section gathers these plus the detailNormalSettings map below). The foam

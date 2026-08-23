@@ -161,7 +161,7 @@ float3 SampleOpaqueSmeared(float2 uv, float roughness)
     for (int tap = 0; tap < SKY_ANISO_TAP_COUNT; tap++)
     {
         float2 tapUV = saturate(uv + float2(0.0, spread * ANISO_TAP_OFFSETS[tap]));
-        color += tex2Dlod(_CameraOpaqueTexture, float4(tapUV, 0.0, 0.0)).rgb
+        color += SampleCameraOpaqueLod(tapUV, 0.0)
                * ANISO_TAP_WEIGHTS[tap];
     }
     return color;

@@ -97,12 +97,14 @@ Shader "AbstractOcclusion/WebGpuWater/WaterCausticProjection"
             return lerp(lerp(c00, c10, f.x), lerp(c01, c11, f.x), f.y);
         }
 
-        struct Attributes { uint vertexID : SV_VertexID; };
-        struct Varyings   { float4 positionCS : SV_POSITION; float2 uv : TEXCOORD0; };
+        struct Attributes { uint vertexID : SV_VertexID; UNITY_VERTEX_INPUT_INSTANCE_ID };
+        struct Varyings   { float4 positionCS : SV_POSITION; float2 uv : TEXCOORD0; UNITY_VERTEX_OUTPUT_STEREO };
 
         Varyings Vert(Attributes IN)
         {
+            UNITY_SETUP_INSTANCE_ID(IN);
             Varyings o;
+            UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
             o.positionCS = GetFullScreenTriangleVertexPosition(IN.vertexID);
             o.uv = GetFullScreenTriangleTexCoord(IN.vertexID);
             return o;
@@ -214,6 +216,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterCausticProjection"
         // above water / outside the footprint, so the additive blend adds exactly 0 there.
         half4 FragCaustic(Varyings IN) : SV_Target
         {
+            UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
             float3 poolPos, worldPos; float underwaterMask; float4 causticSample; float surfaceY;
             float occluderLit;
             SampleProjection(IN.uv, poolPos, worldPos, underwaterMask, causticSample, surfaceY,
@@ -236,6 +239,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterCausticProjection"
         // channel (green invalid), so it is a true no-op outside real shadow columns.
         half4 FragShadow(Varyings IN) : SV_Target
         {
+            UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
             float3 poolPos, worldPos; float underwaterMask; float4 causticSample; float surfaceY;
             float occluderLit;
             SampleProjection(IN.uv, poolPos, worldPos, underwaterMask, causticSample, surfaceY,
@@ -257,6 +261,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterCausticProjection"
             #pragma vertex Vert
             #pragma fragment FragCaustic
             #pragma target 4.0
+            #pragma multi_compile_instancing
             ENDHLSL
         }
 
@@ -269,6 +274,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterCausticProjection"
             #pragma vertex Vert
             #pragma fragment FragShadow
             #pragma target 4.0
+            #pragma multi_compile_instancing
             ENDHLSL
         }
     }

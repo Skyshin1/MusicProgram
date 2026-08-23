@@ -11,6 +11,10 @@ public sealed class SonarWaveVisualSystem : MonoBehaviour
         public LineRenderer[] Lines;
     }
 
+    [Header("Visibility")]
+    [Tooltip("Only controls the white wire-sphere drawing. Turning this off does not disable sonar pulses, fog interaction, hit detection, or white outlines.")]
+    [SerializeField] private bool showWireSphere = false;
+
     [Header("Wire Sphere")]
     [SerializeField, Range(3, 16)] private int latitudeLines = 7;
     [SerializeField, Range(4, 20)] private int longitudeLines = 10;
@@ -49,6 +53,9 @@ public sealed class SonarWaveVisualSystem : MonoBehaviour
 
     private void OnPulseStarted(VolumetricFogPulseEmitter.PulseState pulse)
     {
+        if (!showWireSphere)
+            return;
+
         WaveVisual visual = pool.Count > 0 ? pool.Pop() : CreateVisual();
         visual.Root.SetActive(true);
         active[pulse.Id] = visual;
@@ -67,6 +74,32 @@ public sealed class SonarWaveVisualSystem : MonoBehaviour
             return;
         visual.Root.SetActive(false);
         pool.Push(visual);
+    }
+
+    private void OnValidate()
+    {
+        if (!showWireSphere)
+            HideAllVisuals();
+    }
+
+    /// <summary>Shows or hides only the wire-sphere rendering; sonar gameplay remains active.</summary>
+    public void SetWireSphereVisible(bool visible)
+    {
+        showWireSphere = visible;
+        if (!visible)
+            HideAllVisuals();
+    }
+
+    private void HideAllVisuals()
+    {
+        foreach (WaveVisual visual in active.Values)
+        {
+            if (visual.Root != null)
+                visual.Root.SetActive(false);
+            pool.Push(visual);
+        }
+
+        active.Clear();
     }
 
     private WaveVisual CreateVisual()

@@ -46,7 +46,9 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
         // rasterised there). Written by WaterSurface's "OceanSurfaceEyeDepth" pass via
         // WaterUnderwaterFogPass. When valid, the fog's crossing comes from this - the rendered
         // surface itself - instead of the bounded analytic march.
-        TEXTURE2D(_OceanSurfaceEyeDepth);
+        // X variants become Texture2DArray in single-pass-instanced XR, so the
+        // underwater prepass is read from the eye currently being shaded.
+        TEXTURE2D_X(_OceanSurfaceEyeDepth);
         float _OceanSurfaceDepthValid; // 1 = the prepass ran this frame (set by the fog pass)
         // Sun globals (published by WaterUniformPublisher) - not in this shader's include chain otherwise.
         // Needed so the underwater in-scatter can use the same lit WaterInscatterColor as the surface, for a
@@ -104,12 +106,14 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
         // has with WaterSurface.shader.
         #include "WaterFogDebug.hlsl"
 
-        struct Attributes { uint vertexID : SV_VertexID; };
-        struct Varyings   { float4 positionCS : SV_POSITION; float2 uv : TEXCOORD0; };
+        struct Attributes { uint vertexID : SV_VertexID; UNITY_VERTEX_INPUT_INSTANCE_ID };
+        struct Varyings   { float4 positionCS : SV_POSITION; float2 uv : TEXCOORD0; UNITY_VERTEX_OUTPUT_STEREO };
 
         Varyings Vert(Attributes IN)
         {
+            UNITY_SETUP_INSTANCE_ID(IN);
             Varyings o;
+            UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
             o.positionCS = GetFullScreenTriangleVertexPosition(IN.vertexID);
             o.uv = GetFullScreenTriangleTexCoord(IN.vertexID);
             return o;
@@ -276,7 +280,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
             float rayLen = max(length(ray), 1e-4);
             float3 dir = ray / rayLen;
             int2 prepassPixel = int2(uv * _ScaledScreenParams.xy);
-            float surfaceSigned = LOAD_TEXTURE2D(_OceanSurfaceEyeDepth, prepassPixel).r;
+            float surfaceSigned = LOAD_TEXTURE2D_X(_OceanSurfaceEyeDepth, prepassPixel).r;
             float surfaceEye = abs(surfaceSigned);
             // INSTRUMENT ONLY. Stamped here rather than re-loaded by the view: which of the two
             // coincident sheet twins won this pixel is exactly the thing under suspicion, and a
@@ -309,8 +313,8 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
             int2 prepassPixelMax = int2(_ScaledScreenParams.xy) - int2(1, 1);
             int prepassRowUp   = min(prepassPixel.y + PREPASS_FROM_AIR_CORROBORATION_PIXELS, prepassPixelMax.y);
             int prepassRowDown = max(prepassPixel.y - PREPASS_FROM_AIR_CORROBORATION_PIXELS, 0);
-            float surfaceSignedUp   = LOAD_TEXTURE2D(_OceanSurfaceEyeDepth, int2(prepassPixel.x, prepassRowUp)).r;
-            float surfaceSignedDown = LOAD_TEXTURE2D(_OceanSurfaceEyeDepth, int2(prepassPixel.x, prepassRowDown)).r;
+            float surfaceSignedUp   = LOAD_TEXTURE2D_X(_OceanSurfaceEyeDepth, int2(prepassPixel.x, prepassRowUp)).r;
+            float surfaceSignedDown = LOAD_TEXTURE2D_X(_OceanSurfaceEyeDepth, int2(prepassPixel.x, prepassRowDown)).r;
             bool fromAirCorroborated = surfaceSignedUp > 0.0 || surfaceSignedDown > 0.0;
 
             // Which face of the sheet this pixel shows - a RASTER fact, per pixel, from the same
@@ -865,6 +869,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
             #pragma vertex Vert
             #pragma fragment FragAbsorb
             #pragma target 4.0
+            #pragma multi_compile_instancing
             // multi_compile, NOT shader_feature: this material is created at runtime by
             // CoreUtils.CreateEngineMaterial, so build-time variant stripping would have no material
             // keyword state to inspect and could strip the variant we need. Two keywords x three
@@ -881,6 +886,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
 
             half4 FragAbsorb(Varyings input) : SV_Target
             {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 #ifdef WATER_FOG_NULL
                 return half4(1.0, 1.0, 1.0, 1.0); // Blend Zero SrcColor identity: dst *= 1
 #else
@@ -916,11 +922,13 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
             #pragma vertex Vert
             #pragma fragment FragInscatter
             #pragma target 4.0
+            #pragma multi_compile_instancing
             #pragma multi_compile_fragment _ WATER_FOG_SIMPLE
             #pragma multi_compile_fragment _ WATER_FOG_NULL
 
             half4 FragInscatter(Varyings input) : SV_Target
             {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 #ifdef WATER_FOG_NULL
                 return half4(0.0, 0.0, 0.0, 1.0); // Blend One One identity: dst += 0
 #else
@@ -973,6 +981,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
             #pragma vertex Vert
             #pragma fragment FragWaterline
             #pragma target 4.0
+            #pragma multi_compile_instancing
             // No WATER_FOG_NULL here: the meniscus is a straddle-frame effect, not part of the
             // sustained underwater cost the diagnostic is aimed at.
             #pragma multi_compile_fragment _ WATER_FOG_SIMPLE
@@ -982,7 +991,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
             float _WaterlineWarp;     // lens-tension warp weight (0 = plain darkened line)
             // The scene as fogged so far, copied by the pass (a raster pass cannot read its own
             // target); the tension warp re-samples it at a shifted UV.
-            TEXTURE2D(_WaterlineSceneTex); SAMPLER(sampler_WaterlineSceneTex);
+            TEXTURE2D_X(_WaterlineSceneTex); SAMPLER(sampler_WaterlineSceneTex);
 
             // Guard for the metres-per-pixel derivative (degenerate at a perfectly surface-
             // parallel view), and the alpha below which the fragment discards instead of
@@ -997,6 +1006,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
 
             half4 FragWaterline(Varyings input) : SV_Target
             {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
                 // World position of this pixel ON the near plane (not the scene depth): the
                 // meniscus sits on the camera's 'lens' - exactly the near-plane cut through
                 // the water surface.
@@ -1042,8 +1052,8 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
                     // under camera roll. If the grip visibly pulls the WRONG way, flip upSign.
                     float upSign = (gapPerUvY >= 0.0) ? 1.0 : -1.0;
                     float2 warpedUV = saturate(input.uv + float2(0.0, upSign * offset));
-                    float3 scene = SAMPLE_TEXTURE2D_LOD(_WaterlineSceneTex,
-                                                        sampler_WaterlineSceneTex, warpedUV, 0).rgb;
+                    float3 scene = SAMPLE_TEXTURE2D_X_LOD(_WaterlineSceneTex,
+                                                          sampler_WaterlineSceneTex, warpedUV, 0).rgb;
                     scene *= 1.0 - lineAlpha; // the meniscus darken rides the warped image
                     float coverage = smoothstep(0.0, WATERLINE_WARP_COVER_EDGE, m);
                     clip(coverage - WATERLINE_MIN_ALPHA);

@@ -86,7 +86,11 @@
                 return info;
             }
 
-            struct appdata { float4 vertex : POSITION; };
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+            };
             struct v2f
             {
                 float4 pos      : SV_POSITION;
@@ -96,6 +100,7 @@
                 float2 largeWaveSourceXZ : TEXCOORD3; // undisplaced world xz of the open-water wave,
                                                       // so the fragment normal reads the SOURCE point
                                                       // (not the chop-displaced worldPos)
+                UNITY_VERTEX_OUTPUT_STEREO
             };
 
             // Coordinate fed to the wind-wave layer (WaveHeight/WaveSlope). Bounded bodies sample in
@@ -111,7 +116,9 @@
 
             v2f vert(appdata v)
             {
+                UNITY_SETUP_INSTANCE_ID(v);
                 v2f o;
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                 // Three vertex sources feed the SAME ripple/wave path below:
                 //  - full plane   : the grid vertex IS pool xz;
                 //  - window patch : the SAME [-1,1] grid remapped into the window's pool sub-region,

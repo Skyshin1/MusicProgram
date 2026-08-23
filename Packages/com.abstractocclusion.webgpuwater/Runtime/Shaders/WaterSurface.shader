@@ -104,6 +104,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterSurface"
             #pragma vertex vert
             #pragma fragment frag
             #pragma target 4.0
+            #pragma multi_compile_instancing
             // Main-light shadow keywords: this pass samples the shadow map BY HAND (it is CGPROGRAM, so
             // it can't include URP's Shadows.hlsl) to gate the analytic floor caustic. Needs "Transparent
             // Receive Shadows" ON in the active Renderer asset, else the keyword is never set (caustic
@@ -173,6 +174,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterSurface"
 
             fixed4 frag(v2f i) : SV_Target
             {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
                 // Dry-interior exclusion (boat hull, sub room): kill the surface fragment
                 // BEFORE any shading work. Runs on both sides (_Underwater 0 and 1), so a
                 // dry room seen from below loses its ceiling sheet too. WGSL-safe: discard
@@ -302,6 +304,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterSurface"
             #pragma vertex vert
             #pragma fragment fragDepth
             #pragma target 4.0
+            #pragma multi_compile_instancing
             #include "UnityCG.cginc"
             #include "WaterCommon.hlsl"
             #include "WaterFog.hlsl"
@@ -323,6 +326,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterSurface"
 
             float4 fragDepth(v2f i) : SV_Target
             {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
                 // Dry-interior exclusion: no surface there, so no waterline either (matches the
                 // visible pass's discard, mesh tier included - the two must agree, or this RT would
                 // report a surface the visible pass threw away).
@@ -382,6 +386,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterSurface"
             #pragma vertex vert
             #pragma fragment fragFoamOverlay
             #pragma target 4.0
+            #pragma multi_compile_instancing
             // This IS the after-fog redraw: keep PondFoamLayer's overlay-skip gate out.
             #define WATER_FOAM_OVERLAY_PASS 1
             #include "UnityCG.cginc"
@@ -407,6 +412,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterSurface"
 
             fixed4 fragFoamOverlay(v2f i) : SV_Target
             {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
                 // Same carve rules as the visible pass: no surface there, no foam either.
                 if (InsideExclusion(i.worldPos)) discard;
                 if (_ExclusionMeshCount > 0.5)

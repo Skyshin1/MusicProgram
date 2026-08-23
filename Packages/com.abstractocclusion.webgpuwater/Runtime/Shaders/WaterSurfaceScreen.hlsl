@@ -6,19 +6,52 @@
 #ifndef WATER_SURFACE_SCREEN_INCLUDED
 #define WATER_SURFACE_SCREEN_INCLUDED
 
-// URP scene textures (enable Opaque Texture + Depth Texture in the URP asset)
+// URP scene textures (enable Opaque Texture + Depth Texture in the URP asset).
+// Important: this shader already sits at the ps_4_0 limit of 16 samplers. Do NOT
+// use UNITY_DECLARE_DEPTH_TEXTURE here: its generated sampler would be a 17th
+// sampler. The depth texture deliberately shares sampler_PointClamp with the
+// manual shadow taps below, exactly as the desktop shader did.
+#if defined(UNITY_STEREO_INSTANCING_ENABLED) || defined(UNITY_STEREO_MULTIVIEW_ENABLED)
+Texture2DArray _CameraOpaqueTexture;
+SamplerState sampler_CameraOpaqueTexture;
+Texture2DArray _CameraDepthTexture;
+#else
 sampler2D _CameraOpaqueTexture;
-// Depth as a separate Texture2D + the shared point sampler, NOT a sampler2D: depth
-// must be point-sampled anyway (filtering depth values is meaningless), and ps_4_0
-// caps sampler registers at 16 - the detail-normal texture took the last combined
-// slot, so depth shares the inline point sampler instead of owning a register.
-// (Same Texture2D + explicit-sampler pattern as the WebGPU-safe shadow tap below.)
 Texture2D _CameraDepthTexture;
-SamplerState sampler_PointClamp; // Unity inline sampler: point filter, clamp wrap (non-comparison)
+#endif
+SamplerState sampler_PointClamp;
 // Every read is explicit-LOD (loop-safe, WGSL-safe): LinearEyeDepth(RawSceneDepth(uv)).
 float RawSceneDepth(float2 uv)
 {
+#if defined(UNITY_STEREO_INSTANCING_ENABLED) || defined(UNITY_STEREO_MULTIVIEW_ENABLED)
+    return _CameraDepthTexture.SampleLevel(sampler_PointClamp,
+                                           float3(uv, unity_StereoEyeIndex), 0.0).r;
+#else
     return _CameraDepthTexture.SampleLevel(sampler_PointClamp, uv, 0.0).r;
+#endif
+}
+
+float3 SampleCameraOpaque(float2 uv)
+{
+#if defined(UNITY_STEREO_INSTANCING_ENABLED) || defined(UNITY_STEREO_MULTIVIEW_ENABLED)
+    return _CameraOpaqueTexture.Sample(sampler_CameraOpaqueTexture,
+                                       float3(uv, unity_StereoEyeIndex)).rgb;
+#else
+    return tex2D(_CameraOpaqueTexture, uv).rgb;
+#endif
+}
+
+// Unity has a screenspace helper for implicit LOD but not an explicit-LOD variant.
+// The conditional keeps desktop/WebGL on the original sampler2D path while Quest
+// reads the correct slice of its XR texture array.
+float3 SampleCameraOpaqueLod(float2 uv, float lod)
+{
+#if defined(UNITY_STEREO_INSTANCING_ENABLED) || defined(UNITY_STEREO_MULTIVIEW_ENABLED)
+    return _CameraOpaqueTexture.SampleLevel(sampler_CameraOpaqueTexture,
+                                             float3(uv, unity_StereoEyeIndex), lod).rgb;
+#else
+    return tex2Dlod(_CameraOpaqueTexture, float4(uv, 0.0, lod)).rgb;
+#endif
 }
 
 // Perspective divide of a ComputeScreenPos-style position -> [0,1] screen UV.

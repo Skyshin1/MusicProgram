@@ -240,7 +240,7 @@ float4 UnderwaterStage(v2f i, WaterGeomStage g, float waterClarity)
     if (_RealRefraction > 0.5)
     {
         float2 ruvU = ScreenUV(i.screenPos) + normal.xz * _RefractionDistortion;
-        refractedColor = tex2D(_CameraOpaqueTexture, saturate(ruvU)).rgb * UnderwaterViewTint();
+        refractedColor = SampleCameraOpaque(saturate(ruvU)) * UnderwaterViewTint();
     }
 
     refractedColor = ApplyWaterOpacityTintedClarity(refractedColor, bodyInscatterUnder, waterClarity); // turbidity from below too
@@ -456,7 +456,7 @@ float3 RefractionStage(v2f i, WaterGeomStage g, float waterClarity, out float3 b
     {
         float2 ruv = ScreenUV(i.screenPos);
         ruv += normal.xz * _RefractionDistortion;
-        refractedColor = tex2D(_CameraOpaqueTexture, saturate(ruv)).rgb; // tinted by the water absorption below
+        refractedColor = SampleCameraOpaque(saturate(ruv)); // tinted by the water absorption below
 
         // Fog the transmitted view by the water thickness behind the surface
         // (scene eye-depth - surface eye-depth), so heavy fog reads through too.
@@ -1162,13 +1162,12 @@ float3 FinalCompositeStage(v2f i, WaterGeomStage g, float3 outColor,
             float2 hb1 = float2(HORIZON_BLUR_STEP, 0.0);
             float2 hb2 = float2(2.0 * HORIZON_BLUR_STEP, 0.0);
             float3 perAzimuth =
-                  tex2Dlod(_CameraOpaqueTexture, float4(huv, 0, 0)).rgb * 0.34
-                + tex2Dlod(_CameraOpaqueTexture, float4(saturate(huv + hb1), 0, 0)).rgb * 0.24
-                + tex2Dlod(_CameraOpaqueTexture, float4(saturate(huv - hb1), 0, 0)).rgb * 0.24
-                + tex2Dlod(_CameraOpaqueTexture, float4(saturate(huv + hb2), 0, 0)).rgb * 0.09
-                + tex2Dlod(_CameraOpaqueTexture, float4(saturate(huv - hb2), 0, 0)).rgb * 0.09;
-            float3 centreBand = tex2Dlod(_CameraOpaqueTexture,
-                                         float4(0.5, saturate(horizonUVraw.y), 0.0, 0.0)).rgb;
+                  SampleCameraOpaqueLod(huv, 0.0) * 0.34
+                + SampleCameraOpaqueLod(saturate(huv + hb1), 0.0) * 0.24
+                + SampleCameraOpaqueLod(saturate(huv - hb1), 0.0) * 0.24
+                + SampleCameraOpaqueLod(saturate(huv + hb2), 0.0) * 0.09
+                + SampleCameraOpaqueLod(saturate(huv - hb2), 0.0) * 0.09;
+            float3 centreBand = SampleCameraOpaqueLod(float2(0.5, saturate(horizonUVraw.y)), 0.0);
             skyAtHorizon = lerp(perAzimuth, centreBand, toCentre);
         }
         else

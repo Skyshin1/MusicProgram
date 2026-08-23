@@ -90,7 +90,7 @@ Shader "AbstractOcclusion/WebGpuWater/FoamDensityComposite"
             float3 _DensityCamForward;
             float3 _LightDir; // globals published by the primary WaterVolume
             float3 _SunColor;
-            sampler2D _CameraDepthTexture;
+            UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);
 
             struct v2f
             {
