@@ -30,7 +30,7 @@ public sealed class SonarRevealManager : MonoBehaviour
     [SerializeField, Min(0.01f)] private float outlineFadeDuration = 1.0f;
 
     private readonly Collider[] colliderBuffer = new Collider[ColliderCapacity];
-    private readonly Dictionary<Renderer, byte> activeRenderers = new Dictionary<Renderer, byte>();
+    private readonly Dictionary<Renderer, float> activeRenderers = new Dictionary<Renderer, float>();
     private float allPulsesEndedAt = float.PositiveInfinity;
     private float outlineStrength = 0f;
 
@@ -43,6 +43,20 @@ public sealed class SonarRevealManager : MonoBehaviour
         GameObject system = new GameObject("Sonar Reveal Manager");
         system.AddComponent<SonarRevealManager>();
         DontDestroyOnLoad(system);
+    }
+
+    public static void RevealRenderer(Renderer renderer, float duration)
+    {
+        if (renderer == null)
+            return;
+        if (Instance == null)
+            EnsureInstance();
+        if (Instance == null)
+            return;
+
+        Instance.activeRenderers[renderer] = Time.unscaledTime + Mathf.Max(0.05f, duration);
+        Instance.outlineStrength = 1f;
+        Instance.allPulsesEndedAt = float.PositiveInfinity;
     }
 
     private void OnEnable()
@@ -64,7 +78,7 @@ public sealed class SonarRevealManager : MonoBehaviour
 
     private void Update()
     {
-        RemoveDestroyedRenderers();
+        RemoveDestroyedOrExpiredRenderers();
         if (activeRenderers.Count == 0 || float.IsPositiveInfinity(allPulsesEndedAt))
             return;
 
@@ -114,8 +128,14 @@ public sealed class SonarRevealManager : MonoBehaviour
             Transform root = ResolveRendererRoot(collider);
             foreach (Renderer renderer in root.GetComponentsInChildren<Renderer>(true))
             {
-                if (renderer != null && renderer.enabled && renderer.gameObject.activeInHierarchy)
-                    activeRenderers[renderer] = 0;
+                if (renderer == null || !renderer.enabled || !renderer.gameObject.activeInHierarchy)
+                    continue;
+
+                DeepSeaAI.SonarRevealStyle style =
+                    renderer.GetComponentInParent<DeepSeaAI.SonarRevealStyle>();
+                activeRenderers[renderer] = style != null
+                    ? Time.unscaledTime + style.RevealDuration
+                    : float.PositiveInfinity;
             }
         }
     }
@@ -156,26 +176,40 @@ public sealed class SonarRevealManager : MonoBehaviour
 
     private bool TouchesShell(Collider collider, VolumetricFogPulseEmitter.PulseState pulse)
     {
-        Vector3 closest = collider.ClosestPoint(pulse.Origin);
         float shellHalfWidth = pulse.Width * 0.5f + shellPadding;
-        float distanceToShell = Mathf.Abs(Vector3.Distance(closest, pulse.Origin) - pulse.Radius);
-        if (distanceToShell <= shellHalfWidth)
-            return true;
+        MeshCollider meshCollider = collider as MeshCollider;
+        bool supportsClosestPoint =
+            collider is BoxCollider ||
+            collider is SphereCollider ||
+            collider is CapsuleCollider ||
+            (meshCollider != null && meshCollider.convex);
+
+        if (supportsClosestPoint)
+        {
+            Vector3 closest = collider.ClosestPoint(pulse.Origin);
+            float distanceToShell = Mathf.Abs(Vector3.Distance(closest, pulse.Origin) - pulse.Radius);
+            if (distanceToShell <= shellHalfWidth)
+                return true;
+        }
 
         Bounds bounds = collider.bounds;
         float centerDistance = Vector3.Distance(bounds.center, pulse.Origin);
-        return Mathf.Abs(centerDistance - pulse.Radius) <= bounds.extents.magnitude + shellHalfWidth;
+        return Mathf.Abs(centerDistance - pulse.Radius) <=
+            bounds.extents.magnitude + shellHalfWidth;
     }
 
-    private void RemoveDestroyedRenderers()
+    private void RemoveDestroyedOrExpiredRenderers()
     {
         if (activeRenderers.Count == 0)
             return;
 
         List<Renderer> removed = null;
-        foreach (Renderer renderer in activeRenderers.Keys)
+        float now = Time.unscaledTime;
+        foreach (KeyValuePair<Renderer, float> pair in activeRenderers)
         {
-            if (renderer == null)
+            Renderer renderer = pair.Key;
+            bool expired = !float.IsPositiveInfinity(pair.Value) && now >= pair.Value;
+            if (renderer == null || expired)
             {
                 removed ??= new List<Renderer>();
                 removed.Add(renderer);

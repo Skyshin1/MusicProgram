@@ -62,6 +62,7 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
     public static event System.Action<PulseState> PulseUpdated;
     public static event System.Action<PulseState> PulseEnded;
     public static event System.Action AllPulsesEnded;
+    public static event System.Action<Vector3, float, Transform> PlayerSonarEmitted;
 
     [Header("Input")]
     [SerializeField] private Key triggerKey = Key.F;
@@ -115,7 +116,12 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
         if (Keyboard.current != null &&
             Keyboard.current[triggerKey].wasPressedThisFrame)
         {
-            Emit(ResolveOrigin(), triggerStrength);
+            Vector3 playerOrigin = ResolveOrigin();
+            Emit(playerOrigin, triggerStrength);
+            Transform playerSource = origin != null
+                ? origin
+                : (Camera.main != null ? Camera.main.transform : transform);
+            PlayerSonarEmitted?.Invoke(playerOrigin, triggerStrength, playerSource);
         }
 
         UploadActivePulses();

@@ -1,0 +1,14 @@
+Zombie Apocalypse Kit by Quaternius
+
+Official source:
+https://quaternius.com/packs/zombieapocalypsekit.html
+
+Imported asset:
+Zombie_Basic.fbx and Zombie_Atlas.png
+
+License:
+CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
+https://creativecommons.org/publicdomain/zero/1.0/
+
+The official pack page identifies this pack as CC0. Attribution is not required,
+but this notice is retained in the project to document the asset source and license.

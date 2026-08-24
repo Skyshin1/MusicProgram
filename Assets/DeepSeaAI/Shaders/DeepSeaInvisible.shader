@@ -1,36 +1,24 @@
-Shader "Hidden/Sonar/White Outline"
+Shader "Hidden/DeepSeaAI/Invisible Surface"
 {
-    Properties
-    {
-        _OutlineColor ("Outline Color", Color) = (1, 1, 1, 1)
-    }
     SubShader
     {
-        Tags { "RenderPipeline"="UniversalPipeline" "Queue"="Overlay" }
+        Tags { "RenderPipeline"="UniversalPipeline" "Queue"="Geometry" }
         Pass
         {
-            Name "Sonar White Outline"
-            Cull Front
+            Name "Invisible"
+            Cull Off
             ZWrite Off
             ZTest LEqual
-            Blend SrcAlpha OneMinusSrcAlpha
+            ColorMask 0
 
             HLSLPROGRAM
             #pragma vertex Vert
             #pragma fragment Frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-            CBUFFER_START(UnityPerMaterial)
-                float _OutlineWidth;
-                float _OutlineStrength;
-                float4 _OutlineColor;
-            CBUFFER_END
-            float4 _SonarOutlineDrawColor;
-
             struct Attributes
             {
                 float4 positionOS : POSITION;
-                float3 normalOS : NORMAL;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
@@ -45,15 +33,14 @@ Shader "Hidden/Sonar/White Outline"
                 Varyings output;
                 UNITY_SETUP_INSTANCE_ID(input);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
-                float3 expanded = input.positionOS.xyz + normalize(input.normalOS) * _OutlineWidth;
-                output.positionCS = TransformObjectToHClip(expanded);
+                output.positionCS = TransformObjectToHClip(input.positionOS.xyz);
                 return output;
             }
 
             half4 Frag(Varyings input) : SV_Target
             {
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
-                return half4(_SonarOutlineDrawColor.rgb, saturate(_SonarOutlineDrawColor.a * _OutlineStrength));
+                return half4(0, 0, 0, 0);
             }
             ENDHLSL
         }

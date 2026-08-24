@@ -48,6 +48,9 @@ public sealed class SonarWhiteOutlineRendererFeature : ScriptableRendererFeature
     {
         private static readonly int WidthId = Shader.PropertyToID("_OutlineWidth");
         private static readonly int StrengthId = Shader.PropertyToID("_OutlineStrength");
+        private static readonly int RendererColorId = Shader.PropertyToID("_OutlineColor");
+        private static readonly int DrawColorId = Shader.PropertyToID("_SonarOutlineDrawColor");
+        private static readonly MaterialPropertyBlock ColorPropertyBlock = new MaterialPropertyBlock();
         private readonly Material material;
         private readonly List<Renderer> renderers = new List<Renderer>();
 
@@ -93,6 +96,7 @@ public sealed class SonarWhiteOutlineRendererFeature : ScriptableRendererFeature
                 if (resources.cameraDepthTexture.IsValid())
                     builder.SetRenderAttachmentDepth(resources.cameraDepthTexture, AccessFlags.Read);
                 builder.AllowPassCulling(false);
+                builder.AllowGlobalStateModification(true);
                 builder.SetRenderFunc((PassData passData, RasterGraphContext context) =>
                 {
                     Draw(context.cmd, passData.Material, passData.Renderers);
@@ -121,10 +125,19 @@ public sealed class SonarWhiteOutlineRendererFeature : ScriptableRendererFeature
             {
                 if (renderer == null)
                     continue;
+                cmd.SetGlobalColor(DrawColorId, ResolveOutlineColor(renderer));
                 int subMeshCount = Mathf.Max(1, renderer.sharedMaterials.Length);
                 for (int subMesh = 0; subMesh < subMeshCount; subMesh++)
                     cmd.DrawRenderer(renderer, outlineMaterial, subMesh, 0);
             }
+        }
+
+        private static Color ResolveOutlineColor(Renderer renderer)
+        {
+            ColorPropertyBlock.Clear();
+            renderer.GetPropertyBlock(ColorPropertyBlock);
+            Color color = ColorPropertyBlock.GetColor(RendererColorId);
+            return color.a > 0.001f ? color : Color.white;
         }
 
 #if UNITY_6000_0_OR_NEWER
@@ -134,6 +147,7 @@ public sealed class SonarWhiteOutlineRendererFeature : ScriptableRendererFeature
             {
                 if (renderer == null)
                     continue;
+                cmd.SetGlobalColor(DrawColorId, ResolveOutlineColor(renderer));
                 int subMeshCount = Mathf.Max(1, renderer.sharedMaterials.Length);
                 for (int subMesh = 0; subMesh < subMeshCount; subMesh++)
                     cmd.DrawRenderer(renderer, outlineMaterial, subMesh, 0);
