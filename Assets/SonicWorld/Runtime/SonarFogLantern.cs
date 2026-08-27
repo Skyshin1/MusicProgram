@@ -27,10 +27,11 @@ public sealed class SonarFogLantern : MonoBehaviour
     [Header("Water Visibility Cylinder")]
     [SerializeField] private bool activeLantern = true;
     [SerializeField, Min(0f)] private float forwardOffset = 1f;
-    [SerializeField, Min(0.01f)] private float radius = 2f;
+    [SerializeField, Min(0.01f)] private float radius = 1f;
     [SerializeField, Min(0.001f)] private float edgeFadeWidth = 0.45f;
     [SerializeField] private float bottomOffset = -0.9f;
     [SerializeField, Min(0.01f)] private float height = 2.4f;
+    [SerializeField, Range(0f, 1f)] private float visibilityStrength = 1f;
 
     private void OnEnable()
     {
@@ -57,7 +58,8 @@ public sealed class SonarFogLantern : MonoBehaviour
         Shader.SetGlobalFloat(EnabledId, activeLantern ? 1f : 0f);
         Shader.SetGlobalVector(PositionId, source.position);
         Shader.SetGlobalVector(ForwardId, forward);
-        Shader.SetGlobalVector(ShapeId, new Vector4(forwardOffset, radius, edgeFadeWidth, 0f));
+        Shader.SetGlobalVector(ShapeId, new Vector4(
+            forwardOffset, radius, edgeFadeWidth, visibilityStrength));
         Shader.SetGlobalVector(HeightId, new Vector4(bottomOffset, height, 0f, 0f));
     }
 
@@ -81,5 +83,6 @@ public sealed class SonarFogLantern : MonoBehaviour
         radius = Mathf.Max(0.01f, radius);
         edgeFadeWidth = Mathf.Max(0.001f, edgeFadeWidth);
         height = Mathf.Max(0.01f, height);
+        visibilityStrength = Mathf.Clamp01(visibilityStrength);
     }
 }

@@ -74,6 +74,9 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
     public static event System.Action<Vector3, float, Transform> PlayerSonarEmitted;
 
     [Header("Input")]
+    [SerializeField]
+    [Tooltip("Editor/desktop fallback only. VR gameplay uses XRHandSonarInput and hand Trigger buttons.")]
+    private bool enableKeyboardTest;
     [SerializeField] private Key triggerKey = Key.F;
     [SerializeField, Range(0f, 1f)] private float triggerStrength = 1f;
     [SerializeField]
@@ -131,13 +134,12 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current != null &&
+        if (enableKeyboardTest && Keyboard.current != null &&
             Keyboard.current[triggerKey].wasPressedThisFrame)
         {
             Vector3 playerOrigin = ResolveOrigin();
-            Emit(playerOrigin, triggerStrength);
             Transform playerSource = OriginTransform;
-            PlayerSonarEmitted?.Invoke(playerOrigin, triggerStrength, playerSource);
+            EmitPlayerAt(playerOrigin, triggerStrength, playerSource);
         }
 
         UploadActivePulses();
@@ -152,6 +154,22 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
         if (Instance == null)
             EnsureInstance();
         Instance?.Emit(worldOrigin, strength);
+    }
+
+    /// <summary>
+    /// Emits a player-owned pulse and publishes the semantic player-sonar event
+    /// consumed by fish/enemy investigation systems. Unlike EmitAt, this API is
+    /// specifically for controller/keyboard player input.
+    /// </summary>
+    public static void EmitPlayerAt(Vector3 worldOrigin, float strength, Transform source)
+    {
+        if (Instance == null)
+            EnsureInstance();
+        if (Instance == null)
+            return;
+
+        Instance.Emit(worldOrigin, strength);
+        PlayerSonarEmitted?.Invoke(worldOrigin, Mathf.Clamp01(strength), source);
     }
 
     /// <summary>

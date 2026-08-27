@@ -5,6 +5,7 @@
 #define WEBGPU_WATER_SONAR_EFFECTS_INCLUDED
 
 #define WATER_SONAR_PULSE_CAPACITY 12
+#define WATER_FLASHLIGHT_CAPACITY 4
 
 int _WaterSonarPulseCount;
 float4 _WaterSonarPulseOrigins[WATER_SONAR_PULSE_CAPACITY]; // xyz origin, w radius
@@ -13,8 +14,13 @@ float4 _WaterSonarPulseParams[WATER_SONAR_PULSE_CAPACITY];  // x width, y streng
 float _WaterSonarLanternEnabled;
 float3 _WaterSonarLanternPosition;
 float3 _WaterSonarLanternForward;
-float4 _WaterSonarLanternShape;  // x forward offset, y radius, z edge fade
+float4 _WaterSonarLanternShape;  // x forward offset, y radius, z edge fade, w strength
 float4 _WaterSonarLanternHeight; // x bottom offset, y height
+
+int _WaterFlashlightCount;
+float4 _WaterFlashlightOrigins[WATER_FLASHLIGHT_CAPACITY];   // xyz origin, w range
+float4 _WaterFlashlightDirections[WATER_FLASHLIGHT_CAPACITY]; // xyz direction, w strength
+float4 _WaterFlashlightParameters[WATER_FLASHLIGHT_CAPACITY]; // x cos inner, y cos outer, z range fade start
 
 // Sky/background depth has no concrete scene surface to scan. Keeping it fogged
 // makes the reveal strictly follow the expanding shell over actual objects.
@@ -66,13 +72,45 @@ float WaterSonarLanternClearAt(float3 worldPosition)
     float verticalEdge = min(edge, max(0.001, (top - bottom) * 0.5));
     float lower = smoothstep(bottom, bottom + verticalEdge, worldPosition.y);
     float upper = 1.0 - smoothstep(top - verticalEdge, top, worldPosition.y);
-    return saturate(radial * lower * upper);
+    return saturate(radial * lower * upper * _WaterSonarLanternShape.w);
+}
+
+float WaterFlashlightClearAt(float3 worldPosition)
+{
+    if (_WaterFlashlightCount <= 0)
+        return 0.0;
+
+    float clearAmount = 0.0;
+    [unroll]
+    for (int i = 0; i < WATER_FLASHLIGHT_CAPACITY; i++)
+    {
+        if (i >= _WaterFlashlightCount)
+            break;
+
+        float4 originRange = _WaterFlashlightOrigins[i];
+        float4 directionStrength = _WaterFlashlightDirections[i];
+        float4 cone = _WaterFlashlightParameters[i];
+        float3 offset = worldPosition - originRange.xyz;
+        float distanceFromLight = length(offset);
+        float range = max(0.001, originRange.w);
+        float3 toPoint = offset / max(distanceFromLight, 0.001);
+        float angle = smoothstep(cone.y, max(cone.x, cone.y + 0.0001),
+                                 dot(toPoint, normalize(directionStrength.xyz)));
+        float axial = step(0.0, dot(offset, directionStrength.xyz));
+        float rangeFade = 1.0 - smoothstep(
+            range * saturate(cone.z), range, distanceFromLight);
+        clearAmount = max(clearAmount,
+            angle * axial * rangeFade * directionStrength.w);
+    }
+    return saturate(clearAmount);
 }
 
 float WaterSonarVisibilityClearAt(float3 worldPosition, float rawDepth)
 {
-    return max(WaterSonarPulseClearAt(worldPosition, rawDepth),
-               WaterSonarLanternClearAt(worldPosition));
+    return max(
+        max(WaterSonarPulseClearAt(worldPosition, rawDepth),
+            WaterSonarLanternClearAt(worldPosition)),
+        WaterFlashlightClearAt(worldPosition));
 }
 
 #endif // WEBGPU_WATER_SONAR_EFFECTS_INCLUDED

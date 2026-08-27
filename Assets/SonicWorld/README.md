@@ -1,5 +1,8 @@
 # SonicWorld
 
+VR 水下移动、浮力工具、手电筒、黑匣子、Trigger 声纳与出水水痕的中文说明：
+`VR水下玩法使用说明.md`。
+
 `Scenes/SonicWorldDemo.unity` is generated from the project's existing
 `SampleScene`, so it retains the configured XR player, actions, interaction
 manager, renderer, and OpenXR settings.

@@ -977,7 +977,7 @@ MonoBehaviour:
   origin: {fileID: 0}
   activeLantern: 1
   forwardOffset: 1
-  radius: 2
+  radius: 1
   edgeFadeWidth: 0.45
   bottomOffset: -0.9
   height: 2.4

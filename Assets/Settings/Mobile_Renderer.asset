@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6491430682858206830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ef10f3abf703842bea0659d982b2f4, type: 3}
+  m_Name: Sonar White Outlines
+  m_EditorClassIdentifier: Assembly-CSharp::SonarWhiteOutlineRendererFeature
+  m_Active: 1
+  outlineWidth: 0.025
+  injectionPoint: 600
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,6 +42,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 7094929918558872118}
   - {fileID: 4520741175639886041}
+  - {fileID: -6491430682858206830}
+  - {fileID: 1464051990156667098}
   m_RendererFeatureMap: 3622fe9d2b417662d9487fb725e6bc3e
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
@@ -56,6 +73,21 @@ MonoBehaviour:
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
+--- !u!114 &1464051990156667098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d50f4196360204b882e34aff9b52ad, type: 3}
+  m_Name: Water Exit Lens Droplets
+  m_EditorClassIdentifier: Assembly-CSharp::WaterExitDropletsRendererFeature
+  m_Active: 1
+  shader: {fileID: 4800000, guid: 7974c1f27736add43b2a1cf1b0ad866a, type: 3}
+  injectionPoint: 600
 --- !u!114 &4520741175639886041
 MonoBehaviour:
   m_ObjectHideFlags: 0

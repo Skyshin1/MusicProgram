@@ -21,8 +21,9 @@ public static class SonarSphereSystemInstaller
         EditorUtility.DisplayDialog(
             "Water Volume Sonar Installed",
             "Installed the Water Volume fog feature, white-outline renderer feature and scene controls.\n\n" +
-            "Use F for the player sonar. Put objects that should reveal on the Sonar Reveal Manager target layer mask.\n" +
-            "The lantern follows the XR camera and clears Water Volume visibility in a 2m forward cylinder.",
+            "Use either empty-hand Trigger for player sonar. F is an optional editor-only test input. " +
+            "Put revealable objects on the Sonar Reveal Manager target layer mask.\n" +
+            "The lantern follows the XR camera and clears Water Volume visibility in a 1m forward cylinder.",
             "OK");
     }
 
@@ -110,7 +111,7 @@ public static class SonarSphereSystemInstaller
         EditorUtility.DisplayDialog(
             "Quest Left Stick Locomotion",
             added > 0
-                ? $"Added head-relative left-stick movement to {added} XR Origin(s). Select the XR Origin to tune speed and dead zone."
+                ? $"Added left-stick movement, right-stick turning and right-stick vertical swimming to {added} XR Origin(s). Select the XR Origin to tune all movement, gravity and sinking values."
                 : "Every active XR Origin already has Quest Left Stick Locomotion.",
             "OK");
     }

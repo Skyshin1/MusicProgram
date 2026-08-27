@@ -1,29 +1,42 @@
+using AbstractOcclusion.WebGpuWater;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.XR;
 
 /// <summary>
-/// Quest/OpenXR locomotion for scenes that use this project's XR Origin.
-/// The left thumbstick moves horizontally relative to the tracked headset;
-/// the right thumbstick rotates the XR Origin around the headset position.
-/// A parent CharacterController is used when present, preserving collision.
+/// Quest/OpenXR locomotion for this project's XR Origin. The left stick moves
+/// horizontally relative to the headset, right-stick X turns, and right-stick
+/// Y swims up/down. A CharacterController supplies collision and gravity.
 /// </summary>
 [DisallowMultipleComponent]
+[RequireComponent(typeof(CharacterController))]
 [DefaultExecutionOrder(-50)]
 public sealed class QuestLeftStickLocomotion : MonoBehaviour
 {
-    [Header("Left Stick Movement")]
-    [SerializeField, Min(0f)] private float moveSpeed = 2.2f;
+    [Header("Horizontal Movement")]
+    [SerializeField, Min(0f)] private float moveSpeed = 2f;
     [SerializeField, Range(0f, 0.95f)] private float deadZone = 0.15f;
     [SerializeField] private bool headRelative = true;
     [SerializeField]
-    [Tooltip("When an XRI move provider is added later, this component automatically stands down to avoid double movement.")]
+    [Tooltip("When an XRI move provider is added later, this component stands down to avoid double movement.")]
     private bool disableWhenAnotherMoveProviderExists = true;
 
+    [Header("Underwater Vertical Movement")]
+    [SerializeField, Min(0f)] private float verticalSwimSpeed = 1.5f;
+    [SerializeField, Min(0f)] private float verticalAcceleration = 4f;
+    [SerializeField, Min(0f)] private float underwaterSinkAcceleration = 0.8f;
+    [SerializeField, Min(0f)] private float maximumSinkSpeed = 0.6f;
+    [SerializeField] private float airGravity = -9.81f;
+    [SerializeField, Min(0f)] private float maximumAirFallSpeed = 25f;
+
+    [Header("Player Collision Capsule")]
+    [SerializeField, Range(0.1f, 0.5f)] private float capsuleRadius = 0.25f;
+    [SerializeField, Range(0.5f, 1.2f)] private float minimumCapsuleHeight = 0.8f;
+    [SerializeField, Range(1.2f, 2.5f)] private float maximumCapsuleHeight = 2.2f;
+    [SerializeField, Range(0f, 0.2f)] private float headClearance = 0.05f;
+
     [Header("Right Stick Turning")]
-    [SerializeField]
-    [Tooltip("Recommended for Quest comfort. Turn the stick left/right once to rotate by Snap Turn Degrees.")]
-    private bool useSnapTurn = true;
+    [SerializeField] private bool useSnapTurn = true;
     [SerializeField, Range(15f, 90f)] private float snapTurnDegrees = 45f;
     [SerializeField, Range(0.1f, 0.95f)] private float turnDeadZone = 0.7f;
     [SerializeField, Min(0f)] private float snapTurnCooldown = 0.2f;
@@ -31,10 +44,19 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
 
     private XROrigin xrOrigin;
     private CharacterController characterController;
+    private WaterSurfaceStateTracker waterState;
     private InputDevice leftController;
     private InputDevice rightController;
     private float nextSnapTurnTime;
     private bool snapTurnReady = true;
+    private float verticalVelocity;
+    private bool movementEnabled = true;
+    private bool hasConflictingMoveProvider;
+
+    public bool IsUnderwater => waterState != null && waterState.IsUnderwater;
+    public WaterVolume CurrentWater => waterState != null ? waterState.CurrentWater : null;
+    public float VerticalVelocity => verticalVelocity;
+    public bool MovementEnabled => movementEnabled;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void EnsureOnLoadedOrigins()
@@ -51,32 +73,63 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
     private void Awake()
     {
         xrOrigin = GetComponent<XROrigin>();
-        characterController = GetComponentInParent<CharacterController>();
+        characterController = GetComponent<CharacterController>();
+        // RequireComponent is not applied retroactively to scene instances
+        // that already had this script before the requirement was introduced.
+        if (characterController == null)
+            characterController = gameObject.AddComponent<CharacterController>();
+        waterState = GetComponent<WaterSurfaceStateTracker>();
+        if (waterState == null)
+            waterState = gameObject.AddComponent<WaterSurfaceStateTracker>();
+
+        characterController.radius = capsuleRadius;
+        characterController.skinWidth = Mathf.Min(0.03f, capsuleRadius * 0.2f);
+        characterController.stepOffset = Mathf.Min(0.25f, minimumCapsuleHeight * 0.3f);
+        characterController.slopeLimit = 55f;
+        hasConflictingMoveProvider = HasAnotherMoveProvider();
     }
 
     private void Update()
     {
-        if (disableWhenAnotherMoveProviderExists && HasAnotherMoveProvider())
+        if (!movementEnabled || (disableWhenAnotherMoveProviderExists && hasConflictingMoveProvider))
             return;
 
-        UpdateMovement();
-        UpdateTurning();
+        UpdateCollisionCapsule();
+        ReadControllerAxes(out Vector2 leftStick, out Vector2 rightStick);
+        UpdateMovement(leftStick, rightStick.y);
+        UpdateTurning(rightStick.x);
     }
 
-    private void UpdateMovement()
+    public void SetMovementEnabled(bool enabled)
     {
-        if (moveSpeed <= 0f)
-            return;
+        movementEnabled = enabled;
+        if (!enabled)
+            verticalVelocity = 0f;
+    }
+
+    private void ReadControllerAxes(out Vector2 leftStick, out Vector2 rightStick)
+    {
+        leftStick = Vector2.zero;
+        rightStick = Vector2.zero;
 
         if (!leftController.isValid)
             leftController = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
-        if (!leftController.isValid ||
-            !leftController.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 stick))
-            return;
+        if (leftController.isValid)
+            leftController.TryGetFeatureValue(CommonUsages.primary2DAxis, out leftStick);
 
-        if (stick.sqrMagnitude < deadZone * deadZone)
-            return;
+        if (!rightController.isValid)
+            rightController = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+        if (rightController.isValid)
+            rightController.TryGetFeatureValue(CommonUsages.primary2DAxis, out rightStick);
 
+        if (leftStick.sqrMagnitude < deadZone * deadZone)
+            leftStick = Vector2.zero;
+        if (Mathf.Abs(rightStick.y) < deadZone)
+            rightStick.y = 0f;
+    }
+
+    private void UpdateMovement(Vector2 leftStick, float verticalInput)
+    {
         Transform reference = headRelative && xrOrigin != null && xrOrigin.Camera != null
             ? xrOrigin.Camera.transform
             : transform;
@@ -87,28 +140,53 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
         if (right.sqrMagnitude < 0.001f)
             right = Vector3.right;
 
-        Vector3 movement = (forward * stick.y + right * stick.x);
-        if (movement.sqrMagnitude > 1f)
-            movement.Normalize();
-        movement *= moveSpeed * Time.deltaTime;
+        Vector3 horizontal = forward * leftStick.y + right * leftStick.x;
+        if (horizontal.sqrMagnitude > 1f)
+            horizontal.Normalize();
+        horizontal *= moveSpeed;
 
-        if (characterController != null && characterController.enabled)
-            characterController.Move(movement);
-        else
-            transform.position += movement;
-    }
-
-    private void UpdateTurning()
-    {
-        if (!rightController.isValid)
-            rightController = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
-        if (!rightController.isValid ||
-            !rightController.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 stick))
+        float dt = Time.deltaTime;
+        if (IsUnderwater)
         {
-            return;
+            float targetVertical = Mathf.Abs(verticalInput) > 0.001f
+                ? verticalInput * verticalSwimSpeed
+                : -maximumSinkSpeed;
+            float acceleration = Mathf.Abs(verticalInput) > 0.001f
+                ? verticalAcceleration
+                : underwaterSinkAcceleration;
+            verticalVelocity = Mathf.MoveTowards(verticalVelocity, targetVertical, acceleration * dt);
+        }
+        else
+        {
+            if (characterController.isGrounded && verticalVelocity < 0f)
+                verticalVelocity = -0.5f;
+            else
+                verticalVelocity = Mathf.Max(-maximumAirFallSpeed, verticalVelocity + airGravity * dt);
         }
 
-        float horizontal = stick.x;
+        CollisionFlags flags = characterController.Move(
+            (horizontal + Vector3.up * verticalVelocity) * dt);
+        if ((flags & CollisionFlags.Below) != 0 && verticalVelocity < 0f)
+            verticalVelocity = IsUnderwater ? 0f : -0.5f;
+        if ((flags & CollisionFlags.Above) != 0 && verticalVelocity > 0f)
+            verticalVelocity = 0f;
+    }
+
+    private void UpdateCollisionCapsule()
+    {
+        if (xrOrigin == null || xrOrigin.Camera == null || characterController == null)
+            return;
+
+        Vector3 headLocal = transform.InverseTransformPoint(xrOrigin.Camera.transform.position);
+        float height = Mathf.Clamp(headLocal.y + headClearance,
+            minimumCapsuleHeight, maximumCapsuleHeight);
+        characterController.height = height;
+        characterController.radius = Mathf.Min(capsuleRadius, height * 0.45f);
+        characterController.center = new Vector3(headLocal.x, height * 0.5f, headLocal.z);
+    }
+
+    private void UpdateTurning(float horizontal)
+    {
         if (useSnapTurn)
         {
             if (Mathf.Abs(horizontal) < turnDeadZone)
@@ -126,10 +204,8 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
             return;
         }
 
-        if (Mathf.Abs(horizontal) < deadZone)
-            return;
-
-        RotateOriginAroundHead(horizontal * smoothTurnDegreesPerSecond * Time.deltaTime);
+        if (Mathf.Abs(horizontal) >= deadZone)
+            RotateOriginAroundHead(horizontal * smoothTurnDegreesPerSecond * Time.deltaTime);
     }
 
     private void RotateOriginAroundHead(float degrees)
@@ -141,10 +217,7 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
         Vector3 headPosition = head != null ? head.position : transform.position;
         Vector3 offsetFromHead = transform.position - headPosition;
         Quaternion rotation = Quaternion.AngleAxis(degrees, Vector3.up);
-
         transform.rotation = rotation * transform.rotation;
-        // Room-scale users may stand away from the XR Origin. Keep the actual
-        // headset world position stable while rotating, rather than orbiting it.
         transform.position = headPosition + rotation * offsetFromHead;
     }
 
@@ -163,10 +236,17 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
     private void OnValidate()
     {
         moveSpeed = Mathf.Max(0f, moveSpeed);
+        verticalSwimSpeed = Mathf.Max(0f, verticalSwimSpeed);
+        verticalAcceleration = Mathf.Max(0f, verticalAcceleration);
+        underwaterSinkAcceleration = Mathf.Max(0f, underwaterSinkAcceleration);
+        maximumSinkSpeed = Mathf.Max(0f, maximumSinkSpeed);
+        maximumAirFallSpeed = Mathf.Max(0f, maximumAirFallSpeed);
         deadZone = Mathf.Clamp(deadZone, 0f, 0.95f);
         turnDeadZone = Mathf.Clamp(turnDeadZone, 0.1f, 0.95f);
         snapTurnDegrees = Mathf.Clamp(snapTurnDegrees, 15f, 90f);
         snapTurnCooldown = Mathf.Max(0f, snapTurnCooldown);
         smoothTurnDegreesPerSecond = Mathf.Clamp(smoothTurnDegreesPerSecond, 10f, 360f);
+        minimumCapsuleHeight = Mathf.Max(0.5f, minimumCapsuleHeight);
+        maximumCapsuleHeight = Mathf.Max(minimumCapsuleHeight, maximumCapsuleHeight);
     }
 }

@@ -169,6 +169,7 @@ MonoBehaviour:
   - {fileID: 5240947304466562831}
   - {fileID: -4827051770379578071}
   - {fileID: -7663105721940981088}
+  - {fileID: 2582533841375520778}
   m_RendererFeatureMap: ad6b866f10d7b46cfe0819a2ab3771f5603ef28316019db7f10e6880f896ad3295a274a49a6768811c520b546db9b2c53b9f6e4196b3f6abfc1db5323e4a84b10f3f4541ce95bb4829d51a5afddd02bda0ca715ff22da795
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
@@ -198,6 +199,21 @@ MonoBehaviour:
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
+--- !u!114 &2582533841375520778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d50f4196360204b882e34aff9b52ad, type: 3}
+  m_Name: Water Exit Lens Droplets
+  m_EditorClassIdentifier: Assembly-CSharp::WaterExitDropletsRendererFeature
+  m_Active: 1
+  shader: {fileID: 4800000, guid: 7974c1f27736add43b2a1cf1b0ad866a, type: 3}
+  injectionPoint: 600
 --- !u!114 &3651740866917699313
 MonoBehaviour:
   m_ObjectHideFlags: 0
