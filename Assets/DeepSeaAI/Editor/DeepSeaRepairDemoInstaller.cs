@@ -2,6 +2,7 @@ using DeepSeaAI;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 using Unity.XR.CoreUtils;
@@ -113,45 +114,41 @@ namespace DeepSeaAI.Editor
 
         private static void CreateFacility(Transform parent, Vector3 position, float floorY)
         {
-            GameObject facility = new GameObject("Damaged Repair Facility (Red)");
-            facility.name = "Damaged Repair Facility (Red)";
+            GameObject facility = new GameObject("Repair Facility (Decal Damage)");
+            facility.name = "Repair Facility (Decal Damage)";
             facility.transform.SetParent(parent, false);
             facility.transform.position = new Vector3(position.x, floorY + 0.65f, position.z);
             BoxCollider collider = facility.AddComponent<BoxCollider>();
             collider.center = new Vector3(0f, 0f, 0f);
             collider.size = new Vector3(0.95f, 1.3f, 0.55f);
 
-            GameObject damaged = CreateFacilityVariant(
+            CreateFacilityVariant(
                 facility.transform,
-                "Damaged Mesh",
-                new Color(0.42f, 0.035f, 0.02f),
+                "Facility Mesh",
+                new Color(0.08f, 0.42f, 0.48f),
                 new Vector3(0.85f, 1.3f, 0.35f),
                 PrimitiveType.Cube);
-            GameObject damagedChunk = CreateFacilityVariant(
-                damaged.transform,
-                "Broken Panel",
-                new Color(0.75f, 0.06f, 0.02f),
-                new Vector3(0.62f, 0.34f, 0.12f),
-                PrimitiveType.Cube);
-            damagedChunk.transform.localPosition = new Vector3(0.18f, 0.18f, -0.32f);
-            damagedChunk.transform.localRotation = Quaternion.Euler(0f, 0f, 25f);
-
-            GameObject repaired = CreateFacilityVariant(
-                facility.transform,
-                "Repaired Mesh",
-                new Color(0.05f, 0.55f, 0.62f),
-                new Vector3(0.85f, 0.65f, 0.85f),
-                PrimitiveType.Cylinder);
-            GameObject repairedPanel = CreateFacilityVariant(
-                repaired.transform,
-                "Online Panel",
-                new Color(0.2f, 1f, 0.8f),
-                new Vector3(0.48f, 0.26f, 0.08f),
-                PrimitiveType.Cube);
-            repairedPanel.transform.localPosition = new Vector3(0f, 0.18f, -0.54f);
+            DecalProjector damageDecal = CreateDamageDecal(facility.transform);
 
             RepairableFacility repairable = facility.AddComponent<RepairableFacility>();
-            repairable.Configure(ToolId, 3f, new[] { damaged }, new[] { repaired });
+            repairable.Configure(ToolId, 3f, new[] { damageDecal });
+        }
+
+        private static DecalProjector CreateDamageDecal(Transform parent)
+        {
+            GameObject decalObject = new GameObject("Damage Decal (Fades During Repair)");
+            decalObject.transform.SetParent(parent, false);
+            // The projector sits just in front of the facility and projects back
+            // onto its front face. Its opacity is controlled by RepairableFacility.
+            decalObject.transform.localPosition = new Vector3(0f, 0f, -0.21f);
+            decalObject.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+
+            DecalProjector decal = decalObject.AddComponent<DecalProjector>();
+            decal.size = new Vector3(0.68f, 0.95f, 0.18f);
+            decal.drawDistance = 50f;
+            decal.fadeFactor = 1f;
+            decal.material = CreateDamageDecalMaterial();
+            return decal;
         }
 
         private static GameObject CreateFacilityVariant(
@@ -194,6 +191,31 @@ namespace DeepSeaAI.Editor
             material.SetColor("_BaseColor", color);
             material.SetColor("_EmissionColor", color * emission);
             material.EnableKeyword("_EMISSION");
+            EditorUtility.SetDirty(material);
+            return material;
+        }
+
+        private static Material CreateDamageDecalMaterial()
+        {
+            Shader shader = Shader.Find("Universal Render Pipeline/Decal");
+            if (shader == null)
+            {
+                Debug.LogWarning("[DeepSeaRepair] URP Decal shader was not found. Add/enable the URP Decal Renderer Feature before installing the decal repair demo.");
+                return null;
+            }
+            const string path = GeneratedFolder + "/DeepSeaDamageDecal.mat";
+            Material material = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (material == null)
+            {
+                material = new Material(shader) { name = "Deep Sea Damage Decal Material" };
+                AssetDatabase.CreateAsset(material, path);
+            }
+
+            Color damageColor = new Color(0.9f, 0.05f, 0.01f, 0.9f);
+            if (material.HasProperty("_BaseColor"))
+                material.SetColor("_BaseColor", damageColor);
+            if (material.HasProperty("_BaseMap"))
+                material.SetTexture("_BaseMap", Texture2D.whiteTexture);
             EditorUtility.SetDirty(material);
             return material;
         }

@@ -1,11 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering.Universal;
 
 namespace DeepSeaAI
 {
     /// <summary>
-    /// A reusable, tool-gated repair target. Attach it to any facility collider,
-    /// then set the required tool id and the damaged/repaired mesh roots in the Inspector.
+    /// A reusable, tool-gated repair target. Repairing fades only the assigned
+    /// URP damage Decal Projectors; it never swaps, enables, disables, or moves
+    /// the facility's mesh objects.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class RepairableFacility : MonoBehaviour
@@ -15,17 +18,22 @@ namespace DeepSeaAI
         [SerializeField, Min(0.1f)] private float repairSeconds = 3f;
         [SerializeField] private bool startRepaired;
 
-        [Header("Mesh Variants")]
-        [Tooltip("Meshes or roots shown while this facility is damaged.")]
-        [SerializeField] private GameObject[] damagedMeshes;
-        [Tooltip("Meshes or roots shown after this facility is repaired.")]
-        [SerializeField] private GameObject[] repairedMeshes;
+        [Header("Damage Decals")]
+        [Tooltip("Only these URP Decal Projectors fade during repair. Leave empty and enable Auto Find to use all child decals.")]
+        [SerializeField] private DecalProjector[] damageDecals;
+        [SerializeField]
+        [Tooltip("Convenient for a single prop: all Decal Projectors below this object are treated as repairable damage decals.")]
+        private bool autoFindChildDecals = true;
+        [SerializeField]
+        [Tooltip("Disables each damage decal after it has faded completely. Turn this off only when another system needs the projector to stay active.")]
+        private bool disableDecalsWhenRepaired = true;
 
         [Header("Events")]
         [SerializeField] private UnityEvent onRepaired;
 
         private float repairProgress;
         private bool repaired;
+        private float[] originalFadeFactors;
 
         public string RequiredToolId => requiredToolId;
         public float RepairProgress => repairProgress;
@@ -34,24 +42,38 @@ namespace DeepSeaAI
 
         private void Awake()
         {
+            CacheDamageDecals();
             repaired = startRepaired;
             repairProgress = repaired ? 1f : 0f;
-            ApplyVisuals();
+            ApplyDecalFade();
         }
 
-        public void Configure(
-            string toolId,
-            float seconds,
-            GameObject[] damagedVariantMeshes,
-            GameObject[] repairedVariantMeshes)
+        /// <summary>Configures this repair target with explicit damage decals.</summary>
+        public void Configure(string toolId, float seconds, DecalProjector[] decals)
         {
             requiredToolId = string.IsNullOrWhiteSpace(toolId)
                 ? "StandardRepairTool"
                 : toolId;
             repairSeconds = Mathf.Max(0.1f, seconds);
-            damagedMeshes = damagedVariantMeshes;
-            repairedMeshes = repairedVariantMeshes;
-            ApplyVisuals();
+            damageDecals = decals;
+            autoFindChildDecals = false;
+            originalFadeFactors = null;
+            CacheDamageDecals();
+            ApplyDecalFade();
+        }
+
+        /// <summary>
+        /// Compatibility overload for older setup scripts. Mesh arguments are
+        /// intentionally ignored: repair visuals are decal-only from now on.
+        /// </summary>
+        [Obsolete("Repair visuals are decal-only. Use Configure(toolId, seconds, DecalProjector[]) instead.")]
+        public void Configure(
+            string toolId,
+            float seconds,
+            GameObject[] unusedDamagedMeshes,
+            GameObject[] unusedRepairedMeshes)
+        {
+            Configure(toolId, seconds, GetComponentsInChildren<DecalProjector>(true));
         }
 
         /// <returns>True when this tool is allowed to repair this facility.</returns>
@@ -67,12 +89,12 @@ namespace DeepSeaAI
                 return false;
 
             repairProgress = Mathf.Clamp01(repairProgress + deltaTime / repairSeconds);
-            ApplyVisuals();
+            ApplyDecalFade();
             if (repairProgress < 1f)
                 return false;
 
             repaired = true;
-            ApplyVisuals();
+            ApplyDecalFade();
             onRepaired?.Invoke();
             return true;
         }
@@ -81,23 +103,50 @@ namespace DeepSeaAI
         {
             repaired = false;
             repairProgress = 0f;
-            ApplyVisuals();
+            ApplyDecalFade();
         }
 
-        private void ApplyVisuals()
+        private void CacheDamageDecals()
         {
-            SetActive(damagedMeshes, !repaired);
-            SetActive(repairedMeshes, repaired);
-        }
+            if ((damageDecals == null || damageDecals.Length == 0) && autoFindChildDecals)
+                damageDecals = GetComponentsInChildren<DecalProjector>(true);
 
-        private static void SetActive(GameObject[] meshes, bool active)
-        {
-            if (meshes == null)
+            int count = damageDecals != null ? damageDecals.Length : 0;
+            if (originalFadeFactors != null && originalFadeFactors.Length == count)
                 return;
-            foreach (GameObject mesh in meshes)
+
+            originalFadeFactors = new float[count];
+            for (int i = 0; i < count; i++)
             {
-                if (mesh != null)
-                    mesh.SetActive(active);
+                DecalProjector decal = damageDecals[i];
+                originalFadeFactors[i] = decal != null ? Mathf.Clamp01(decal.fadeFactor) : 0f;
+            }
+        }
+
+        private void ApplyDecalFade()
+        {
+            CacheDamageDecals();
+            if (damageDecals == null)
+                return;
+
+            float multiplier = repaired ? 0f : 1f - repairProgress;
+            for (int i = 0; i < damageDecals.Length; i++)
+            {
+                DecalProjector decal = damageDecals[i];
+                if (decal == null)
+                    continue;
+
+                if (repaired && disableDecalsWhenRepaired)
+                {
+                    decal.gameObject.SetActive(false);
+                    continue;
+                }
+
+                if (!decal.gameObject.activeSelf)
+                    decal.gameObject.SetActive(true);
+
+                float original = i < originalFadeFactors.Length ? originalFadeFactors[i] : 1f;
+                decal.fadeFactor = original * multiplier;
             }
         }
 
