@@ -65,13 +65,16 @@ namespace DeepSeaAI
 
         private void OnEnable()
         {
-            VolumetricFogPulseEmitter.PlayerSonarEmitted += OnPlayerSonar;
+            // PulseStarted is the common path for keyboard sonar, controller sonar,
+            // scripted sonar and collision / thrown-object sonar. Listening only to
+            // PlayerSonarEmitted made the AI ignore non-keyboard pulses.
+            VolumetricFogPulseEmitter.PulseStarted += OnSonarPulseStarted;
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         private void OnDisable()
         {
-            VolumetricFogPulseEmitter.PlayerSonarEmitted -= OnPlayerSonar;
+            VolumetricFogPulseEmitter.PulseStarted -= OnSonarPulseStarted;
             SceneManager.sceneLoaded -= OnSceneLoaded;
             if (Instance == this)
                 Instance = null;
@@ -96,13 +99,13 @@ namespace DeepSeaAI
             nextImpactScan = 0f;
         }
 
-        private void OnPlayerSonar(Vector3 position, float strength, Transform source)
+        private void OnSonarPulseStarted(VolumetricFogPulseEmitter.PulseState pulse)
         {
             Emit(new NoiseStimulus(
-                position,
-                sonarRadius * Mathf.Clamp01(strength),
+                pulse.Origin,
+                sonarRadius * Mathf.Clamp01(pulse.Strength),
                 NoiseKind.Sonar,
-                source,
+                null,
                 Time.time));
         }
 

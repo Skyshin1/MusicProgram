@@ -18,10 +18,14 @@ namespace DeepSeaAI
         [Min(0.02f)] public float sightInterval = 0.2f;
         [Min(0f)] public float eyeHeight = 1.55f;
         [Min(0f)] public float playerBodyOffset = 0.75f;
+        [Tooltip("Off by default so Water Volume and other helper colliders do not hide the player from the prototype enemy. Enable after placing real world obstacle layers.")]
+        public bool requireLineOfSight;
         public LayerMask sightBlockers = ~0;
 
         [Header("Hearing")]
         [Min(0.1f)] public float sonarHearingRadius = 18f;
+        [Tooltip("Off by default so water/helper colliders do not suppress sound investigation. Enable when your obstacle layers are configured.")]
+        public bool soundsCanBeOccluded;
         [Range(0.05f, 1f)] public float occludedRadiusMultiplier = 0.55f;
         [Range(0f, 1f)] public float noiseRetargetAdvantage = 0.2f;
         [Min(0f)] public float noiseMemorySeconds = 8f;

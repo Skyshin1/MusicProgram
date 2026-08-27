@@ -25,7 +25,7 @@ MonoBehaviour:
   sightBlockers:
     serializedVersion: 2
     m_Bits: 4294967295
-  sonarHearingRadius: 18
+  sonarHearingRadius: 45
   occludedRadiusMultiplier: 0.55
   noiseRetargetAdvantage: 0.2
   noiseMemorySeconds: 8

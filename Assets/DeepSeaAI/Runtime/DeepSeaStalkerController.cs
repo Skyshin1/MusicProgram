@@ -23,6 +23,9 @@ namespace DeepSeaAI
         [SerializeField] private Transform playerRoot;
         [SerializeField] private Animator animator;
         [SerializeField] private PlayerRespawnController playerRespawn;
+        [Header("Sonar Diagnostics")]
+        [Tooltip("Writes one Console message whenever this enemy directly receives a player or impact sonar pulse.")]
+        [SerializeField] private bool logDirectSonarReception = true;
 
         private readonly RaycastHit[] sightHits = new RaycastHit[16];
         private NavMeshAgent agent;
@@ -86,12 +89,17 @@ namespace DeepSeaAI
         private void OnEnable()
         {
             NoiseSystem.NoiseEmitted += OnNoise;
+            // Listen to the actual pulse source as well as the generic noise bus.
+            // This deliberately bypasses water-volume rendering and NoiseSystem
+            // initialization order, so underwater sonar always reaches the AI.
+            VolumetricFogPulseEmitter.PulseStarted += OnSonarPulseStarted;
             BindRespawn();
         }
 
         private void OnDisable()
         {
             NoiseSystem.NoiseEmitted -= OnNoise;
+            VolumetricFogPulseEmitter.PulseStarted -= OnSonarPulseStarted;
             if (playerRespawn != null)
                 playerRespawn.Respawned -= OnPlayerRespawned;
         }
@@ -215,9 +223,14 @@ namespace DeepSeaAI
 
             Vector3 ear = transform.position + Vector3.up * CurrentConfig.eyeHeight;
             float distance = Vector3.Distance(ear, noise.Position);
-            float effectiveRadius = noise.Radius;
+            // Sonar range is a per-enemy gameplay value. Impacts retain the
+            // strength calculated from their collision speed.
+            float effectiveRadius = noise.Kind == NoiseKind.Sonar
+                ? CurrentConfig.sonarHearingRadius
+                : noise.Radius;
             Vector3 direction = noise.Position - ear;
-            if (direction.sqrMagnitude > 0.01f &&
+            if (CurrentConfig.soundsCanBeOccluded &&
+                direction.sqrMagnitude > 0.01f &&
                 Physics.Raycast(
                     ear,
                     direction.normalized,
@@ -247,6 +260,37 @@ namespace DeepSeaAI
             BeginInvestigation(noise.Position, score);
         }
 
+        private void OnSonarPulseStarted(VolumetricFogPulseEmitter.PulseState pulse)
+        {
+            if (!isActiveAndEnabled || state == StalkerState.Attack || state == StalkerState.Chase)
+                return;
+
+            Vector3 ear = transform.position + Vector3.up * CurrentConfig.eyeHeight;
+            float distance = Vector3.Distance(ear, pulse.Origin);
+            float effectiveRadius = CurrentConfig.sonarHearingRadius * Mathf.Clamp01(pulse.Strength);
+            if (distance > effectiveRadius)
+                return;
+
+            // Do not use line-of-sight, water depth, or renderer visibility here.
+            // Sonar is gameplay sound: an active pulse within range always creates
+            // an investigation target, including while both objects are underwater.
+            float score = effectiveRadius / Mathf.Max(0.25f, distance);
+            bool hasActiveNoise = state == StalkerState.Investigate || state == StalkerState.Search;
+            if (hasActiveNoise &&
+                score < currentNoiseScore * (1f + CurrentConfig.noiseRetargetAdvantage))
+            {
+                return;
+            }
+
+            lastNoiseTime = Time.time;
+            BeginInvestigation(pulse.Origin, score);
+
+            if (logDirectSonarReception)
+            {
+                Debug.Log($"[DeepSeaAI] {name} received sonar at {pulse.Origin} (distance {distance:F1}m) and is investigating.", this);
+            }
+        }
+
         private bool EvaluateSight()
         {
             if (playerRoot == null)
@@ -265,6 +309,9 @@ namespace DeepSeaAI
                 planarForward = transform.forward;
             if (Vector3.Angle(planarForward, planarDirection) > CurrentConfig.sightAngle * 0.5f)
                 return false;
+
+            if (!CurrentConfig.requireLineOfSight)
+                return true;
 
             int count = Physics.RaycastNonAlloc(
                 eye,
@@ -510,7 +557,9 @@ namespace DeepSeaAI
 
         private Vector3 ProjectToNavigationPlane(Vector3 position)
         {
-            if (NavMesh.SamplePosition(position, out NavMeshHit hit, 20f, NavMesh.AllAreas))
+            // A sonar can originate at the player's underwater head height, while
+            // the navmesh lives on the seabed. Use a generous vertical tolerance.
+            if (NavMesh.SamplePosition(position, out NavMeshHit hit, 100f, NavMesh.AllAreas))
                 return hit.position;
             return new Vector3(position.x, transform.position.y, position.z);
         }

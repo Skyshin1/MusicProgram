@@ -18,7 +18,7 @@ public sealed class SonarFogLantern : MonoBehaviour
 
     [Header("Follow Target")]
     [SerializeField]
-    [Tooltip("In VR, use the Main Camera's tracked pose so the light follows the actual player/headset position and facing direction.")]
+    [Tooltip("In VR, use the XR Origin's tracked camera pose so the light follows the actual player/headset position and facing direction.")]
     private bool followMainCamera = true;
     [SerializeField]
     [Tooltip("Optional explicit source. When set, it takes priority over Follow Main Camera.")]
@@ -66,8 +66,12 @@ public sealed class SonarFogLantern : MonoBehaviour
         if (origin != null)
             return origin;
 
-        if (followMainCamera && Camera.main != null)
-            return Camera.main.transform;
+        if (followMainCamera)
+        {
+            Transform playerView = VolumetricFogPulseEmitter.FindPlayerViewTransform();
+            if (playerView != null)
+                return playerView;
+        }
 
         return transform;
     }

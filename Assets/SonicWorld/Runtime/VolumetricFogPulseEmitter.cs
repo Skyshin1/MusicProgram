@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
+using Unity.XR.CoreUtils;
 
 /// <summary>
 /// Standalone gameplay pulse. Pressing its configured key emits a world-space
@@ -10,6 +12,13 @@ using UnityEngine.InputSystem;
 [DisallowMultipleComponent]
 public sealed class VolumetricFogPulseEmitter : MonoBehaviour
 {
+    public enum PlayerPulseOrigin
+    {
+        RightHand,
+        LeftHand,
+        PlayerBody
+    }
+
     public readonly struct PulseState
     {
         public readonly int Id;
@@ -57,7 +66,7 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
         Shader.PropertyToID("_VolumetricFogPulseCount");
 
     public static VolumetricFogPulseEmitter Instance { get; private set; }
-    public Transform OriginTransform => origin != null ? origin : transform;
+    public Transform OriginTransform => ResolveOriginTransform();
     public static event System.Action<PulseState> PulseStarted;
     public static event System.Action<PulseState> PulseUpdated;
     public static event System.Action<PulseState> PulseEnded;
@@ -68,8 +77,17 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
     [SerializeField] private Key triggerKey = Key.F;
     [SerializeField, Range(0f, 1f)] private float triggerStrength = 1f;
     [SerializeField]
-    [Tooltip("Optional gameplay origin. If empty, the Main Camera emits the pulse.")]
+    [Tooltip("Optional explicit gameplay origin. When assigned, it overrides the selected player hand/body origin.")]
     private Transform origin;
+
+    [SerializeField]
+    [Tooltip("Default is Right Hand. The selected tracked hand is used at the instant F is pressed; if it is unavailable, the pulse falls back to Player Body.")]
+    private PlayerPulseOrigin playerPulseOrigin = PlayerPulseOrigin.RightHand;
+
+    [Header("XR Body-centred Origin")]
+    [SerializeField, Range(-1f, 3f)]
+    [Tooltip("Vertical position of a player-originated sonar above the XR Origin. Horizontal position always follows the tracked headset.")]
+    private float playerCenterHeight = 0.9f;
 
     [Header("Water Sonar Shell")]
     [SerializeField, Range(1f, 40f)] private float propagationSpeed = 12f;
@@ -118,9 +136,7 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
         {
             Vector3 playerOrigin = ResolveOrigin();
             Emit(playerOrigin, triggerStrength);
-            Transform playerSource = origin != null
-                ? origin
-                : (Camera.main != null ? Camera.main.transform : transform);
+            Transform playerSource = OriginTransform;
             PlayerSonarEmitted?.Invoke(playerOrigin, triggerStrength, playerSource);
         }
 
@@ -195,8 +211,140 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
         if (origin != null)
             return origin.position;
 
+        if (playerPulseOrigin != PlayerPulseOrigin.PlayerBody)
+        {
+            Transform hand = FindPlayerHandTransform(playerPulseOrigin == PlayerPulseOrigin.RightHand);
+            if (hand != null)
+                return hand.position;
+        }
+
+        Transform playerBody = FindPlayerOriginTransform();
+        Transform playerView = FindPlayerViewTransform();
+        if (playerBody != null && playerView != null)
+        {
+            // Room-scale movement updates the headset but not necessarily the
+            // XR Origin. Conversely, this project's headset Y can be offset by
+            // underwater tracking. Combine the trustworthy parts of both.
+            return new Vector3(
+                playerView.position.x,
+                playerBody.position.y + playerCenterHeight,
+                playerView.position.z);
+        }
+
+        return OriginTransform.position;
+    }
+
+    private Transform ResolveOriginTransform()
+    {
+        if (origin != null)
+            return origin;
+
+        if (playerPulseOrigin != PlayerPulseOrigin.PlayerBody)
+        {
+            Transform hand = FindPlayerHandTransform(playerPulseOrigin == PlayerPulseOrigin.RightHand);
+            if (hand != null)
+                return hand;
+        }
+
+        return FindPlayerOriginTransform() ?? FindPlayerViewTransform() ?? transform;
+    }
+
+    /// <summary>
+    /// Resolves the camera driven by the active XR Origin before falling back to
+    /// a tagged Main Camera. This avoids selecting a legacy scene camera when a
+    /// VR scene contains both a desktop camera and a tracked headset camera.
+    /// </summary>
+    public static Transform FindPlayerViewTransform()
+    {
+        // The tracked pose driver is the most precise discriminator in scenes
+        // containing an XR Interaction Simulator, a legacy camera, or multiple
+        // XR Origins. Only the headset camera has both this driver and Camera.
+        TrackedPoseDriver[] trackedDrivers = FindObjectsByType<TrackedPoseDriver>(
+            FindObjectsInactive.Exclude,
+            FindObjectsSortMode.None);
+
+        foreach (TrackedPoseDriver trackedDriver in trackedDrivers)
+        {
+            if (trackedDriver != null &&
+                trackedDriver.TryGetComponent(out Camera trackedCamera) &&
+                trackedCamera.isActiveAndEnabled)
+            {
+                return trackedCamera.transform;
+            }
+        }
+
+        XROrigin[] origins = FindObjectsByType<XROrigin>(
+            FindObjectsInactive.Exclude,
+            FindObjectsSortMode.None);
+
+        foreach (XROrigin xrOrigin in origins)
+        {
+            Camera xrCamera = xrOrigin != null ? xrOrigin.Camera : null;
+            if (xrCamera != null && xrCamera.isActiveAndEnabled)
+                return xrCamera.transform;
+        }
+
         Camera mainCamera = Camera.main;
-        return mainCamera != null ? mainCamera.transform.position : transform.position;
+        return mainCamera != null ? mainCamera.transform : null;
+    }
+
+    /// <summary>
+    /// Finds the body/root transform that owns the actively tracked headset.
+    /// This keeps a spherical gameplay pulse centred on the player even when
+    /// headset tracking changes the camera's local Y position.
+    /// </summary>
+    public static Transform FindPlayerOriginTransform()
+    {
+        XROrigin[] origins = FindObjectsByType<XROrigin>(
+            FindObjectsInactive.Exclude,
+            FindObjectsSortMode.None);
+
+        foreach (XROrigin xrOrigin in origins)
+        {
+            Camera xrCamera = xrOrigin != null ? xrOrigin.Camera : null;
+            if (xrCamera != null &&
+                xrCamera.isActiveAndEnabled &&
+                xrCamera.TryGetComponent<TrackedPoseDriver>(out _))
+            {
+                return xrOrigin.transform;
+            }
+        }
+
+        // A project without the Input System pose driver can still use an
+        // ordinary XR Origin as the player body.
+        foreach (XROrigin xrOrigin in origins)
+        {
+            Camera xrCamera = xrOrigin != null ? xrOrigin.Camera : null;
+            if (xrCamera != null && xrCamera.isActiveAndEnabled)
+                return xrOrigin.transform;
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Finds the controller transform driven by the Input System pose driver.
+    /// The project uses children named Left/Right, while the name matching also
+    /// supports the standard XRI controller prefab naming convention.
+    /// </summary>
+    public static Transform FindPlayerHandTransform(bool rightHand)
+    {
+        Transform playerRoot = FindPlayerOriginTransform();
+        if (playerRoot == null)
+            return null;
+
+        string side = rightHand ? "right" : "left";
+        TrackedPoseDriver[] drivers = playerRoot.GetComponentsInChildren<TrackedPoseDriver>(true);
+        foreach (TrackedPoseDriver driver in drivers)
+        {
+            if (driver == null || !driver.isActiveAndEnabled)
+                continue;
+
+            if (driver.name.IndexOf(side, System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return driver.transform;
+        }
+
+        return null;
     }
 
     private void UploadActivePulses()
