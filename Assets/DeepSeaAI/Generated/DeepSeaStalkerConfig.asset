@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DeepSeaStalkerConfig
   m_EditorClassIdentifier: Assembly-CSharp::DeepSeaAI.DeepSeaStalkerConfig
   patrolSpeed: 1.2
-  investigateSpeed: 1.6
+  investigateSpeedMultiplier: 1.5
   chaseSpeed: 2.6
   patrolWaitSeconds: 1
   stoppingDistance: 0.18

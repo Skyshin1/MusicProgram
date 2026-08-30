@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DeepSeaAI
 {
@@ -7,7 +8,9 @@ namespace DeepSeaAI
     {
         [Header("Movement")]
         [Min(0f)] public float patrolSpeed = 1.2f;
-        [Min(0f)] public float investigateSpeed = 1.6f;
+        [FormerlySerializedAs("investigateSpeed")]
+        [Tooltip("Investigation/search speed is patrol speed multiplied by this value. Default 1.5 means an alerted stalker is visibly faster than its patrol.")]
+        [Min(1f)] public float investigateSpeedMultiplier = 1.5f;
         [Min(0f)] public float chaseSpeed = 2.6f;
         [Min(0f)] public float patrolWaitSeconds = 1f;
         [Min(0.05f)] public float stoppingDistance = 0.18f;
@@ -55,7 +58,7 @@ namespace DeepSeaAI
         private void OnValidate()
         {
             patrolSpeed = Mathf.Max(0f, patrolSpeed);
-            investigateSpeed = Mathf.Max(0f, investigateSpeed);
+            investigateSpeedMultiplier = Mathf.Max(1f, investigateSpeedMultiplier);
             chaseSpeed = Mathf.Max(0f, chaseSpeed);
             sightRange = Mathf.Max(0.1f, sightRange);
             sightInterval = Mathf.Max(0.02f, sightInterval);

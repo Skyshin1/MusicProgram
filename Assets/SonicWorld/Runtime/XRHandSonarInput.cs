@@ -22,6 +22,7 @@ public sealed class XRHandSonarInput : MonoBehaviour
     [SerializeField] private Transform rightHand;
 
     private XROrigin xrOrigin;
+    private WaterSurfaceStateTracker waterState;
     private InputDevice leftDevice;
     private InputDevice rightDevice;
     private bool leftWasPressed;
@@ -43,6 +44,7 @@ public sealed class XRHandSonarInput : MonoBehaviour
     private void Awake()
     {
         xrOrigin = GetComponent<XROrigin>();
+        waterState = GetComponent<WaterSurfaceStateTracker>();
         ResolveHands();
     }
 
@@ -77,6 +79,12 @@ public sealed class XRHandSonarInput : MonoBehaviour
 
     private void TryEmit(Transform hand, bool right)
     {
+        if (waterState == null)
+            waterState = GetComponent<WaterSurfaceStateTracker>();
+        // At the surface Trigger is reserved for document interaction. Sonar is underwater only.
+        if (waterState == null || !waterState.IsUnderwater)
+            return;
+
         if (Time.unscaledTime < nextAllowedTime)
             return;
 

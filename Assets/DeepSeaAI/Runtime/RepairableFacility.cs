@@ -88,7 +88,16 @@ namespace DeepSeaAI
             if (!AcceptsTool(toolId) || deltaTime <= 0f)
                 return false;
 
-            repairProgress = Mathf.Clamp01(repairProgress + deltaTime / repairSeconds);
+            return AdjustRepairProgress(deltaTime / repairSeconds);
+        }
+
+        /// <summary>Applies a normalized progress delta. Negative values are used by failed QTE checks.</summary>
+        public bool AdjustRepairProgress(float normalizedDelta)
+        {
+            if (repaired || Mathf.Approximately(normalizedDelta, 0f))
+                return false;
+
+            repairProgress = Mathf.Clamp01(repairProgress + normalizedDelta);
             ApplyDecalFade();
             if (repairProgress < 1f)
                 return false;

@@ -13,4 +13,13 @@ public sealed class BlackBoxItem : MonoBehaviour
     public string BlackBoxId => string.IsNullOrWhiteSpace(blackBoxId) ? name : blackBoxId;
     public AudioClip Recording => recording;
     public float PlaybackVolume => playbackVolume;
+
+    private void Awake()
+    {
+        // The black box is intentionally heavy: it should sink when released,
+        // unlike the flashlight that acts as the player's floating marker.
+        BuoyantXRGrabBridge bridge = GetComponent<BuoyantXRGrabBridge>();
+        if (bridge != null)
+            bridge.ReleasedForceScale = 0f;
+    }
 }

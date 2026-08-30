@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using AbstractOcclusion.WebGpuWater;
 
 namespace DeepSeaAI
 {
@@ -24,9 +25,9 @@ namespace DeepSeaAI
         [SerializeField] private LayerMask repairLayers = ~0;
 
         [Header("Input")]
-        [Tooltip("Allows R to repair during desktop Play Mode without grabbing the tool. It is ignored in a device build.")]
+        [Tooltip("Allows F to repair during desktop Play Mode without grabbing the tool. R is reserved for the repair QTE judgement.")]
         [SerializeField] private bool allowDesktopKeyboardTest = true;
-        [SerializeField] private Key desktopRepairKey = Key.R;
+        [SerializeField] private Key desktopRepairKey = Key.F;
 
         [Header("Feedback")]
         [SerializeField] private LineRenderer repairBeam;
@@ -36,6 +37,7 @@ namespace DeepSeaAI
         private XRGrabInteractable grabInteractable;
         private bool activateHeld;
         private RepairableFacility currentTarget;
+        private RepairSkillCheckController skillCheck;
 
         public string ToolId => toolId;
         public RepairableFacility CurrentTarget => currentTarget;
@@ -50,7 +52,17 @@ namespace DeepSeaAI
 
         private void Awake()
         {
+            // R is the desktop skill-check key. Existing scene instances made
+            // before skill checks used R for repairing, so migrate them safely.
+            if (desktopRepairKey == Key.R)
+                desktopRepairKey = Key.F;
             grabInteractable = GetComponent<XRGrabInteractable>();
+            skillCheck = GetComponent<RepairSkillCheckController>();
+            if (skillCheck == null)
+                skillCheck = gameObject.AddComponent<RepairSkillCheckController>();
+            BuoyantXRGrabBridge bridge = GetComponent<BuoyantXRGrabBridge>();
+            if (bridge != null)
+                bridge.ReleasedForceScale = 0f;
             ConfigureBeam();
         }
 
@@ -84,11 +96,15 @@ namespace DeepSeaAI
             currentTarget = repairing ? FindNearestTarget() : null;
             if (currentTarget == null)
             {
+                skillCheck?.Tick(null, false, false);
                 SetBeam(false, null);
                 return;
             }
 
-            currentTarget.Repair(toolId, Time.deltaTime);
+            float multiplier = skillCheck != null
+                ? skillCheck.Tick(currentTarget, true, IsHeldByRightHand())
+                : 1f;
+            currentTarget.Repair(toolId, Time.deltaTime * multiplier);
             SetBeam(true, currentTarget);
         }
 
@@ -132,6 +148,22 @@ namespace DeepSeaAI
                 best = candidate;
             }
             return best;
+        }
+
+        private bool IsHeldByRightHand()
+        {
+            if (grabInteractable == null || grabInteractable.interactorsSelecting.Count == 0)
+                return true;
+
+            Transform holder = grabInteractable.interactorsSelecting[0].transform;
+            Transform right = VolumetricFogPulseEmitter.FindPlayerHandTransform(true);
+            Transform left = VolumetricFogPulseEmitter.FindPlayerHandTransform(false);
+            if (right == null)
+                return holder.name.IndexOf("right", System.StringComparison.OrdinalIgnoreCase) >= 0;
+            if (left == null)
+                return true;
+            return (holder.position - right.position).sqrMagnitude <=
+                   (holder.position - left.position).sqrMagnitude;
         }
 
         private void ConfigureBeam()

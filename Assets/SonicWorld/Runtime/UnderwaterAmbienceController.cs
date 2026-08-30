@@ -14,7 +14,9 @@ public sealed class UnderwaterAmbienceController : MonoBehaviour
 {
     [Header("Audio")]
     [SerializeField] private AudioClip underwaterLoop;
-    [SerializeField, Range(0f, 1f)] private float maximumVolume = 0.35f;
+    [SerializeField, Range(0f, 1f)] private float surfaceVolume = 0.55f;
+    [SerializeField, Range(0f, 1f)] private float deepWaterMinimumVolume = 0.14f;
+    [SerializeField, Min(0.1f)] private float depthForMinimumVolume = 20f;
     [SerializeField, Min(0.01f)] private float fadeInSeconds = 1.2f;
     [SerializeField, Min(0.01f)] private float fadeOutSeconds = 0.8f;
     [SerializeField] private bool generatePlaceholderWhenEmpty = true;
@@ -73,9 +75,13 @@ public sealed class UnderwaterAmbienceController : MonoBehaviour
         float flow01 = waterState != null
             ? Mathf.Clamp01(waterState.WaterFlow.magnitude / flowSpeedForMaximumPitch)
             : 0f;
-        float target = waterState != null && waterState.IsUnderwater
-            ? Mathf.Clamp01(maximumVolume + flow01 * flowVolumeInfluence)
+        float depth01 = waterState != null && waterState.IsUnderwater
+            ? Mathf.Clamp01(waterState.SignedDepth / depthForMinimumVolume)
             : 0f;
+        float baseVolume = waterState != null && waterState.IsUnderwater
+            ? Mathf.Lerp(surfaceVolume, deepWaterMinimumVolume, depth01)
+            : surfaceVolume;
+        float target = Mathf.Clamp01(baseVolume + flow01 * flowVolumeInfluence);
         float fade = target > source.volume ? fadeInSeconds : fadeOutSeconds;
         source.volume = Mathf.MoveTowards(source.volume, target, Time.unscaledDeltaTime / fade);
         source.pitch = Mathf.Lerp(pitchRange.x, pitchRange.y, flow01);
@@ -114,7 +120,9 @@ public sealed class UnderwaterAmbienceController : MonoBehaviour
 
     private void OnValidate()
     {
-        maximumVolume = Mathf.Clamp01(maximumVolume);
+        surfaceVolume = Mathf.Clamp01(surfaceVolume);
+        deepWaterMinimumVolume = Mathf.Clamp(deepWaterMinimumVolume, 0f, surfaceVolume);
+        depthForMinimumVolume = Mathf.Max(0.1f, depthForMinimumVolume);
         fadeInSeconds = Mathf.Max(0.01f, fadeInSeconds);
         fadeOutSeconds = Mathf.Max(0.01f, fadeOutSeconds);
         flowSpeedForMaximumPitch = Mathf.Max(0.01f, flowSpeedForMaximumPitch);

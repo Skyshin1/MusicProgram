@@ -32,6 +32,9 @@ namespace DeepSeaAI
         private Camera playerCamera;
         private StalkerState state;
         private int patrolIndex;
+        private readonly System.Collections.Generic.List<int> patrolOrder = new();
+        private int patrolOrderCursor;
+        private int lastPatrolPoint = -1;
         private float stateTimer;
         private float nextSightCheck;
         private bool canSeePlayer;
@@ -84,6 +87,8 @@ namespace DeepSeaAI
             agent = GetComponent<NavMeshAgent>();
             ConfigureAgent();
             previousPosition = transform.position;
+            if (GetComponent<DeepSeaStalkerAlertIndicator>() == null)
+                gameObject.AddComponent<DeepSeaStalkerAlertIndicator>();
         }
 
         private void OnEnable()
@@ -355,6 +360,7 @@ namespace DeepSeaAI
 
         private void TickPatrol()
         {
+            EnsurePatrolOrder();
             Transform point = patrolPoints[Mathf.Clamp(patrolIndex, 0, patrolPoints.Length - 1)];
             if (!MoveTo(point.position, CurrentConfig.patrolSpeed))
                 return;
@@ -366,7 +372,11 @@ namespace DeepSeaAI
                 return;
 
             stateTimer = 0f;
-            patrolIndex = (patrolIndex + 1) % patrolPoints.Length;
+            lastPatrolPoint = patrolIndex;
+            patrolOrderCursor++;
+            if (patrolOrderCursor >= patrolOrder.Count)
+                BuildPatrolOrder();
+            patrolIndex = patrolOrder[Mathf.Clamp(patrolOrderCursor, 0, patrolOrder.Count - 1)];
         }
 
         private void BeginInvestigation(Vector3 position, float score)
@@ -381,7 +391,7 @@ namespace DeepSeaAI
 
         private void TickInvestigate()
         {
-            if (!MoveTo(investigationOrigin, CurrentConfig.investigateSpeed))
+            if (!MoveTo(investigationOrigin, InvestigationSpeed))
             {
                 BeginSearch();
                 return;
@@ -409,7 +419,7 @@ namespace DeepSeaAI
                 return;
             }
 
-            if (!MoveTo(currentSearchPoint, CurrentConfig.investigateSpeed) ||
+            if (!MoveTo(currentSearchPoint, InvestigationSpeed) ||
                 HasArrived(currentSearchPoint))
             {
                 float pause = Mathf.Repeat(stateTimer, CurrentConfig.searchPointWait + 0.001f);
@@ -512,6 +522,8 @@ namespace DeepSeaAI
 
             if (HasArrived(target))
             {
+                lastPatrolPoint = patrolIndex;
+                BuildPatrolOrder();
                 state = StalkerState.Patrol;
                 stateTimer = 0f;
             }
@@ -582,6 +594,45 @@ namespace DeepSeaAI
             return nearest;
         }
 
+        private float InvestigationSpeed =>
+            CurrentConfig.patrolSpeed * Mathf.Max(1f, CurrentConfig.investigateSpeedMultiplier);
+
+        /// <summary>
+        /// Every patrol round visits each configured point once, in a fresh
+        /// random order. The first destination is never the point just visited,
+        /// so the enemy cannot immediately turn around and repeat itself.
+        /// </summary>
+        private void EnsurePatrolOrder()
+        {
+            if (patrolOrder.Count == 0 || patrolOrderCursor >= patrolOrder.Count)
+                BuildPatrolOrder();
+            if (patrolOrder.Count > 0)
+                patrolIndex = patrolOrder[patrolOrderCursor];
+        }
+
+        private void BuildPatrolOrder()
+        {
+            patrolOrder.Clear();
+            if (patrolPoints == null)
+                return;
+
+            for (int i = 0; i < patrolPoints.Length; i++)
+            {
+                if (patrolPoints[i] != null)
+                    patrolOrder.Add(i);
+            }
+
+            for (int i = patrolOrder.Count - 1; i > 0; i--)
+            {
+                int other = UnityEngine.Random.Range(0, i + 1);
+                (patrolOrder[i], patrolOrder[other]) = (patrolOrder[other], patrolOrder[i]);
+            }
+
+            if (patrolOrder.Count > 1 && patrolOrder[0] == lastPatrolPoint)
+                (patrolOrder[0], patrolOrder[1]) = (patrolOrder[1], patrolOrder[0]);
+            patrolOrderCursor = 0;
+        }
+
         private void SetAgentStopped(bool stopped)
         {
             if (agent != null && agent.enabled && agent.isOnNavMesh)
@@ -639,13 +690,16 @@ namespace DeepSeaAI
             hadSightLastCheck = false;
             currentNoiseScore = 0f;
             lastNoiseTime = -100f;
-            patrolIndex = 0;
+            lastPatrolPoint = -1;
+            BuildPatrolOrder();
+            patrolIndex = patrolOrder.Count > 0 ? patrolOrder[0] : 0;
             state = StalkerState.Patrol;
             stateTimer = 0f;
 
-            if (teleportToStart && patrolPoints != null && patrolPoints.Length > 0 && patrolPoints[0] != null)
+            if (teleportToStart && patrolPoints != null && patrolPoints.Length > 0 &&
+                patrolPoints[Mathf.Clamp(patrolIndex, 0, patrolPoints.Length - 1)] != null)
             {
-                Vector3 start = patrolPoints[0].position;
+                Vector3 start = patrolPoints[patrolIndex].position;
                 if (agent != null && agent.enabled && agent.isOnNavMesh)
                     agent.Warp(start);
                 else

@@ -182,7 +182,7 @@ namespace DeepSeaAI
     [Serializable, GeneratePropertyBag]
     [NodeDescription(
         name: "Fixed Route Patrol",
-        story: "Otherwise patrol P0 through P4 in a fixed loop",
+        story: "Otherwise patrol a newly shuffled route of the configured patrol points",
         category: "Deep Sea AI",
         id: "d689408ead084e15b7869edcc52452b0")]
     public partial class DeepSeaPatrolPriorityAction : Unity.Behavior.Action

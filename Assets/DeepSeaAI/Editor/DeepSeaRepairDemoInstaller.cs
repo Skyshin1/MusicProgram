@@ -6,19 +6,25 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 using Unity.XR.CoreUtils;
+using AbstractOcclusion.WebGpuWater;
 
 namespace DeepSeaAI.Editor
 {
     /// <summary>Creates a small, removable repair-tool example in the 1-VR scene.</summary>
     public static class DeepSeaRepairDemoInstaller
     {
-        private const string ScenePath = "Assets/Scenes/1-VR.unity";
         private const string RootName = "Deep Sea Repair Demo";
         private const string ToolId = "StandardRepairTool";
         private const string GeneratedFolder = "Assets/DeepSeaAI/Generated";
 
         [MenuItem("Tools/Deep Sea Repair/Install Or Repair Basic Demo")]
-        private static void Install()
+        private static void InstallFromMenu()
+        {
+            InstallOrRepairDemoForCurrentScene();
+        }
+
+        /// <summary>Shared installer used by the all-in-one water gameplay menu.</summary>
+        public static void InstallOrRepairDemoForCurrentScene()
         {
             if (Application.isPlaying)
             {
@@ -26,9 +32,15 @@ namespace DeepSeaAI.Editor
                 return;
             }
 
+            // Install into the scene the designer is currently editing. The
+            // former hard-coded 1-VR scene caused the all-in-one installer to
+            // unexpectedly replace an open scene.
             Scene scene = SceneManager.GetActiveScene();
-            if (scene.path != ScenePath)
-                scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            if (!scene.IsValid())
+            {
+                EditorUtility.DisplayDialog("Deep Sea Repair", "Open a scene before installing the demo.", "OK");
+                return;
+            }
 
             EnsureGeneratedFolder();
 
@@ -58,7 +70,7 @@ namespace DeepSeaAI.Editor
             EditorSceneManager.SaveScene(scene);
             AssetDatabase.SaveAssets();
             Selection.activeGameObject = root;
-            Debug.Log("[DeepSeaRepair] Installed a grab-able Repair Tool and a damaged Repair Facility. Grab the tool, approach the red panel, then hold the controller Activate input to repair.", root);
+            Debug.Log("[DeepSeaRepair] Installed a grab-able Repair Tool and QTE Repair Console. Hold tool Trigger to repair; when the ring appears press R (desktop) or the other empty hand Grip.", root);
         }
 
         [MenuItem("Tools/Deep Sea Repair/Select Basic Demo")]
@@ -92,6 +104,11 @@ namespace DeepSeaAI.Editor
             body.interpolation = RigidbodyInterpolation.Interpolate;
             UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grab = tool.AddComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
             grab.throwOnDetach = true;
+            tool.AddComponent<WaterBuoyancy>();
+            tool.AddComponent<WaterSplash>();
+            BuoyantXRGrabBridge bridge = tool.AddComponent<BuoyantXRGrabBridge>();
+            bridge.ReleasedForceScale = 0f;
+            tool.AddComponent<VolumetricFogCollisionPulse>();
 
             GameObject tip = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             tip.name = "Repair Tip";
@@ -114,8 +131,7 @@ namespace DeepSeaAI.Editor
 
         private static void CreateFacility(Transform parent, Vector3 position, float floorY)
         {
-            GameObject facility = new GameObject("Repair Facility (Decal Damage)");
-            facility.name = "Repair Facility (Decal Damage)";
+            GameObject facility = new GameObject("QTE Repair Console");
             facility.transform.SetParent(parent, false);
             facility.transform.position = new Vector3(position.x, floorY + 0.65f, position.z);
             BoxCollider collider = facility.AddComponent<BoxCollider>();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AbstractOcclusion.WebGpuWater;
 using DeepSeaAI;
+using DeepSeaAI.Editor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -17,6 +18,7 @@ public static class WaterGameplayInstaller
     private const string FlashlightPath = PrefabFolder + "/VR Water Flashlight.prefab";
     private const string BlackBoxPath = PrefabFolder + "/VR Black Box.prefab";
     private const string DockPath = PrefabFolder + "/Black Box Playback Dock.prefab";
+    private const string ElectronicCardPath = PrefabFolder + "/VR Electronic Access Card.prefab";
 
     [InitializeOnLoadMethod]
     private static void ScheduleProjectAssetSetup()
@@ -33,6 +35,7 @@ public static class WaterGameplayInstaller
         EnsureFlashlightPrefab();
         EnsureBlackBoxPrefab();
         EnsureDockPrefab();
+        EnsureElectronicCardPrefab();
         AssetDatabase.SaveAssets();
     }
 
@@ -50,16 +53,19 @@ public static class WaterGameplayInstaller
         GameObject flashlight = EnsureFlashlightPrefab();
         GameObject blackBox = EnsureBlackBoxPrefab();
         GameObject dock = EnsureDockPrefab();
+        GameObject electronicCard = EnsureElectronicCardPrefab();
         EnsurePlayerComponents();
         EnsureRepairToolsAreBuoyant();
-        EnsureSceneProps(flashlight, blackBox, dock);
+        EnsureSceneProps(flashlight, blackBox, dock, electronicCard);
+        EnsureSurfaceDocuments();
+        DeepSeaRepairDemoInstaller.InstallOrRepairDemoForCurrentScene();
 
         AssetDatabase.SaveAssets();
         EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         EditorUtility.DisplayDialog(
             "VR Water Gameplay Installed",
-            "Player swimming/gravity, empty-hand Trigger sonar, underwater ambience and exit droplets are wired.\n\n" +
-            "Flashlight, black-box and playback-dock prefabs were created under:\n" + PrefabFolder +
+            "Surface floating/documents, repair QTE, player movement, ambience and water props are wired.\n\n" +
+            "Flashlight, black-box, electronic-card and playback-dock prefabs were created under:\n" + PrefabFolder +
             "\n\nMove the generated Water Gameplay Props root onto your surface platform, then replace the temporary audio clips in the Inspector.",
             "OK");
     }
@@ -91,6 +97,7 @@ public static class WaterGameplayInstaller
             AddUndoIfMissing<WaterSurfaceStateTracker>(origin.gameObject);
             AddUndoIfMissing<QuestLeftStickLocomotion>(origin.gameObject);
             AddUndoIfMissing<XRHandSonarInput>(origin.gameObject);
+            AddUndoIfMissing<SurfaceDocumentReader>(origin.gameObject);
             AddUndoIfMissing<UnderwaterAmbienceController>(origin.gameObject);
             AddUndoIfMissing<WaterExitLensEffect>(origin.gameObject);
 
@@ -111,7 +118,12 @@ public static class WaterGameplayInstaller
         RepairTool[] tools = Object.FindObjectsByType<RepairTool>(
             FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (RepairTool tool in tools)
+        {
             ConfigureBuoyantGrabProp(tool.gameObject);
+            BuoyantXRGrabBridge bridge = tool.GetComponent<BuoyantXRGrabBridge>();
+            if (bridge != null)
+                bridge.ReleasedForceScale = 0f;
+        }
     }
 
     private static void ConfigureBuoyantGrabProp(GameObject root)
@@ -185,7 +197,10 @@ public static class WaterGameplayInstaller
     {
         GameObject existing = AssetDatabase.LoadAssetAtPath<GameObject>(BlackBoxPath);
         if (existing != null)
+        {
+            SetReleasedBuoyancy(existing, 0f);
             return existing;
+        }
 
         GameObject root = new("VR Black Box");
         BoxCollider collider = root.AddComponent<BoxCollider>();
@@ -197,7 +212,8 @@ public static class WaterGameplayInstaller
         root.AddComponent<XRGrabInteractable>();
         root.AddComponent<WaterBuoyancy>();
         root.AddComponent<WaterSplash>();
-        root.AddComponent<BuoyantXRGrabBridge>();
+        BuoyantXRGrabBridge bridge = root.AddComponent<BuoyantXRGrabBridge>();
+        bridge.ReleasedForceScale = 0f;
         root.AddComponent<VolumetricFogCollisionPulse>();
         root.AddComponent<BlackBoxItem>();
 
@@ -210,6 +226,43 @@ public static class WaterGameplayInstaller
         visual.AddComponent<WaterMembership>();
 
         GameObject prefab = PrefabUtility.SaveAsPrefabAsset(root, BlackBoxPath);
+        Object.DestroyImmediate(root);
+        return prefab;
+    }
+
+    private static GameObject EnsureElectronicCardPrefab()
+    {
+        GameObject existing = AssetDatabase.LoadAssetAtPath<GameObject>(ElectronicCardPath);
+        if (existing != null)
+        {
+            SetReleasedBuoyancy(existing, 0f);
+            return existing;
+        }
+
+        GameObject root = new("VR Electronic Access Card");
+        BoxCollider collider = root.AddComponent<BoxCollider>();
+        collider.size = new Vector3(0.1f, 0.012f, 0.16f);
+        Rigidbody body = root.AddComponent<Rigidbody>();
+        body.mass = 0.08f;
+        body.interpolation = RigidbodyInterpolation.Interpolate;
+        body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        root.AddComponent<XRGrabInteractable>();
+        root.AddComponent<WaterBuoyancy>();
+        root.AddComponent<WaterSplash>();
+        BuoyantXRGrabBridge bridge = root.AddComponent<BuoyantXRGrabBridge>();
+        bridge.ReleasedForceScale = 0f;
+        root.AddComponent<VolumetricFogCollisionPulse>();
+
+        GameObject visual = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        visual.name = "Electronic Card Visual";
+        Object.DestroyImmediate(visual.GetComponent<Collider>());
+        visual.transform.SetParent(root.transform, false);
+        visual.transform.localScale = collider.size;
+        visual.AddComponent<WaterInteractable>();
+        visual.AddComponent<WaterMembership>();
+        SetColour(visual.GetComponent<Renderer>(), new Color(0.12f, 0.4f, 1f));
+
+        GameObject prefab = PrefabUtility.SaveAsPrefabAsset(root, ElectronicCardPath);
         Object.DestroyImmediate(root);
         return prefab;
     }
@@ -241,7 +294,7 @@ public static class WaterGameplayInstaller
         return prefab;
     }
 
-    private static void EnsureSceneProps(GameObject flashlight, GameObject blackBox, GameObject dock)
+    private static void EnsureSceneProps(GameObject flashlight, GameObject blackBox, GameObject dock, GameObject electronicCard)
     {
         GameObject parent = GameObject.Find("Water Gameplay Props");
         if (parent == null)
@@ -254,6 +307,62 @@ public static class WaterGameplayInstaller
             basePosition + new Vector3(0f, 0.3f, 0f));
         EnsureSceneInstance(dock, "Black Box Playback Dock", parent.transform,
             basePosition + new Vector3(0.65f, 0.1f, 0f));
+        EnsureSceneInstance(electronicCard, "VR Electronic Access Card", parent.transform,
+            basePosition + new Vector3(0.32f, 0.3f, -0.35f));
+    }
+
+    private static void EnsureSurfaceDocuments()
+    {
+        GameObject parent = GameObject.Find("Surface Documents");
+        if (parent == null)
+            parent = new GameObject("Surface Documents");
+
+        Vector3 basePosition = ResolveSurfacePlacement();
+        CreateSurfaceDocument(parent.transform, "Document - Dive Log", basePosition + new Vector3(-0.9f, 0.2f, 0.35f),
+            new Color(1f, 0.78f, 0.15f), "潜水记录 01", "水面安全协议：浮到水面后可以正常移动。向下推右摇杆，或桌面按 Q，重新下潜。\n\n在水面按 L 或空手 Trigger 阅读附近文档。");
+        CreateSurfaceDocument(parent.transform, "Document - Sonar Note", basePosition + new Vector3(-0.62f, 0.2f, -0.22f),
+            new Color(0.18f, 0.95f, 0.8f), "声纳操作笔记", "水下空手 Trigger 发射声纳。水面为了阅读与抓取安全，会禁用声纳。\n\n携带维修工具时 Trigger 维修；维修圆环出现后，按 R 或另一只空手 Grip 判定。");
+        CreateSurfaceDocument(parent.transform, "Document - Recovery Note", basePosition + new Vector3(-1.18f, 0.2f, -0.18f),
+            new Color(1f, 0.32f, 0.32f), "回收清单", "手电筒松手会浮到水面。黑匣子、电子卡和维修工具松手会下沉。\n\n将黑匣子带回水上播放座可重播录音。");
+    }
+
+    private static void CreateSurfaceDocument(Transform parent, string objectName, Vector3 position,
+        Color colour, string title, string body)
+    {
+        GameObject existing = GameObject.Find(objectName);
+        if (existing != null)
+            return;
+
+        GameObject document = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        document.name = objectName;
+        document.transform.SetParent(parent, true);
+        document.transform.SetPositionAndRotation(position, Quaternion.Euler(8f, 0f, 0f));
+        document.transform.localScale = new Vector3(0.25f, 0.025f, 0.18f);
+        SetColour(document.GetComponent<Renderer>(), colour);
+        SurfaceDocument payload = document.AddComponent<SurfaceDocument>();
+        payload.Configure(title, body);
+    }
+
+    private static void SetReleasedBuoyancy(GameObject root, float scale)
+    {
+        BuoyantXRGrabBridge bridge = root.GetComponent<BuoyantXRGrabBridge>();
+        if (bridge == null)
+            return;
+        bridge.ReleasedForceScale = scale;
+        EditorUtility.SetDirty(bridge);
+    }
+
+    private static void SetColour(Renderer renderer, Color colour)
+    {
+        if (renderer == null)
+            return;
+        Shader shader = Shader.Find("Universal Render Pipeline/Lit");
+        if (shader == null)
+            return;
+        Material material = new(shader) { name = "Temporary Gameplay Prop Colour" };
+        material.SetColor("_BaseColor", colour);
+        material.SetColor("_EmissionColor", colour * 0.08f);
+        renderer.sharedMaterial = material;
     }
 
     private static Vector3 ResolveSurfacePlacement()

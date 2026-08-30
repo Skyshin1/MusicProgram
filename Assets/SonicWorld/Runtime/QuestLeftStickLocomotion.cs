@@ -2,6 +2,7 @@ using AbstractOcclusion.WebGpuWater;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Quest/OpenXR locomotion for this project's XR Origin. The left stick moves
@@ -29,6 +30,14 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
     [SerializeField] private float airGravity = -9.81f;
     [SerializeField, Min(0f)] private float maximumAirFallSpeed = 25f;
 
+    [Header("Water Surface Floating")]
+    [SerializeField, Min(0f)] private float surfaceEyeHeight = 0.15f;
+    [SerializeField, Min(0.1f)] private float surfaceSnapSpeed = 4f;
+    [SerializeField, Min(0.1f)] private float surfaceCaptureDistance = 0.8f;
+    [SerializeField, Range(0.1f, 0.95f)] private float diveInputThreshold = 0.45f;
+    [SerializeField] private bool allowDesktopDiveKey = true;
+    [SerializeField] private Key desktopDiveKey = Key.Q;
+
     [Header("Player Collision Capsule")]
     [SerializeField, Range(0.1f, 0.5f)] private float capsuleRadius = 0.25f;
     [SerializeField, Range(0.5f, 1.2f)] private float minimumCapsuleHeight = 0.8f;
@@ -45,18 +54,20 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
     private XROrigin xrOrigin;
     private CharacterController characterController;
     private WaterSurfaceStateTracker waterState;
-    private InputDevice leftController;
-    private InputDevice rightController;
+    private UnityEngine.XR.InputDevice leftController;
+    private UnityEngine.XR.InputDevice rightController;
     private float nextSnapTurnTime;
     private bool snapTurnReady = true;
     private float verticalVelocity;
     private bool movementEnabled = true;
     private bool hasConflictingMoveProvider;
+    private bool surfaceFloating;
 
     public bool IsUnderwater => waterState != null && waterState.IsUnderwater;
     public WaterVolume CurrentWater => waterState != null ? waterState.CurrentWater : null;
     public float VerticalVelocity => verticalVelocity;
     public bool MovementEnabled => movementEnabled;
+    public bool IsSurfaceFloating => surfaceFloating;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void EnsureOnLoadedOrigins()
@@ -115,12 +126,12 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
         if (!leftController.isValid)
             leftController = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
         if (leftController.isValid)
-            leftController.TryGetFeatureValue(CommonUsages.primary2DAxis, out leftStick);
+            leftController.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out leftStick);
 
         if (!rightController.isValid)
             rightController = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
         if (rightController.isValid)
-            rightController.TryGetFeatureValue(CommonUsages.primary2DAxis, out rightStick);
+            rightController.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out rightStick);
 
         if (leftStick.sqrMagnitude < deadZone * deadZone)
             leftStick = Vector2.zero;
@@ -146,6 +157,47 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
         horizontal *= moveSpeed;
 
         float dt = Time.deltaTime;
+        bool diveRequested = verticalInput <= -diveInputThreshold ||
+            (allowDesktopDiveKey && !Application.isMobilePlatform && Keyboard.current != null &&
+             Keyboard.current[desktopDiveKey].isPressed);
+        float surfaceY = 0f;
+        bool hasSurface = waterState != null && waterState.TryGetSurfaceHeight(out surfaceY);
+        float headY = xrOrigin != null && xrOrigin.Camera != null
+            ? xrOrigin.Camera.transform.position.y
+            : transform.position.y;
+
+        if (surfaceFloating)
+        {
+            if (diveRequested)
+            {
+                surfaceFloating = false;
+                verticalVelocity = -verticalSwimSpeed;
+            }
+            else if (hasSurface)
+            {
+                float targetHeadY = surfaceY + surfaceEyeHeight;
+                verticalVelocity = Mathf.Clamp((targetHeadY - headY) * surfaceSnapSpeed,
+                    -verticalSwimSpeed, verticalSwimSpeed);
+                CollisionFlags surfaceFlags = characterController.Move(
+                    (horizontal + Vector3.up * verticalVelocity) * dt);
+                if ((surfaceFlags & CollisionFlags.Above) != 0 && verticalVelocity > 0f)
+                    verticalVelocity = 0f;
+                return;
+            }
+            else
+            {
+                surfaceFloating = false;
+            }
+        }
+
+        if (!IsUnderwater && hasSurface && !diveRequested &&
+            Mathf.Abs(headY - (surfaceY + surfaceEyeHeight)) <= surfaceCaptureDistance)
+        {
+            surfaceFloating = true;
+            verticalVelocity = 0f;
+            return;
+        }
+
         if (IsUnderwater)
         {
             float targetVertical = Mathf.Abs(verticalInput) > 0.001f
@@ -241,6 +293,10 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
         underwaterSinkAcceleration = Mathf.Max(0f, underwaterSinkAcceleration);
         maximumSinkSpeed = Mathf.Max(0f, maximumSinkSpeed);
         maximumAirFallSpeed = Mathf.Max(0f, maximumAirFallSpeed);
+        surfaceEyeHeight = Mathf.Max(0f, surfaceEyeHeight);
+        surfaceSnapSpeed = Mathf.Max(0.1f, surfaceSnapSpeed);
+        surfaceCaptureDistance = Mathf.Max(0.1f, surfaceCaptureDistance);
+        diveInputThreshold = Mathf.Clamp(diveInputThreshold, 0.1f, 0.95f);
         deadZone = Mathf.Clamp(deadZone, 0f, 0.95f);
         turnDeadZone = Mathf.Clamp(turnDeadZone, 0.1f, 0.95f);
         snapTurnDegrees = Mathf.Clamp(snapTurnDegrees, 15f, 90f);
