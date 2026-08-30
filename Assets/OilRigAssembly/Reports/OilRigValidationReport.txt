@@ -1,0 +1,35 @@
+﻿Oil Rig Above-Water Platform Validation
+Generated: 2026-08-30 13:03:43
+Scene: Assets/OilRigAssembly/Scenes/OilRig_AboveWater.unity
+Prefab instance roots: 234
+Non-uniformly scaled Prefab roots: 0
+Floating platform controller: FOUND
+Crest buoyancy sample points: 4 (required: 4)
+Static objects under moving root: 0
+Fixed seabed jacket structure: none
+GameObjects: 414
+Renderers: 344
+Colliders: 344
+Lights: 8 (shadowed: 3)
+Approximate rendered triangles (all active LOD meshes counted): 4,051,481
+Triangle budget (maximum 9,500,000): PASS
+Bounds center: (3.58, 23.54, -6.81)
+Bounds size: (47.25, 54.68, 37.72)
+Missing scripts: 0
+Missing material slots: 0
+Error shaders: 0
+Water/ocean objects: none
+Top triangle contributors:
+  Crane_Top_01: 846,508 tris across 1 instances
+  Floor_4x4M: 447,170 tris across 97 instances
+  BarrelCrate_Square_02_: 341,728 tris across 2 instances
+  Cooler_Module_03_: 254,140 tris across 1 instances
+  Fuel_Tank_01_: 210,474 tris across 1 instances
+  BarrelCrate_Rectangular_01_Tarp: 205,216 tris across 2 instances
+  Crane_Bottom_01: 185,440 tris across 1 instances
+  Cooler_Module_02_: 182,684 tris across 1 instances
+  ACunit_Big_Module_4: 169,900 tris across 1 instances
+  Catwalk_Stairs_2M: 157,952 tris across 2 instances
+  Catwalk_Floor_Railing_2M: 126,720 tris across 64 instances
+  ElectricBox_Module_3: 104,722 tris across 1 instances
+Result: PASS
