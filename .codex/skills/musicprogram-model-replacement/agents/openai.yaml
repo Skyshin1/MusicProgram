@@ -1,0 +1,7 @@
+interface:
+  display_name: "MusicProgram 模型替换"
+  short_description: "安全替换深海 VR 模型并保留玩法系统"
+  default_prompt: "使用 $musicprogram-model-replacement 读取 IncomingModels 清单并安全替换模型。"
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,19 @@
+{
+  "scene": "Assets/Scenes/1-VR.unity",
+  "items": [
+    {
+      "source": "Assets/Art/IncomingModels/Flashlight/Flashlight.fbx",
+      "target": "Flashlight",
+      "kind": "grabbable-tool",
+      "operation": "replace-visual-only",
+      "notes": "保留 GrabFlashlight、XR Grab、Rigidbody、Collider、浮力和 Light。"
+    },
+    {
+      "source": "Assets/Art/IncomingModels/FishA/FishA.fbx",
+      "target": "Fish 1",
+      "kind": "fish",
+      "operation": "replace-visual-only",
+      "notes": "保留 DeepSeaFishAI、Animator 引用和 AudioSource；新模型如无动画则保留现有移动逻辑。"
+    }
+  ]
+}
