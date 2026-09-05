@@ -101,6 +101,12 @@ namespace AbstractOcclusion.WebGpuWater
                      "real reflected ray and sticks to it by construction. Affects PLANAR only - SSR " +
                      "and the environment base ignore this.")]
             public LayerMask planarExcludeLayers = 0;
+            [Tooltip("Planar reflection render-target size as a fraction of the source camera. " +
+                     "0.5 is the PC/VR default; lower values trade sharpness for GPU time.")]
+            [Range(0.25f, 1f)] public float planarResolutionScale = 0.5f;
+            [Tooltip("Render the planar mirror every Nth frame and reuse the last result between " +
+                     "updates. 1 updates every frame; 2 is a useful PC VR fallback.")]
+            [Range(1, 4)] public int planarFrameInterval = 1;
 
             // Look (drives the above-water surface; the under-water surface uses the same strength /
             // distortion for its total-internal-reflection view). Ranges mirror the shader.
@@ -174,6 +180,8 @@ namespace AbstractOcclusion.WebGpuWater
         /// <summary>Layers the author wants kept out of this body's planar mirror (on top of the
         /// water layer, which <see cref="PlanarReflectLayers"/> always removes).</summary>
         internal LayerMask PlanarExcludeLayers => reflectionSettings.planarExcludeLayers;
+        internal float PlanarResolutionScale => Mathf.Clamp(reflectionSettings.planarResolutionScale, 0.25f, 1f);
+        internal int PlanarFrameInterval => Mathf.Clamp(reflectionSettings.planarFrameInterval, 1, 4);
         internal bool EffectiveRealRefraction => _realRefractionAllowed && reflectionSettings.realRefraction;
         internal bool ReflectUrpProbe => reflectionSettings.reflectUrpProbe;
         internal float ReflectionStrength => reflectionSettings.reflectionStrength;

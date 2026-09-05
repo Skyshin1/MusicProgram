@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuoyantXRGrabBridge
   heldForceScale: 0
+  releasedForceScale: 0
   clearVelocitiesOnGrab: 0
 --- !u!114 &4281768654737650521
 MonoBehaviour:

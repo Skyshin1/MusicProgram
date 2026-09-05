@@ -104,15 +104,13 @@ namespace AbstractOcclusion.WebGpuWater
             UpdateUnderwaterState();
         }
 
-        // Fraction of screen resolution + clip-plane push for the per-body planar mirror. Constants (not
-        // per-body inspector fields yet) to keep the Reflections block small - the budget, not resolution,
-        // is the cost lever. KEEP in sync with PlanarReflection's inspector defaults.
-        // Also the field-initializer defaults of the standalone PlanarReflection component, so the
-        // per-body path and the legacy global component start from the same tuning by construction.
+        // Default resolution + clip-plane push for the per-body planar mirror. Resolution can be
+        // overridden per WaterVolume; the constant remains the standalone PlanarReflection default.
         internal const float PlanarMirrorResolutionScale = 0.5f;
         internal const float PlanarMirrorClipPlaneOffset = 0.02f;
 
         PlanarMirror _planarMirror;
+        int _lastPlanarMirrorFrame = -1;
         // A mirror retired mid-frame, waiting for a legal moment to be destroyed. RenderPlanarMirror runs
         // from beginCameraRendering, and PlanarMirror.Dispose destroys its reflection camera GAMEOBJECT -
         // which outside play mode goes through DestroyImmediate, and Unity forbids that inside a rendering
@@ -134,9 +132,15 @@ namespace AbstractOcclusion.WebGpuWater
             if (!EffectiveUsePlanar)
             {
                 RetirePlanarMirror();
+                _lastPlanarMirrorFrame = -1;
                 return;
             }
             _planarMirror ??= new PlanarMirror(name + "_PlanarMirror");
+            // Reuse the last valid mirror between scheduled updates. Always render immediately when
+            // the mirror has just been created so enabling Planar never exposes an uninitialised RT.
+            if (_planarMirror.Texture != null && _lastPlanarMirrorFrame >= 0 &&
+                Time.frameCount - _lastPlanarMirrorFrame < PlanarFrameInterval)
+                return;
             // Mirror across the WAVE-AWARE surface height, not the flat rest plane. A planar mirror
             // is exact only ON its plane: an object floating at height h above the plane has its
             // image placed at -h while the surface it should reflect in sits at +h, so the
@@ -149,8 +153,9 @@ namespace AbstractOcclusion.WebGpuWater
             // NOT a complete fix, and cannot be: one plane cannot fit a displaced surface, so an
             // object far away on a different wave phase is still offset. The exact answer for
             // near-field object reflections is SSR, which marches the real reflected ray.
-            _planarMirror.Render(cam, SurfaceHeightAtCamera(), PlanarMirrorResolutionScale,
+            _planarMirror.Render(cam, SurfaceHeightAtCamera(), PlanarResolutionScale,
                                  PlanarMirrorClipPlaneOffset, PlanarReflectLayers());
+            _lastPlanarMirrorFrame = Time.frameCount;
         }
 
         // Hand the live mirror to the retire slot instead of destroying it here. _planarMirror is cleared

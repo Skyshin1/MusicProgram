@@ -83,7 +83,9 @@ namespace AbstractOcclusion.WebGpuWater.Editor
                 // Greyed unless planar is on: it is the planar mirror's culling mask and does
                 // nothing to SSR or the environment base.
                 DrawFieldsIf(Prop(WaterVolumePropertyPaths.PlanarReflection).boolValue,
-                    "reflectionSettings.planarExcludeLayers");
+                    "reflectionSettings.planarExcludeLayers",
+                    "reflectionSettings.planarResolutionScale",
+                    "reflectionSettings.planarFrameInterval");
 
                 // Refraction gets its own heading rather than one line buried in the SSR foldout,
                 // where nobody looking for "how do I tune refraction" would ever find it. The two
