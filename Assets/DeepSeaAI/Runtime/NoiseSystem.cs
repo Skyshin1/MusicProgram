@@ -38,6 +38,8 @@ namespace DeepSeaAI
         public static event Action<NoiseStimulus> NoiseEmitted;
 
         [SerializeField, Min(0.1f)] private float sonarRadius = 18f;
+        [SerializeField] private bool forwardAllPulses = true;
+        [SerializeField] private bool autoDiscoverImpacts = true;
         [SerializeField, Min(0.1f)] private float impactScanInterval = 5f;
 
         private float nextImpactScan;
@@ -82,11 +84,12 @@ namespace DeepSeaAI
 
         private void Start()
         {
-            AddImpactEmitters();
+            if (autoDiscoverImpacts) AddImpactEmitters();
         }
 
         private void Update()
         {
+            if (!autoDiscoverImpacts) return;
             if (Time.unscaledTime < nextImpactScan)
                 return;
 
@@ -101,6 +104,7 @@ namespace DeepSeaAI
 
         private void OnSonarPulseStarted(VolumetricFogPulseEmitter.PulseState pulse)
         {
+            if (!forwardAllPulses) return;
             Emit(new NoiseStimulus(
                 pulse.Origin,
                 sonarRadius * Mathf.Clamp01(pulse.Strength),

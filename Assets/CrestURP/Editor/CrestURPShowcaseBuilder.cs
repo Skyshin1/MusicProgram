@@ -35,7 +35,7 @@ namespace MusicProgram.CrestURP.Editor
 
         static CrestURPShowcaseBuilder()
         {
-            EditorApplication.delayCall += AutoBuildIfNeeded;
+            // Explicit showcase menu only. Domain reload must not alter unrelated renderers.
         }
 
         static void AutoBuildIfNeeded()

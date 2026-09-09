@@ -103,6 +103,13 @@ namespace AbstractOcclusion.WebGpuWater
             TextureHandle cameraColor = resources.activeColorTexture;
             if (!cameraColor.IsValid()) return;
 
+            // Defense in depth if this pass is enqueued through another path. Merely allocating
+            // a two-slice history is not enough: the shader samples TEXTURE2D and uses mono VP.
+            // Preserve the scene frame until proper per-eye raymarch/history support is added.
+            TextureDesc sourceDesc = renderGraph.GetTextureDesc(cameraColor);
+            if (cameraData.camera.stereoEnabled || sourceDesc.dimension != TextureDimension.Tex2D || sourceDesc.slices != 1)
+                return;
+
             TextureHandle shaftTexture = CreateHalfResTarget(renderGraph, cameraColor, out TextureDesc halfDesc);
 
             bool temporal = cameraData.cameraType == CameraType.Game;

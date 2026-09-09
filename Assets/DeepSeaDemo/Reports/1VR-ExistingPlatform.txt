@@ -1,0 +1,29 @@
+READ ONLY Assets/DeepSeaDemo/Scenes/DeepSeaInvestigation_1VR.unity dirty=False
+__OilRigGenerated world=(1.30, -1.04, -1.50) scale=(1.00, 1.00, 1.00) colliders=344
+Column_To_Deck_Bracing world=(1.30, -1.04, -1.50) scale=(1.00, 1.00, 1.00) colliders=8
+Pontoon_To_Deck_Brace_00 world=(-14.05, 2.61, -8.75) scale=(0.40, 0.25, 6.24) colliders=1
+Pontoon_To_Deck_Brace_01 world=(-5.35, 2.61, -8.75) scale=(0.40, 0.25, 6.24) colliders=1
+Pontoon_To_Deck_Brace_02 world=(5.95, 2.61, -8.75) scale=(0.40, 0.25, 6.24) colliders=1
+Pontoon_To_Deck_Brace_03 world=(14.65, 2.61, -8.75) scale=(0.40, 0.25, 6.24) colliders=1
+Pontoon_To_Deck_Brace_04 world=(-14.05, 2.61, 5.75) scale=(0.40, 0.25, 6.24) colliders=1
+Pontoon_To_Deck_Brace_05 world=(-5.35, 2.61, 5.75) scale=(0.40, 0.25, 6.24) colliders=1
+Pontoon_To_Deck_Brace_06 world=(5.95, 2.61, 5.75) scale=(0.40, 0.25, 6.24) colliders=1
+Pontoon_To_Deck_Brace_07 world=(14.65, 2.61, 5.75) scale=(0.40, 0.25, 6.24) colliders=1
+Supported_Lower_Maintenance_Deck world=(1.30, -1.04, -1.50) scale=(1.00, 1.00, 1.00) colliders=8
+Compact_Main_Deck_40x24 world=(1.30, -1.04, -1.50) scale=(1.00, 1.00, 1.00) colliders=60
+Supported_Process_Deck_12x8 world=(1.30, -1.04, -1.50) scale=(1.00, 1.00, 1.00) colliders=12
+MainDeck_Preparation_And_Electrical_Block world=(1.30, -1.04, -1.50) scale=(1.00, 1.00, 1.00) colliders=18
+Room_Equipment_Preparation world=(-12.70, 4.96, -7.50) scale=(1.00, 1.00, 1.00) colliders=0
+Room_Electrical_Maintenance world=(-6.70, 4.96, -7.50) scale=(1.00, 1.00, 1.00) colliders=0
+MainDeck_Log_And_Stair_Block world=(1.30, -1.04, -1.50) scale=(1.00, 1.00, 1.00) colliders=22
+Room_Log_Monitor world=(-12.70, 4.96, 4.50) scale=(1.00, 1.00, 1.00) colliders=0
+Room_Main_Control world=(-12.70, 8.96, 4.50) scale=(1.00, 1.00, 1.00) colliders=0
+Room_BlackBox_Analysis world=(-4.70, 8.96, 4.50) scale=(1.00, 1.00, 1.00) colliders=0
+Lower_Deck_Pumps world=(1.30, -1.04, -1.50) scale=(1.00, 1.00, 1.00) colliders=2
+Purposeful_Deck_Clutter world=(1.30, -1.04, -1.50) scale=(1.00, 1.00, 1.00) colliders=6
+MainDeck_West_Worklight world=(-16.70, 9.46, -12.50) scale=(1.00, 1.00, 1.00) colliders=0
+MainDeck_East_Worklight world=(19.30, 9.96, -11.50) scale=(1.00, 1.00, 1.00) colliders=0
+ProcessDeck_Worklight world=(2.30, 13.96, -0.50) scale=(1.00, 1.00, 1.00) colliders=0
+LowerDeck_Worklight world=(-5.70, 4.16, -5.50) scale=(1.00, 1.00, 1.00) colliders=0
+MainDeck_Realtime_Probe world=(1.30, 7.96, -1.50) scale=(1.00, 1.00, 1.00) colliders=0
+CAMERA Main Camera active=True enabled=True

@@ -73,7 +73,13 @@ public sealed class SurfaceDocumentReader : MonoBehaviour
 
         bool leftPressed = IsTriggerPressed(leftDevice);
         bool rightPressed = IsTriggerPressed(rightDevice);
-        bool keyboardPressed = allowDesktopKeyboardTest && !Application.isMobilePlatform &&
+        var adapter = GetComponent<DeepSeaDemo.DemoXRInput>();
+        if (adapter != null)
+        {
+            if (GetComponent<DeepSeaDemo.DemoInputRouter>() != null) return;
+            leftPressed = adapter.left.Trigger >= .75f; rightPressed = adapter.right.Trigger >= .75f;
+        }
+        bool keyboardPressed = allowDesktopKeyboardTest && (adapter == null || adapter.DesktopUI) && !Application.isMobilePlatform &&
             Keyboard.current != null && Keyboard.current[desktopReadKey].wasPressedThisFrame;
 
         if (keyboardPressed)

@@ -1,0 +1,367 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ffa32b781b3a465b82a930a597ac18, type: 3}
+  m_Name: EnglishText
+  m_EditorClassIdentifier: Assembly-CSharp::DeepSeaDemo.DemoTextCatalog
+  entries:
+  - id: log01.title
+    text: Routine Voyage Log
+  - id: log01.body
+    text: '12 June. The supply boat arrived half an hour early. Fresh vegetables
+      at last. We checked the southern ladder and the winch; the sea was quieter
+      than the training basin. Our new diver joked that this would be an easy posting.
+
+
+      After
+      lunch, the sonar operator found a repeating echo twenty-four metres below the
+      platform. It sounded like someone tapping a steel pipe. Nothing was loose in
+      the pump room. He marked it as a seabed reflection and promised another survey
+      tomorrow. At dinner we called it our neighbour asking us to stop working.
+
+
+      The
+      echo returned after lights-out. There was no alarm. I wrote the time in the
+      paper log because the terminal had already shut down: 23:17. Beyond the windows,
+      the sea looked perfectly still.'
+  - id: log02.title
+    text: 'Night Shift: Equipment Faults'
+  - id: log02.body
+    text: '14 June. Array channel three failed at 23:17. The discharge pump tripped
+      immediately afterwards. Both times are in the signed paper log. The exported
+      alarm report says 00:03 the next morning: scheduled maintenance, no personnel
+      risk. Nobody on this shift signed a maintenance order.
+
+
+      The technician
+      found dents pressed inward through the housing. Corrosion cannot explain them.
+      When we shut the equipment down, the knocks stopped. When we tested the array,
+      the echoes came closer. Nobody laughed this time.
+
+
+      The supervisor says
+      speculation is unprofessional. He wants the original records uploaded, and
+      the paper copy corrected to match the system. I have kept this page unchanged.
+      If these times are a clerical error, why does the report need to be replaced
+      before anyone inspects the damage?'
+  - id: log03.title
+    text: Diver Observation
+  - id: log03.body
+    text: '16 June. Visibility near the outfall is collapsing. My flashlight showed
+      a few metres of drifting particles and nothing beyond them. An empty beam does
+      not mean empty water.
+
+
+      My partner triggered active sonar. Something
+      moved behind the pump frame. On the next pulse it was closer. We switched off
+      the equipment and sheltered behind the rocks. It passed us and followed the
+      pipe that was still vibrating. The metal groaned. For the first time, I could
+      not tell myself it was just the current.
+
+
+      We returned holding each other''s
+      wrists. Do not scan continuously. Do not follow an echo into open water. A
+      stone thrown against a distant metal frame drew its attention long enough for
+      us to leave. Take cover first, make one decision, and then move. Sound travels
+      much farther than our lights.'
+  - id: log04.title
+    text: The Unsent Report
+  - id: log04.body
+    text: '18 June. The company requested that we remove the contamination peak and
+      submit last week''s water sample as this week''s result. I cannot sign that
+      report.
+
+
+      The submarine recorder still holds the original sensor timestamps.
+      Discharge began before the alarm. The final images show the creatures striking
+      the transmitting sonar array, then the discharge pump. They did not pursue
+      the divers who had switched off their equipment and withdrawn. We described
+      our fear as something evil in the ocean. We did not describe what we were pumping
+      into its home.
+
+
+      If you find this page, bring back the black box. Collect
+      a fresh sample if it is safe. Compare the sensor log with the handwritten times.
+      Do not rely on the company''s remote summary. Listen to the complete recording
+      before deciding where the evidence should go.'
+  - id: runtime.000
+    text: Read the Routine Voyage Log in the safe room.
+  - id: runtime.001
+    text: Compare the alarm timestamps with the paper log.
+  - id: runtime.002
+    text: Pick up the flashlight from the equipment table.
+  - id: runtime.003
+    text: Confirm your diving suit at the equipment station.
+  - id: runtime.004
+    text: 'Enter the water. Right stick down: dive. Empty-hand Trigger: sonar.'
+  - id: runtime.005
+    text: Follow the pipes to the repair cage. Find the electronic lock tool. Outfall
+      evidence is optional.
+  - id: runtime.006
+    text: Enter the flooded compartment. Read the last recording and retrieve the
+      orange black box.
+  - id: runtime.007
+    text: 'Repair the submarine hatch: hold tool Trigger; judge the QTE with the
+      other empty hand''s Grip.'
+  - id: runtime.008
+    text: Bring the black box back to the platform. Follow the blue return beacons.
+  - id: runtime.009
+    text: Insert the black box into the analysis socket. Review the evidence, then
+      preserve or upload it.
+  - id: runtime.010
+    text: Investigation complete.
+  - id: runtime.011
+    text: Contaminated water. The flashlight reveals nearby surfaces. Sonar reveals
+      outlines, but also reveals you.
+  - id: runtime.012
+    text: Checkpoint unavailable. Please start a new game.
+  - id: runtime.013
+    text: Equipment ready. Weather is deteriorating. Follow the yellow signs to the
+      dive point.
+  - id: runtime.014
+    text: Hatch unlocked. The compartment is flooded. Watch your oxygen.
+  - id: runtime.015
+    text: Company Data Reception
+  - id: runtime.016
+    text: 'Uploading mission records...
+
+      This is a fictional sequence. No real
+      files are uploaded.'
+  - id: runtime.017
+    text: Automatic Cleanup Protocol
+  - id: runtime.018
+    text: 'Black-box copy: removed
+
+      Local sensor index: removed
+
+      Company
+      conclusion: equipment failure. No abnormal discharge.'
+  - id: runtime.019
+    text: Last Recording
+  - id: runtime.020
+    text: 'Backup power restored. The recording shows the creature striking the active
+      sonar array, then the discharge pump.
+
+      It did not follow the divers who
+      switched off their equipment and withdrew.
+
+
+      The engine is making noise.
+      Take the black box and leave.'
+  - id: runtime.021
+    text: Backup power is online. Take the black box and follow the return beacons.
+  - id: runtime.022
+    text: The checkpoint could not be written to disk. Retry is still available for
+      this session.
+  - id: runtime.023
+    text: Destination obstructed. Movement cancelled.
+  - id: runtime.024
+    text: ' was moved to its recovery point.'
+  - id: runtime.025
+    text: DEEP SEA / THE UNSENT REPORT
+  - id: runtime.026
+    text: New Game
+  - id: runtime.027
+    text: Continue Checkpoint
+  - id: runtime.028
+    text: Settings
+  - id: runtime.029
+    text: Quit
+  - id: runtime.030
+    text: 'Quest 3 / Link or Air Link
+
+      Grip: grab / Trigger: use or select'
+  - id: runtime.031
+    text: Investigation Paused
+  - id: runtime.032
+    text: Resume
+  - id: runtime.033
+    text: Return to Safe Position
+  - id: runtime.034
+    text: Retry Chapter Checkpoint
+  - id: runtime.035
+    text: Main Menu
+  - id: runtime.036
+    text: Comfort & Audio
+  - id: runtime.037
+    text: Volume -
+  - id: runtime.038
+    text: Volume +
+  - id: runtime.039
+    text: 'Turn: Snap / Smooth'
+  - id: runtime.040
+    text: 'Move Speed: Slow / Standard'
+  - id: runtime.041
+    text: 'Lightning: Standard / Gentle'
+  - id: runtime.042
+    text: 'Story Subtitles: '
+  - id: runtime.043
+    text: On
+  - id: runtime.044
+    text: Off
+  - id: runtime.045
+    text: ' (documents remain available)'
+  - id: runtime.046
+    text: Back
+  - id: runtime.047
+    text: FIELD ARCHIVE / READ AGAIN ANYTIME
+  - id: runtime.048
+    text: Close Record
+  - id: runtime.049
+    text: Black Box Decoded
+  - id: runtime.050
+    text: EVIDENCE CROSS-CHECK
+  - id: runtime.051
+    text: 'Black box: decoded
+
+'
+  - id: runtime.052
+    text: 'Sensor: discharge preceded the alarm
+
+'
+  - id: runtime.053
+    text: 'Sensor log: not recovered
+
+'
+  - id: runtime.054
+    text: 'Water sample: abnormal contamination
+
+'
+  - id: runtime.055
+    text: 'Water sample: not submitted
+
+'
+  - id: runtime.056
+    text: 'Testimony: impacts stopped when sonar stopped
+
+'
+  - id: runtime.057
+    text: 'Survivor testimony: not read
+
+'
+  - id: runtime.058
+    text: '
+
+      The creatures targeted sonar arrays and discharge pumps first.
+      The company requests an immediate upload. Its protocol includes deleting the
+      local copies.'
+  - id: runtime.059
+    text: Preserve Evidence / Refuse Upload
+  - id: runtime.060
+    text: Upload to Company...
+  - id: runtime.061
+    text: 'Ending: Case Closed'
+  - id: runtime.062
+    text: 'Ending: The Unsent Report'
+  - id: runtime.063
+    text: 'You followed the company''s instructions.
+
+      The anomalies were classified
+      as equipment failure.
+
+      The platform resumed work. The echoes below did
+      not stop.'
+  - id: runtime.064
+    text: 'You refused to upload.
+
+      The evidence still connects the pollution
+      to the attacks.
+
+      The next person who enters these waters will not have
+      to trust the altered report.'
+  - id: runtime.065
+    text: '
+
+
+      Thank you for playing / Deep Sea Investigation'
+  - id: runtime.066
+    text: Start Again
+  - id: runtime.067
+    text: Return to Main Menu
+  - id: runtime.068
+    text: Confirm Upload?
+  - id: runtime.069
+    text: 'The company protocol will erase the fictional in-game records.
+
+      This
+      choice determines the ending.'
+  - id: runtime.070
+    text: Confirm Upload
+  - id: runtime.071
+    text: Back to Evidence
+  - id: runtime.072
+    text: 'Volume '
+  - id: runtime.073
+    text: Turning mode changed.
+  - id: runtime.074
+    text: Movement speed changed.
+  - id: runtime.075
+    text: Lightning setting changed.
+  - id: runtime.076
+    text: '
+
+      Oxygen '
+  - id: runtime.077
+    text: '%    Acoustic Exposure '
+  - id: runtime.078
+    text: Pick up the flashlight from the equipment table first.
+  - id: runtime.079
+    text: Diving suit ready. Your oxygen gauge is on your glove.
+  - id: runtime.080
+    text: Place the matching item in the receiver.
+  - id: runtime.081
+    text: Release the black box into the socket. The evidence panel opens when playback
+      finishes.
+  - id: runtime.082
+    text: 'Evidence registered: '
+  - id: world.Alarm_Terminal.title
+    text: Alarm Terminal
+  - id: world.Alarm_Terminal.body
+    text: 'Paper log: 23:17, sonar array lost and pump stopped. Digital export: 00:03,
+      scheduled maintenance. Forty-six minutes are missing. No engineer signed the
+      paper log. The discrepancy has been registered.'
+  - id: world.Diving_Suit_Confirmation.title
+    text: Diving Suit Confirmation
+  - id: world.Diving_Suit_Confirmation.body
+    text: Use an empty-hand Trigger to interact. Grip picks up physical objects.
+  - id: world.Water_Sample_Receiver.title
+    text: Water Sample Receiver
+  - id: world.Water_Sample_Receiver.body
+    text: Use an empty-hand Trigger to interact. Grip picks up physical objects.
+  - id: world.Safe_Boarding.title
+    text: Safe Boarding
+  - id: world.Safe_Boarding.body
+    text: Use an empty-hand Trigger to interact. Grip picks up physical objects.
+  - id: world.Dive_Entry_Panel.title
+    text: Dive Entry Panel
+  - id: world.Dive_Entry_Panel.body
+    text: Use an empty-hand Trigger to interact. Grip picks up physical objects.
+  - id: world.Outfall_Sensor.title
+    text: Outfall Sensor
+  - id: world.Outfall_Sensor.body
+    text: '23:11: discharge valve opened. 23:14: turbidity reached 8.7 times baseline.
+      23:17: sonar array failed. The company export smooths this interval to normal
+      values. Original sensor data registered. Return the nearby water sample for
+      independent verification.'
+  - id: world.Survivor_Transcript.title
+    text: Survivor Transcript
+  - id: world.Survivor_Transcript.body
+    text: I could not see it. When the pump stopped, it stopped too. As we escaped,
+      it turned toward the running array, not toward us. Do not erase the shutdown
+      record. It explains why we survived.
+  - id: world.Last_Submarine_Recording.title
+    text: Last Submarine Recording
+  - id: world.Last_Submarine_Recording.body
+    text: 'FRAME 01: repeated sonar pulses. The creature turns toward the array.
+      FRAME 02: the discharge pump ruptures. Divers escape while the animal circles
+      the machinery. RECORDER: It follows the noise. This black box contains the
+      original timestamps. Removing it will start emergency power. Follow the return
+      beacons.'

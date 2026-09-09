@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39fa3d8997a24136984ca6e2c99902bc, type: 3}
+  m_Name: DemoMenuActions
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionAsset
+  m_ActionMaps:
+  - m_Name: Demo
+    m_Id: 23d7a4ff-eacb-48ad-af7f-5923cc4bcb70
+    m_Asset: {fileID: 11400000}
+    m_Actions:
+    - m_Name: Left Menu
+      m_Type: 1
+      m_ExpectedControlType: 
+      m_Id: 21cdb44d-4664-4612-9f89-bed94346f520
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Right Menu
+      m_Type: 1
+      m_ExpectedControlType: 
+      m_Id: 2c9ccdf3-e090-4a08-8f45-ed69eed84f09
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Bindings:
+    - m_Name: 
+      m_Id: 0aeb1f3d-9bc7-4672-86c4-5a6c04215f0e
+      m_Path: <XRController>{LeftHand}/menuButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Left Menu
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 0bce2e31-ea03-42bc-99bd-28f65c9d002a
+      m_Path: <XRController>{RightHand}/menuButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Right Menu
+      m_Flags: 0
+  m_ControlSchemes: []
+  m_IsProjectWide: 0

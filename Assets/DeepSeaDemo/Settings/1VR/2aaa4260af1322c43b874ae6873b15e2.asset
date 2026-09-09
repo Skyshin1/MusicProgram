@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a5765b2c354184fa4927ddf0f55062, type: 3}
+  m_Name: 2aaa4260af1322c43b874ae6873b15e2
+  m_EditorClassIdentifier: Assembly-CSharp::DeepSeaDemo.DemoConfig
+  text: {fileID: 11400000, guid: 1421c6157598cd547aa5075beddb4f73, type: 2}
+  saveFileName: DeepSeaInvestigation_1VR.checkpoint.json
+  moveSpeed: 2
+  swimSpeed: 1.5
+  oxygenSeconds: 1200
+  refillSeconds: 5
+  grabRange: 3
+  sonarRadius: 25
+  sonarSpeed: 12
+  sonarWidth: 0.5
+  sonarCooldown: 1.5
+  exposurePerPulse: 20
+  exposureDecayDelay: 8
+  exposureDecaySpeed: 3
+  baseHearingRadius: 24
+  maximumHearingRadius: 36
+  impactSpeed: 1.5
+  impactCooldown: 0.6
+  impactRadius: 12
+  worldMask:
+    serializedVersion: 2
+    m_Bits: 768
+  interactMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  uiMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  chineseFont: {fileID: 12800000, guid: 8750dadfc741fb546990f5a8c5331679, type: 3}
+  runtimeShaders: []
+  weatherReady: 0
+  weatherStatus: 'BLOCKED: Import UniStorm 5.4+ and its official Render Graph URP
+    support package. No replacement weather system is used.'

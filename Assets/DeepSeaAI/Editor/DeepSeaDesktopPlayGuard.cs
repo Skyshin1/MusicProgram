@@ -2,9 +2,7 @@ using System.IO;
 using Microsoft.Win32;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEditor.XR.Management;
 using UnityEngine;
-using UnityEngine.XR.Management;
 
 namespace DeepSeaAI.Editor
 {
@@ -12,7 +10,6 @@ namespace DeepSeaAI.Editor
     internal static class DeepSeaDesktopPlayGuard
     {
         private const string TargetScenePath = "Assets/Scenes/1-VR.unity";
-        private const string RestoreKey = "DeepSeaAI.RestoreXRInit";
         private const string ToggleKey = "DeepSeaAI.DesktopPlayGuardEnabled";
 
         static DeepSeaDesktopPlayGuard()
@@ -43,8 +40,6 @@ namespace DeepSeaAI.Editor
         {
             if (change == PlayModeStateChange.ExitingEditMode)
                 PrepareDesktopPlay();
-            else if (change == PlayModeStateChange.EnteredEditMode)
-                RestoreXRSetting();
         }
 
         private static void PrepareDesktopPlay()
@@ -56,36 +51,11 @@ namespace DeepSeaAI.Editor
                 return;
             }
 
-            XRGeneralSettings settings =
-                XRGeneralSettingsPerBuildTarget.XRGeneralSettingsForBuildTarget(
-                    BuildTargetGroup.Standalone);
-            if (settings == null || !settings.InitManagerOnStart)
-                return;
-
-            SessionState.SetBool(RestoreKey, true);
-            settings.InitManagerOnStart = false;
-            EditorUtility.SetDirty(settings);
-            AssetDatabase.SaveAssets();
-            Debug.Log(
-                "[DeepSeaAI] No active OpenXR runtime was found. XR startup is disabled " +
-                "for this editor Play session only; desktop keyboard simulation remains active.");
-        }
-
-        private static void RestoreXRSetting()
-        {
-            if (!SessionState.GetBool(RestoreKey, false))
-                return;
-
-            XRGeneralSettings settings =
-                XRGeneralSettingsPerBuildTarget.XRGeneralSettingsForBuildTarget(
-                    BuildTargetGroup.Standalone);
-            if (settings != null)
-            {
-                settings.InitManagerOnStart = true;
-                EditorUtility.SetDirty(settings);
-                AssetDatabase.SaveAssets();
-            }
-            SessionState.EraseBool(RestoreKey);
+            // Never persist a disabled project-wide XR startup flag from a Play test.
+            // A crash before restoration used to leave every scene without automatic XR.
+            Debug.LogWarning(
+                "[DeepSeaAI] No registered OpenXR runtime was found. XR settings were NOT changed. " +
+                "Select a desktop test configuration explicitly if no headset is intended.");
         }
 
         private static bool HasActiveOpenXRRuntime()

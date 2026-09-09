@@ -73,6 +73,13 @@ public sealed class VolumetricFogPulseEmitter : MonoBehaviour
     public static event System.Action AllPulsesEnded;
     public static event System.Action<Vector3, float, Transform> PlayerSonarEmitted;
 
+    public void ClearPulses()
+    {
+        System.Array.Clear(pulses, 0, pulses.Length);
+        Shader.SetGlobalInt(PulseCountId, 0);
+        AllPulsesEnded?.Invoke();
+    }
+
     [Header("Input")]
     [SerializeField]
     [Tooltip("Editor/desktop fallback only. VR gameplay uses XRHandSonarInput and hand Trigger buttons.")]

@@ -69,6 +69,10 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
     public bool MovementEnabled => movementEnabled;
     public bool IsSurfaceFloating => surfaceFloating;
 
+    public void ResetVerticalMotion() { verticalVelocity = 0; surfaceFloating = false; }
+    public void ToggleTurnMode() { useSnapTurn = !useSnapTurn; }
+    public void ToggleComfortSpeed() { moveSpeed = moveSpeed > 1.5f ? 1.2f : 2f; }
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void EnsureOnLoadedOrigins()
     {
@@ -123,6 +127,14 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
         leftStick = Vector2.zero;
         rightStick = Vector2.zero;
 
+        var demoInput = GetComponent<DeepSeaDemo.DemoXRInput>();
+        if (demoInput != null && demoInput.isActiveAndEnabled)
+        {
+            leftStick = demoInput.left.Stick;
+            rightStick = demoInput.right.Stick;
+        }
+        else
+        {
         if (!leftController.isValid)
             leftController = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
         if (leftController.isValid)
@@ -132,11 +144,17 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
             rightController = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
         if (rightController.isValid)
             rightController.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out rightStick);
+        }
 
         if (leftStick.sqrMagnitude < deadZone * deadZone)
             leftStick = Vector2.zero;
         if (Mathf.Abs(rightStick.y) < deadZone)
             rightStick.y = 0f;
+        if (GetComponent<DeepSeaDemo.DemoPlayerSafety>() != null)
+        {
+            if (Mathf.Abs(rightStick.y) > Mathf.Abs(rightStick.x)) rightStick.x = 0;
+            else rightStick.y = 0;
+        }
     }
 
     private void UpdateMovement(Vector2 leftStick, float verticalInput)
@@ -156,9 +174,10 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
             horizontal.Normalize();
         horizontal *= moveSpeed;
 
-        float dt = Time.deltaTime;
+        float dt = Mathf.Min(Time.deltaTime, .1f);
+        var adapter = GetComponent<DeepSeaDemo.DemoXRInput>();
         bool diveRequested = verticalInput <= -diveInputThreshold ||
-            (allowDesktopDiveKey && !Application.isMobilePlatform && Keyboard.current != null &&
+            (allowDesktopDiveKey && (adapter == null || adapter.DesktopUI) && !Application.isMobilePlatform && Keyboard.current != null &&
              Keyboard.current[desktopDiveKey].isPressed);
         float surfaceY = 0f;
         bool hasSurface = waterState != null && waterState.TryGetSurfaceHeight(out surfaceY);
@@ -178,7 +197,7 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
                 float targetHeadY = surfaceY + surfaceEyeHeight;
                 verticalVelocity = Mathf.Clamp((targetHeadY - headY) * surfaceSnapSpeed,
                     -verticalSwimSpeed, verticalSwimSpeed);
-                CollisionFlags surfaceFlags = characterController.Move(
+                CollisionFlags surfaceFlags = MoveSafely(
                     (horizontal + Vector3.up * verticalVelocity) * dt);
                 if ((surfaceFlags & CollisionFlags.Above) != 0 && verticalVelocity > 0f)
                     verticalVelocity = 0f;
@@ -216,7 +235,7 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
                 verticalVelocity = Mathf.Max(-maximumAirFallSpeed, verticalVelocity + airGravity * dt);
         }
 
-        CollisionFlags flags = characterController.Move(
+        CollisionFlags flags = MoveSafely(
             (horizontal + Vector3.up * verticalVelocity) * dt);
         if ((flags & CollisionFlags.Below) != 0 && verticalVelocity < 0f)
             verticalVelocity = IsUnderwater ? 0f : -0.5f;
@@ -232,9 +251,21 @@ public sealed class QuestLeftStickLocomotion : MonoBehaviour
         Vector3 headLocal = transform.InverseTransformPoint(xrOrigin.Camera.transform.position);
         float height = Mathf.Clamp(headLocal.y + headClearance,
             minimumCapsuleHeight, maximumCapsuleHeight);
+        float radius = Mathf.Min(capsuleRadius, height * .45f);
+        Vector3 center = new(headLocal.x, height * .5f, headLocal.z);
+        var safety = GetComponent<DeepSeaDemo.DemoPlayerSafety>();
+        if (safety != null && !safety.CanResize(center, height, radius)) return;
         characterController.height = height;
-        characterController.radius = Mathf.Min(capsuleRadius, height * 0.45f);
-        characterController.center = new Vector3(headLocal.x, height * 0.5f, headLocal.z);
+        characterController.radius = radius;
+        characterController.center = center;
+    }
+
+    private CollisionFlags MoveSafely(Vector3 delta)
+    {
+        int steps = Mathf.Clamp(Mathf.CeilToInt(delta.magnitude / .12f), 1, 32);
+        CollisionFlags flags = CollisionFlags.None;
+        for (int i = 0; i < steps; i++) flags |= characterController.Move(delta / steps);
+        return flags;
     }
 
     private void UpdateTurning(float horizontal)

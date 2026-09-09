@@ -20,7 +20,7 @@ namespace DeepSeaAI.Editor
 
         static MissingStalkerSafeRepair()
         {
-            EditorApplication.delayCall += TryRepair;
+            // Use the explicit Install/Repair menu; never silently save a scene on domain reload.
         }
 
         private static void TryRepair()

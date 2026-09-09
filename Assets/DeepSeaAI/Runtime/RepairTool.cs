@@ -91,7 +91,8 @@ namespace DeepSeaAI
                 !Application.isMobilePlatform &&
                 Keyboard.current != null &&
                 Keyboard.current[desktopRepairKey].isPressed;
-            bool repairing = (grabbed && activateHeld) || desktopInput;
+            bool repairing = ((grabbed && activateHeld) || desktopInput) &&
+                !DeepSeaDemo.DemoInputRouter.BlockItemTrigger(transform);
 
             currentTarget = repairing ? FindNearestTarget() : null;
             if (currentTarget == null)

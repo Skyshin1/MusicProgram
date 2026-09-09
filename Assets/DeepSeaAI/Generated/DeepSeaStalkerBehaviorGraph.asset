@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DeepSeaStalkerBehaviorGraph
   m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraph
   Graphs:
-  - rid: 2377482907936620615
+  - rid: 7109906325291663431
   m_DebugInfo: {fileID: 0}
   m_WasCompileWithPlaceholderNode: 0
   references:
@@ -21,32 +21,32 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 2377482907936620615
+    - rid: 7109906325291663431
       type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         AuthoringAssetID:
-          m_Value0: 13682262560940435317
-          m_Value1: 9784010967025417658
+          m_Value0: 5448513861766673139
+          m_Value1: 12994405355502614258
         m_DebugInfo: {fileID: 0}
         BlackboardReference:
-          rid: 2377482907936620616
+          rid: 7109906325291663432
         BlackboardGroupReferences: []
         Root:
-          rid: 2377482907936620617
+          rid: 7109906325291663433
         m_ActiveNodes: []
         m_NodesToTick: []
         m_NodesToEnd:
-          rid: 2377482907936620618
+          rid: 7109906325291663434
         m_EndedNodes:
-          rid: 2377482907936620619
+          rid: 7109906325291663435
         m_VersionTimestamp: 0
-    - rid: 2377482907936620616
+    - rid: 7109906325291663432
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Blackboard:
-          rid: 2377482907936620620
+          rid: 7109906325291663436
         m_Source: {fileID: 0}
-    - rid: 2377482907936620617
+    - rid: 7109906325291663433
       type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -57,29 +57,29 @@ MonoBehaviour:
         m_Parent:
           rid: -2
         m_Child:
-          rid: 2377482907936620621
+          rid: 7109906325291663437
         Repeat: 1
         AllowMultipleRepeatsPerTick: 0
-    - rid: 2377482907936620618
+    - rid: 7109906325291663434
       type: {class: 'Stack`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: mscorlib}
       data: 
-    - rid: 2377482907936620619
+    - rid: 7109906325291663435
       type: {class: 'HashSet`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: System.Core}
       data: 
-    - rid: 2377482907936620620
+    - rid: 7109906325291663436
       type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Variables:
-        - rid: 2377482907936620622
-        - rid: 2377482907936620623
-        - rid: 2377482907936620624
-        - rid: 2377482907936620625
-        - rid: 2377482907936620626
-        - rid: 2377482907936620627
-        - rid: 2377482907936620628
-        - rid: 2377482907936620629
-        - rid: 2377482907936620630
-    - rid: 2377482907936620621
+        - rid: 7109906325291663438
+        - rid: 7109906325291663439
+        - rid: 7109906325291663440
+        - rid: 7109906325291663441
+        - rid: 7109906325291663442
+        - rid: 7109906325291663443
+        - rid: 7109906325291663444
+        - rid: 7109906325291663445
+        - rid: 7109906325291663446
+    - rid: 7109906325291663437
       type: {class: SelectorComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -88,84 +88,84 @@ MonoBehaviour:
         Graph:
           rid: -2
         m_Parent:
-          rid: 2377482907936620617
+          rid: 7109906325291663433
         m_Children:
-        - rid: 2377482907936620631
-        - rid: 2377482907936620632
-        - rid: 2377482907936620633
-    - rid: 2377482907936620622
+        - rid: 7109906325291663447
+        - rid: 7109906325291663448
+        - rid: 7109906325291663449
+    - rid: 7109906325291663438
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
-          m_Value0: 4305886627650317985
-          m_Value1: 9367603687073896047
+          m_Value0: 5957425042656070318
+          m_Value1: 6074725736998359940
         Name: Self
         m_Value: {fileID: 0}
-    - rid: 2377482907936620623
+    - rid: 7109906325291663439
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
-          m_Value0: 1707445423660045439
-          m_Value1: 10298917786353046278
+          m_Value0: 7453162730110314661
+          m_Value1: 1886381426589087707
         Name: Player
         m_Value: {fileID: 0}
-    - rid: 2377482907936620624
+    - rid: 7109906325291663440
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
-          m_Value0: 16655435516419479581
-          m_Value1: 8011128655960372597
+          m_Value0: 11509204155102607377
+          m_Value1: 13157039011966454824
         Name: PatrolPoints
         m_Value: {fileID: 0}
-    - rid: 2377482907936620625
+    - rid: 7109906325291663441
       type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
-          m_Value0: 4089253263726058391
-          m_Value1: 11786009301710144786
+          m_Value0: 2037404663242528753
+          m_Value1: 7971206000217420420
         Name: CanSeePlayer
         m_Value: 0
-    - rid: 2377482907936620626
+    - rid: 7109906325291663442
       type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
-          m_Value0: 11601389407988926417
-          m_Value1: 3383109624977587293
+          m_Value0: 11072706139529136175
+          m_Value1: 18064428743517283195
         Name: LastSeenPosition
         m_Value: {x: 0, y: 0, z: 0}
-    - rid: 2377482907936620627
+    - rid: 7109906325291663443
       type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
-          m_Value0: 15994573867934591680
-          m_Value1: 7896089396485401979
+          m_Value0: 13001871858845791163
+          m_Value1: 9235437543811873754
         Name: HasNoise
         m_Value: 0
-    - rid: 2377482907936620628
+    - rid: 7109906325291663444
       type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
-          m_Value0: 15403469681709446291
-          m_Value1: 10290809817119629914
+          m_Value0: 13799217152468789899
+          m_Value1: 17977943474415263343
         Name: LastNoisePosition
         m_Value: {x: 0, y: 0, z: 0}
-    - rid: 2377482907936620629
+    - rid: 7109906325291663445
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
-          m_Value0: 14872426043769360582
-          m_Value1: 2219149327881440883
+          m_Value0: 5695224845896555027
+          m_Value1: 13168058785799312203
         Name: NoiseScore
         m_Value: 0
-    - rid: 2377482907936620630
+    - rid: 7109906325291663446
       type: {class: 'BlackboardVariable`1[[System.String, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
-          m_Value0: 17824192675274859151
-          m_Value1: 14907720931632397003
+          m_Value0: 16012018358599005569
+          m_Value1: 1126152805852506840
         Name: ActiveState
         m_Value: Patrol
-    - rid: 2377482907936620631
+    - rid: 7109906325291663447
       type: {class: DeepSeaChasePriorityAction, ns: DeepSeaAI, asm: Assembly-CSharp}
       data:
         ID:
@@ -174,10 +174,10 @@ MonoBehaviour:
         Graph:
           rid: -2
         m_Parent:
-          rid: 2377482907936620621
+          rid: 7109906325291663437
         Agent:
-          rid: 2377482907936620622
-    - rid: 2377482907936620632
+          rid: 7109906325291663438
+    - rid: 7109906325291663448
       type: {class: DeepSeaInvestigatePriorityAction, ns: DeepSeaAI, asm: Assembly-CSharp}
       data:
         ID:
@@ -186,10 +186,10 @@ MonoBehaviour:
         Graph:
           rid: -2
         m_Parent:
-          rid: 2377482907936620621
+          rid: 7109906325291663437
         Agent:
-          rid: 2377482907936620622
-    - rid: 2377482907936620633
+          rid: 7109906325291663438
+    - rid: 7109906325291663449
       type: {class: DeepSeaPatrolPriorityAction, ns: DeepSeaAI, asm: Assembly-CSharp}
       data:
         ID:
@@ -198,6 +198,6 @@ MonoBehaviour:
         Graph:
           rid: -2
         m_Parent:
-          rid: 2377482907936620621
+          rid: 7109906325291663437
         Agent:
-          rid: 2377482907936620622
+          rid: 7109906325291663438

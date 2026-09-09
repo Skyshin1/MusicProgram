@@ -134,7 +134,7 @@ namespace DeepSeaAI
                 return;
 
             foreach (Renderer target in renderers)
-                SonarRevealManager.RevealRenderer(target, revealDuration);
+                SonarRevealManager.RevealRendererForPulse(target, revealDuration, pulse);
 
         }
 

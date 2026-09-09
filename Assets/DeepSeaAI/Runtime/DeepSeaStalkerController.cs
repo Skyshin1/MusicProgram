@@ -26,6 +26,9 @@ namespace DeepSeaAI
         [Header("Sonar Diagnostics")]
         [Tooltip("Writes one Console message whenever this enemy directly receives a player or impact sonar pulse.")]
         [SerializeField] private bool logDirectSonarReception = true;
+        [SerializeField] private bool listenToRawPulses = true;
+        [SerializeField] private bool useStimulusSonarRadius;
+        [SerializeField] private bool validateAttackReach;
 
         private readonly RaycastHit[] sightHits = new RaycastHit[16];
         private NavMeshAgent agent;
@@ -230,7 +233,7 @@ namespace DeepSeaAI
             float distance = Vector3.Distance(ear, noise.Position);
             // Sonar range is a per-enemy gameplay value. Impacts retain the
             // strength calculated from their collision speed.
-            float effectiveRadius = noise.Kind == NoiseKind.Sonar
+            float effectiveRadius = noise.Kind == NoiseKind.Sonar && !useStimulusSonarRadius
                 ? CurrentConfig.sonarHearingRadius
                 : noise.Radius;
             Vector3 direction = noise.Position - ear;
@@ -267,6 +270,7 @@ namespace DeepSeaAI
 
         private void OnSonarPulseStarted(VolumetricFogPulseEmitter.PulseState pulse)
         {
+            if (!listenToRawPulses) return;
             if (!isActiveAndEnabled || state == StalkerState.Attack || state == StalkerState.Chase)
                 return;
 
@@ -475,7 +479,8 @@ namespace DeepSeaAI
             float planarDistance = Vector2.Distance(
                 new Vector2(transform.position.x, transform.position.z),
                 new Vector2(target.x, target.z));
-            if (canSeePlayer && planarDistance <= CurrentConfig.killDistance)
+            if (canSeePlayer && planarDistance <= CurrentConfig.killDistance &&
+                (!validateAttackReach || CanReachAttack()))
                 BeginAttack();
         }
 
@@ -496,6 +501,7 @@ namespace DeepSeaAI
                 return;
 
             stateTimer = float.NegativeInfinity;
+            if (validateAttackReach && !CanReachAttack()) { EnterReturnToPatrol(); return; }
             if (playerRespawn != null)
                 playerRespawn.Kill(transform);
             else
@@ -535,11 +541,16 @@ namespace DeepSeaAI
             {
                 agent.isStopped = false;
                 agent.speed = speed;
+                if (validateAttackReach && !NavMesh.SamplePosition(target, out _, 2f, agent.areaMask))
+                    target = ProjectToNavigationPlane(target);
                 if (!agent.SetDestination(target))
                     return false;
                 return agent.pathStatus != NavMeshPathStatus.PathInvalid;
             }
 
+            // The formal demo must never walk straight through geometry when navigation fails.
+            // Legacy test scenes retain their previous planar fallback.
+            if (validateAttackReach) return false;
             Vector3 planarTarget = new Vector3(target.x, transform.position.y, target.z);
             Vector3 next = Vector3.MoveTowards(
                 transform.position,
@@ -569,6 +580,12 @@ namespace DeepSeaAI
 
         private Vector3 ProjectToNavigationPlane(Vector3 position)
         {
+            if (validateAttackReach)
+            {
+                Vector3 seabed = new Vector3(position.x, transform.position.y, position.z);
+                if (NavMesh.SamplePosition(seabed, out NavMeshHit nearby, 5f, NavMesh.AllAreas)) return nearby.position;
+                return transform.position;
+            }
             // A sonar can originate at the player's underwater head height, while
             // the navmesh lives on the seabed. Use a generous vertical tolerance.
             if (NavMesh.SamplePosition(position, out NavMeshHit hit, 100f, NavMesh.AllAreas))
@@ -592,6 +609,12 @@ namespace DeepSeaAI
                 }
             }
             return nearest;
+        }
+
+        private bool CanReachAttack()
+        {
+            Vector3 ear = transform.position + Vector3.up * CurrentConfig.eyeHeight;
+            return Vector3.Distance(ear, PlayerBodyPosition()) <= CurrentConfig.killDistance + .35f && EvaluateSight();
         }
 
         private float InvestigationSpeed =>

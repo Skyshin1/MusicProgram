@@ -140,6 +140,11 @@ namespace DeepSeaAI
                 view.gameObject.SetActive(false);
         }
 
+        public void CancelActiveCheck()
+        {
+            CancelCheck(); target = null; boostEndsAt = 0;
+        }
+
         private void CancelCheck()
         {
             checkActive = false;
@@ -150,7 +155,9 @@ namespace DeepSeaAI
 
         private bool WasQtePressed(bool toolHeldByRightHand)
         {
-            if (!Application.isMobilePlatform && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
+            var adapter = FindFirstObjectByType<DeepSeaDemo.DemoXRInput>();
+            // R resets the XRI simulator: only allow it in the separate desktop test mode.
+            if ((adapter == null || adapter.DesktopUI) && !Application.isMobilePlatform && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
                 return true;
 
             bool pressed = ReadVrGrip(toolHeldByRightHand);
@@ -161,6 +168,12 @@ namespace DeepSeaAI
 
         private static bool ReadVrGrip(bool toolHeldByRightHand)
         {
+            var demoInput = DeepSeaDemo.DemoInputRouter.Instance;
+            if (demoInput != null && demoInput.Holding(!toolHeldByRightHand)) return false;
+            if (demoInput != null && demoInput.Actions != null)
+                return demoInput.Actions.Hand(!toolHeldByRightHand).Grip >= .75f;
+            var adapter = FindFirstObjectByType<DeepSeaDemo.DemoXRInput>();
+            if (adapter != null) return adapter.Hand(!toolHeldByRightHand).Grip >= .75f;
             XRNode freeHand = toolHeldByRightHand ? XRNode.LeftHand : XRNode.RightHand;
             UnityEngine.XR.InputDevice device = InputDevices.GetDeviceAtXRNode(freeHand);
             return device.isValid &&

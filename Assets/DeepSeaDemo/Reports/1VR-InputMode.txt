@@ -1,0 +1,6 @@
+Scene: Assets/DeepSeaDemo/Scenes/DeepSeaInvestigation_1VR.unity
+Mode: RealVR
+Simulator roots: 1
+Active simulators: 0
+Configured in open scene. NOT auto-saved: preserve user's existing unsaved changes. Save with Ctrl+S.
+Headset tracking and controller play not verified by this configuration check.

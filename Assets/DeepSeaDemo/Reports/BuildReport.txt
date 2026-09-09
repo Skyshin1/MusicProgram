@@ -1,0 +1,33 @@
+Dedicated PCVR renderer features: SonarWhiteOutlineRendererFeature, WaterUnderwaterFogFeature, WaterCausticProjectionFeature, LargeBodyAtmosphereFeature, WaterExitDropletsRendererFeature, DecalRendererFeature
+Hand Visual Leather Glove Left: 15 bone pose channels; exact selected left/right models.
+Hand Visual Leather Glove Right: 15 bone pose channels; exact selected left/right models.
+Water copied from configured 1-VR, camera/sun rebound, authored source unchanged.
+WARNING: No repair Decal material found; damage visual needs authoring.
+Submarine bounds Center: (20.00, -20.80, 19.00), Extents: (3.79, 3.84, 9.50); Door Center: (20.00, -17.55, 19.14), Extents: (1.22, 0.43, 1.35); approach (20.00, -15.35, 19.14); MUST check corridor clearance in headset.
+BLOCKED: Import UniStorm 5.4+ and its official Render Graph URP support package. No replacement weather system is used.
+EnemyFish imported animations: Swim
+Fish0 imported animations: Take 001
+Fish0 imported animations: Take 001
+Fish0 imported animations: Take 001
+Fish0 imported animations: Take 001
+Fish0 imported animations: Take 001
+Fish1 imported animations: Take 001
+Fish1 imported animations: Take 001
+Fish1 imported animations: Take 001
+Fish1 imported animations: Take 001
+Fish1 imported animations: Take 001
+NavMesh baked for seabed volume; 1 enemy + 10 fish; source models preserved.
+Saved complete bound assembly plus independent player, exact gloves, fish schools, enemy and props.
+VALIDATION UTC 2026-09-06T11:02:11.5011656Z
+XR Origin count: 1
+Prop IDs unique: True
+Documents: 4
+Missing scripts: 0
+Checkpoint Checkpoint Platform Departure head=(0.00, 3.95, -14.00) obstructed=
+Checkpoint Checkpoint Tool Cage head=(-15.00, -21.80, 8.00) obstructed=
+Checkpoint Checkpoint Submarine head=(20.00, -15.35, 19.14) obstructed=
+Checkpoint Checkpoint Analysis head=(4.00, 3.95, -14.00) obstructed=
+Door real model bound: True
+NavMesh triangles: 223
+WEATHER: BLOCKED: Import UniStorm 5.4+ and its official Render Graph URP support package. No replacement weather system is used.
+NOT VERIFIED: Quest 3 stereo, 72 Hz CPU/GPU, hand pose alignment, full controller-only playthrough, submarine corridor clearances, both endings/checkpoint runtime regression.

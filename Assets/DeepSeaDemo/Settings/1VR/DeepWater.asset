@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2019e7cec699fcf71040e19538a82f10, type: 3}
+  m_Name: DeepWater
+  m_EditorClassIdentifier: Assembly-CSharp::DeepSeaDemo.DemoDeepWaterProfile
+  fogColor: {r: 0.001, g: 0.003, b: 0.005, a: 1}
+  fogExtinction: {r: 0.62, g: 0.26, b: 0.22, a: 1}
+  fogDensity: 1.3
+  depthExtinction: {r: 0.45, g: 0.3, b: 0.23, a: 1}
+  depthStrength: 1.3
+  scatterAmbient: 0.04
+  scatterSun: 0.08
+  scatterIntensity: 0.1
+  causticIntensity: 0.12
+  causticDepthFade: 0.65
+  headlampRadius: 0.65
+  headlampOffset: 0.3
+  headlampEdge: 0.3
+  flashlightRange: 5
+  shallowTestDepth: 5
+  transitionTestDepth: 15
+  deepTestDepth: 22

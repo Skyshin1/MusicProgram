@@ -13,6 +13,7 @@ namespace DeepSeaAI
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void Install()
         {
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().path.StartsWith("Assets/DeepSeaDemo/")) return;
             var probe = new GameObject("Deep Sea Runtime Sanity Probe");
             probe.hideFlags = HideFlags.HideAndDontSave;
             probe.AddComponent<DeepSeaRuntimeSanityProbe>();

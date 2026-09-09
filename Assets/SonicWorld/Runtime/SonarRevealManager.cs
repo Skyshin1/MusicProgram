@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using AbstractOcclusion.WebGpuWater;
 
 /// <summary>
 /// Tracks renderers swept by standalone Water Volume sonar shells. Renderers
@@ -31,6 +32,13 @@ public sealed class SonarRevealManager : MonoBehaviour
 
     private readonly Collider[] colliderBuffer = new Collider[ColliderCapacity];
     private readonly Dictionary<Renderer, float> activeRenderers = new Dictionary<Renderer, float>();
+    private readonly Dictionary<Collider, Transform> colliderRoots = new();
+    private readonly Dictionary<Transform, Renderer[]> rendererCache = new();
+    private readonly HashSet<Transform> scannedRoots = new();
+    private readonly Dictionary<int, WaterVolume> pulseWater = new();
+    private readonly Dictionary<Renderer, float> surfaceLimits = new();
+    private readonly List<Material> targetMaterials = new();
+    public static float OutlineMaximumY(Renderer renderer) => Instance != null && Instance.surfaceLimits.TryGetValue(renderer, out float y) ? y : 1e20f;
     private float allPulsesEndedAt = float.PositiveInfinity;
     private float outlineStrength = 0f;
 
@@ -55,8 +63,29 @@ public sealed class SonarRevealManager : MonoBehaviour
             return;
 
         Instance.activeRenderers[renderer] = Time.unscaledTime + Mathf.Max(0.05f, duration);
+        Instance.surfaceLimits[renderer] = 1e20f;
         Instance.outlineStrength = 1f;
         Instance.allPulsesEndedAt = float.PositiveInfinity;
+    }
+
+    public static void RevealRendererForPulse(Renderer renderer, float duration, VolumetricFogPulseEmitter.PulseState pulse)
+    {
+        if (renderer == null) return;
+        if (Instance == null) EnsureInstance();
+        if (Instance == null || !Instance.EligibleSurface(renderer, pulse, out float maxY)) return;
+        Instance.activeRenderers[renderer] = Time.unscaledTime + Mathf.Max(.05f, duration);
+        Instance.surfaceLimits[renderer] = maxY;
+        Instance.outlineStrength = 1;
+        Instance.allPulsesEndedAt = float.PositiveInfinity;
+    }
+
+    public void ClearReveals()
+    {
+        activeRenderers.Clear();
+        colliderRoots.Clear(); rendererCache.Clear(); scannedRoots.Clear();
+        pulseWater.Clear(); surfaceLimits.Clear();
+        outlineStrength = 0;
+        allPulsesEndedAt = float.PositiveInfinity;
     }
 
     private void OnEnable()
@@ -64,6 +93,7 @@ public sealed class SonarRevealManager : MonoBehaviour
         Instance = this;
         VolumetricFogPulseEmitter.PulseStarted += OnPulseStarted;
         VolumetricFogPulseEmitter.PulseUpdated += OnPulseUpdated;
+        VolumetricFogPulseEmitter.PulseEnded += OnPulseEnded;
         VolumetricFogPulseEmitter.AllPulsesEnded += OnAllPulsesEnded;
     }
 
@@ -71,6 +101,7 @@ public sealed class SonarRevealManager : MonoBehaviour
     {
         VolumetricFogPulseEmitter.PulseStarted -= OnPulseStarted;
         VolumetricFogPulseEmitter.PulseUpdated -= OnPulseUpdated;
+        VolumetricFogPulseEmitter.PulseEnded -= OnPulseEnded;
         VolumetricFogPulseEmitter.AllPulsesEnded -= OnAllPulsesEnded;
         if (Instance == this)
             Instance = null;
@@ -93,11 +124,16 @@ public sealed class SonarRevealManager : MonoBehaviour
 
         activeRenderers.Clear();
         allPulsesEndedAt = float.PositiveInfinity;
+        surfaceLimits.Clear(); rendererCache.Clear(); colliderRoots.Clear();
     }
 
     private void OnPulseStarted(VolumetricFogPulseEmitter.PulseState pulse)
     {
+        // Models can be replaced between pulses, but not rediscovered for every
+        // collider on every frame of the same pulse.
+        colliderRoots.Clear(); rendererCache.Clear();
         allPulsesEndedAt = float.PositiveInfinity;
+        pulseWater[pulse.Id] = WaterVolume.BodyContaining(pulse.Origin);
         outlineStrength = 1f;
     }
 
@@ -107,6 +143,7 @@ public sealed class SonarRevealManager : MonoBehaviour
             return;
 
         float queryRadius = pulse.Radius + pulse.Width + shellPadding;
+        scannedRoots.Clear();
         int count = Physics.OverlapSphereNonAlloc(
             pulse.Origin,
             queryRadius,
@@ -125,11 +162,20 @@ public sealed class SonarRevealManager : MonoBehaviour
             // Using Transform.root here would outline the whole level when a
             // single rock is swept. Prefer the Rigidbody object for dynamic
             // props; otherwise use the closest renderer-bearing hierarchy.
-            Transform root = ResolveRendererRoot(collider);
-            foreach (Renderer renderer in root.GetComponentsInChildren<Renderer>(true))
+            if (!colliderRoots.TryGetValue(collider, out Transform root) || root == null)
+            { root = ResolveRendererRoot(collider); colliderRoots[collider] = root; }
+            if (!scannedRoots.Add(root)) continue;
+            if (!rendererCache.TryGetValue(root, out Renderer[] targets))
+            { targets = root.GetComponentsInChildren<Renderer>(true); rendererCache[root] = targets; }
+            foreach (Renderer renderer in targets)
             {
                 if (renderer == null || !renderer.enabled || !renderer.gameObject.activeInHierarchy)
                     continue;
+                // A swept group collider is not proof that every child surface
+                // was swept. Never enroll UI/particles/water helper lines either.
+                if (!EligibleSurface(renderer, pulse, out float maxY)) continue;
+                surfaceLimits[renderer] = maxY;
+                if (activeRenderers.TryGetValue(renderer, out float expiry) && float.IsPositiveInfinity(expiry)) continue;
 
                 DeepSeaAI.SonarRevealStyle style =
                     renderer.GetComponentInParent<DeepSeaAI.SonarRevealStyle>();
@@ -138,6 +184,41 @@ public sealed class SonarRevealManager : MonoBehaviour
                     : float.PositiveInfinity;
             }
         }
+    }
+
+    private void OnPulseEnded(VolumetricFogPulseEmitter.PulseState pulse) => pulseWater.Remove(pulse.Id);
+
+    private bool EligibleSurface(Renderer renderer, VolumetricFogPulseEmitter.PulseState pulse, out float maxY)
+    {
+        maxY = 1e20f;
+        if (renderer == null || !renderer.enabled || !renderer.gameObject.activeInHierarchy) return false;
+        if (!(renderer is MeshRenderer) && !(renderer is SkinnedMeshRenderer)) return false;
+        int layer = 1 << renderer.gameObject.layer;
+        if ((targetLayers.value & layer) == 0 || (ignoredLayers.value & layer) != 0) return false;
+        if (ignoreGroundTag && !string.IsNullOrEmpty(groundTag) && renderer.tag == groundTag) return false;
+        if (!BoundsTouchShell(renderer.bounds, pulse.Origin, pulse.Radius, pulse.Width * .5f + shellPadding)) return false;
+        renderer.GetSharedMaterials(targetMaterials);
+        foreach (var material in targetMaterials)
+            if (material != null && material.shader != null && material.shader.name.StartsWith("AbstractOcclusion/WebGpuWater/"))
+                return false;
+        if (!pulseWater.TryGetValue(pulse.Id, out var water))
+        { water = WaterVolume.BodyContaining(pulse.Origin); pulseWater[pulse.Id] = water; }
+        if (water != null && water.TryGetAnalyticWaterline(pulse.Origin.x, pulse.Origin.z, out float originSurface) && pulse.Origin.y < originSurface)
+        {
+            var center = renderer.bounds.center;
+            if (!water.TryGetAnalyticWaterline(center.x, center.z, out maxY)) maxY = originSurface;
+            maxY -= .03f;
+            if (renderer.bounds.min.y >= maxY) return false;
+            // Clip straddling meshes (platform supports) per fragment as well.
+        }
+        return true;
+    }
+
+    public static bool BoundsTouchShell(Bounds bounds, Vector3 origin, float radius, float padding)
+    {
+        float min = Vector3.Distance(bounds.ClosestPoint(origin), origin);
+        Vector3 far = new Vector3(Mathf.Abs(bounds.center.x - origin.x), Mathf.Abs(bounds.center.y - origin.y), Mathf.Abs(bounds.center.z - origin.z)) + bounds.extents;
+        return min <= radius + padding && far.magnitude >= radius - padding;
     }
 
     private static Transform ResolveRendererRoot(Collider collider)
@@ -219,6 +300,9 @@ public sealed class SonarRevealManager : MonoBehaviour
         if (removed == null)
             return;
         foreach (Renderer renderer in removed)
+        {
             activeRenderers.Remove(renderer);
+            surfaceLimits.Remove(renderer);
+        }
     }
 }

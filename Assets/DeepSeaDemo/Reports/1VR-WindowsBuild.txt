@@ -1,0 +1,8 @@
+Scene: Assets/DeepSeaDemo/Scenes/DeepSeaInvestigation_1VR.unity
+Result: Succeeded
+Errors: 25
+Warnings: 116
+Bytes: 2165718568
+Duration: 00:25:23.6836215
+Simulator disabled in build scene. Windows PCVR only, not a standalone Quest APK.
+Headset stereo and performance NOT verified by build success.

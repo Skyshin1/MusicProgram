@@ -10,6 +10,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Collider))]
 public sealed class VolumetricFogCollisionPulse : MonoBehaviour
 {
+    public static event System.Action<Vector3, float, Transform> CollisionSonarEmitted;
     [Header("Collision Filter")]
     [SerializeField]
     [Tooltip("Only collisions with these layers may create a pulse.")]
@@ -141,6 +142,7 @@ public sealed class VolumetricFogCollisionPulse : MonoBehaviour
         {
             VolumetricFogPulseEmitter.EmitAt(point, strength);
         }
+        CollisionSonarEmitted?.Invoke(point, strength, transform);
     }
 
     private void OnValidate()

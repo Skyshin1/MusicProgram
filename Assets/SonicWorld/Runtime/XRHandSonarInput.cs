@@ -57,6 +57,14 @@ public sealed class XRHandSonarInput : MonoBehaviour
 
         bool leftPressed = ReadTrigger(leftDevice);
         bool rightPressed = ReadTrigger(rightDevice);
+        var demo = GetComponent<DeepSeaDemo.DemoXRInput>();
+        if (demo != null)
+        {
+            // When the full Demo router is installed it owns arbitration, not both components.
+            if (GetComponent<DeepSeaDemo.DemoInputRouter>() != null) return;
+            leftPressed = demo.left.Trigger >= analogPressThreshold;
+            rightPressed = demo.right.Trigger >= analogPressThreshold;
+        }
 
         if (leftPressed && !leftWasPressed)
             TryEmit(leftHand, false);
@@ -104,6 +112,8 @@ public sealed class XRHandSonarInput : MonoBehaviour
             ? xrOrigin.Camera.transform
             : VolumetricFogPulseEmitter.FindPlayerViewTransform();
         Transform source = hand != null ? hand : fallback;
+        var demo = GetComponent<DeepSeaDemo.DemoXRInput>();
+        if (demo != null && !demo.Hand(right).Tracked) source = fallback;
         Vector3 position = source != null ? source.position : transform.position;
         VolumetricFogPulseEmitter.EmitPlayerAt(position, strength, source);
         nextAllowedTime = Time.unscaledTime + globalCooldown;

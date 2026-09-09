@@ -17,6 +17,8 @@ namespace DeepSeaAI
         [SerializeField, Min(0f)] private float verticalRange = 2f;
         [SerializeField, Min(0f)] private float swimSpeed = 1.1f;
         [SerializeField, Min(0.1f)] private float waypointTolerance = 0.22f;
+        [SerializeField] private bool avoidObstacles;
+        [SerializeField] private LayerMask obstacleLayers;
 
         [Header("Sonar Escape")]
         [SerializeField, Min(0.1f)] private float sonarReactionRange = 12f;
@@ -176,6 +178,12 @@ namespace DeepSeaAI
             }
 
             Vector3 movement = direction / distance;
+            if (avoidObstacles && Physics.SphereCast(transform.position, .15f, movement, out RaycastHit obstacle,
+                    Mathf.Max(.5f, speed * Time.deltaTime + .2f), obstacleLayers, QueryTriggerInteraction.Ignore))
+            {
+                target = ClampToSwimVolume(transform.position + obstacle.normal * 1.5f + Vector3.up * .35f);
+                return;
+            }
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 target,

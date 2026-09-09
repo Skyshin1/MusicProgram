@@ -37,8 +37,7 @@ namespace DeepSeaAI.Editor
 
         static DeepSeaStalkerSceneInstaller()
         {
-            EditorApplication.delayCall += TryAutomaticInstall;
-            EditorApplication.playModeStateChanged += OnPlayModeChanged;
+            // Installation is explicit. A script reload must not rebuild/save the user's scene.
         }
 
         [MenuItem("Tools/Deep Sea AI/Install or Repair 1-VR Scene")]

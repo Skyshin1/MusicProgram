@@ -39,6 +39,10 @@ namespace AbstractOcclusion.WebGpuWater
             // Fullscreen paint: also excluded from reflections - god-ray shafts belong in the view,
             // never composited into the mirror the view reflects. See WaterPassCameraGate.
             if (WaterPassCameraGate.SkipCameraFullscreen(renderingData.cameraData.cameraType)) return;
+            // This optional atmosphere shader/history is currently mono-only. Do not enqueue it
+            // for a stereo camera: copying the two-eye target to its 2D history aborts the whole
+            // RenderGraph (black headset output / flickering Scene view). Water/fog are separate.
+            if (renderingData.cameraData.camera.stereoEnabled) return;
             if (_pass == null) return;                                // shader unassigned / not created
             if (!LargeBodyAtmosphereGate.HasActiveGodRayOcean) return; // ocean-only, and only when shafts are on
             // A fullscreen-fog debug view owns the frame: these shafts inject one slot AFTER the

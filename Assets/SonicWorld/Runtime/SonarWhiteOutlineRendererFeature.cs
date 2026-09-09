@@ -50,7 +50,9 @@ public sealed class SonarWhiteOutlineRendererFeature : ScriptableRendererFeature
         private static readonly int StrengthId = Shader.PropertyToID("_OutlineStrength");
         private static readonly int RendererColorId = Shader.PropertyToID("_OutlineColor");
         private static readonly int DrawColorId = Shader.PropertyToID("_SonarOutlineDrawColor");
+        private static readonly int MaximumYId = Shader.PropertyToID("_SonarOutlineMaximumY");
         private static readonly MaterialPropertyBlock ColorPropertyBlock = new MaterialPropertyBlock();
+        private static readonly List<Material> SharedMaterials = new();
         private readonly Material material;
         private readonly List<Renderer> renderers = new List<Renderer>();
 
@@ -67,7 +69,8 @@ public sealed class SonarWhiteOutlineRendererFeature : ScriptableRendererFeature
             renderers.Clear();
             foreach (Renderer renderer in SonarRevealManager.ActiveRenderers)
             {
-                if (renderer != null && renderer.enabled && renderer.gameObject.activeInHierarchy)
+                if (renderer != null && renderer.enabled && renderer.gameObject.activeInHierarchy && renderer.isVisible &&
+                    (renderer is MeshRenderer || renderer is SkinnedMeshRenderer))
                     renderers.Add(renderer);
             }
             material.SetFloat(StrengthId, SonarRevealManager.OutlineStrength);
@@ -92,9 +95,12 @@ public sealed class SonarWhiteOutlineRendererFeature : ScriptableRendererFeature
             {
                 data.Material = material;
                 data.Renderers = new List<Renderer>(renderers);
-                builder.SetRenderAttachment(resources.cameraColor, 0, AccessFlags.ReadWrite);
+                // cameraDepthTexture is a RESOLVED shader-readable texture, not
+                // necessarily a depth attachment (and may differ in MSAA count).
+                // Test scene depth in the shader instead of attaching it to color.
+                builder.SetRenderAttachment(resources.activeColorTexture, 0, AccessFlags.ReadWrite);
                 if (resources.cameraDepthTexture.IsValid())
-                    builder.SetRenderAttachmentDepth(resources.cameraDepthTexture, AccessFlags.Read);
+                    builder.UseTexture(resources.cameraDepthTexture, AccessFlags.Read);
                 builder.AllowPassCulling(false);
                 builder.AllowGlobalStateModification(true);
                 builder.SetRenderFunc((PassData passData, RasterGraphContext context) =>
@@ -126,7 +132,9 @@ public sealed class SonarWhiteOutlineRendererFeature : ScriptableRendererFeature
                 if (renderer == null)
                     continue;
                 cmd.SetGlobalColor(DrawColorId, ResolveOutlineColor(renderer));
-                int subMeshCount = Mathf.Max(1, renderer.sharedMaterials.Length);
+                cmd.SetGlobalFloat(MaximumYId, SonarRevealManager.OutlineMaximumY(renderer));
+                renderer.GetSharedMaterials(SharedMaterials);
+                int subMeshCount = Mathf.Max(1, SharedMaterials.Count);
                 for (int subMesh = 0; subMesh < subMeshCount; subMesh++)
                     cmd.DrawRenderer(renderer, outlineMaterial, subMesh, 0);
             }
@@ -148,7 +156,9 @@ public sealed class SonarWhiteOutlineRendererFeature : ScriptableRendererFeature
                 if (renderer == null)
                     continue;
                 cmd.SetGlobalColor(DrawColorId, ResolveOutlineColor(renderer));
-                int subMeshCount = Mathf.Max(1, renderer.sharedMaterials.Length);
+                cmd.SetGlobalFloat(MaximumYId, SonarRevealManager.OutlineMaximumY(renderer));
+                renderer.GetSharedMaterials(SharedMaterials);
+                int subMeshCount = Mathf.Max(1, SharedMaterials.Count);
                 for (int subMesh = 0; subMesh < subMeshCount; subMesh++)
                     cmd.DrawRenderer(renderer, outlineMaterial, subMesh, 0);
             }

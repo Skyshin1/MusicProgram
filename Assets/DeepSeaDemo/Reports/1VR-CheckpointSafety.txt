@@ -1,0 +1,4 @@
+PASS Checkpoint Platform Departure head=(-12.20, 6.71, -6.00)
+PASS Checkpoint Tool Cage head=(-15.00, -24.20, 8.00)
+PASS Checkpoint Submarine head=(20.00, -17.75, 19.14)
+PASS Checkpoint Analysis head=(-4.70, 10.71, 6.00)

@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 6731973655193a841986b7769baf1501
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _Normal: {fileID: 2800000, guid: 4914a58362014b44bb7cb18de818fe9f, type: 3}
+  - _Refraction_Waviness: {fileID: 2800000, guid: 9a7ff67f5a3f88547b117a0e419b4ca8, type: 3}
+  - _Refraction: {fileID: 2800000, guid: c67b8030ffcf9c44cb0e69a018999586, type: 3}
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

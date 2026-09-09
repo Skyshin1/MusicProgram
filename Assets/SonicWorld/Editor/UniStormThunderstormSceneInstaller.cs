@@ -33,8 +33,7 @@ namespace SonicWorld.Editor
 
         static UniStormThunderstormSceneInstaller()
         {
-            EditorApplication.delayCall += TryAutomaticInstall;
-            EditorApplication.playModeStateChanged += OnPlayModeChanged;
+            // Legacy test setup is opt-in through its menu, not automatic on script reload.
         }
 
         [MenuItem("Tools/Sonic World/Install or Repair Locked Thunderstorm")]

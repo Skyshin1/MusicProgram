@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MI_Coral_Brain_Broken
+  m_Shader: {fileID: 4800000, guid: 5f1f70425cca1934496e15623de3a404, type: 3}
+  m_ShaderKeywords: _FUZZYSHADING_ON _RANDOMHUE_ON
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Material_Texture2D_0:
+        m_Texture: {fileID: 2800000, guid: abc00000000008349937950146273419, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Material_Texture2D_1:
+        m_Texture: {fileID: 2800000, guid: abc00000000017439346656596958142, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Material_Texture2D_2:
+        m_Texture: {fileID: 2800000, guid: abc00000000008116238872722988190, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Material_Texture2D_3:
+        m_Texture: {fileID: 2800000, guid: abc00000000005089782172809281472, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Diffuse:
+        m_Texture: {fileID: 2800000, guid: abc00000000017439346656596958142, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Macro:
+        m_Texture: {fileID: 2800000, guid: abc00000000008116238872722988190, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 2800000, guid: abc00000000008349937950146273419, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalDetail:
+        m_Texture: {fileID: 2800000, guid: abc00000000013741776867338191150, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Brightness: 1
+    - _Contrast: 1.5
+    - _CustomRoughness: 0
+    - _Deep_ZHeight: -262.5
+    - _Desaturation: -0.5
+    - _DetailNormalEnable: 0
+    - _DstBlend: 0
+    - _FuzzyShading: 1
+    - _Glow: 0
+    - _GlowIntensity: 5
+    - _Hue: 0
+    - _Hue_Variation_Intensity: 1
+    - _Macro_Intensity: 1
+    - _Macro_Scale: 20
+    - _Macro_Triplanar_Blending: 1
+    - _Metallic: 0.1
+    - _Normal_Detail_Amount: 0.5
+    - _Normal_Detail_Scale: 1
+    - _RandomHue: 1
+    - _Roughness_A: 1
+    - _Roughness_B: 1
+    - _Roughness_Max: 1
+    - _Roughness_Min: 0
+    - _Shallow_ZHeight: -267
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _Wind: 0
+    - _Wind_Intensity: 1
+    - _Wind_Speed: 0.1
+    - _ZWrite: 1
+    - __dirty: 0
+    m_Colors:
+    - _Color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+    - _DifColor_BeforeHue: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _GlowColor: {r: 0, g: 0.6901961, b: 1, a: 1}
+  m_BuildTextureStacks: []

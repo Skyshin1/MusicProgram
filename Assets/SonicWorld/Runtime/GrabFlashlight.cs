@@ -131,6 +131,7 @@ public sealed class GrabFlashlight : MonoBehaviour
 
     private void OnActivated(ActivateEventArgs args)
     {
+        if (DeepSeaDemo.DemoInputRouter.BlockItemTrigger(transform)) return;
         if (grab != null && grab.isSelected)
             ToggleLight();
     }

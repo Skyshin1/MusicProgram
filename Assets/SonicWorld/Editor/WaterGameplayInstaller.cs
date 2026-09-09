@@ -20,7 +20,6 @@ public static class WaterGameplayInstaller
     private const string DockPath = PrefabFolder + "/Black Box Playback Dock.prefab";
     private const string ElectronicCardPath = PrefabFolder + "/VR Electronic Access Card.prefab";
 
-    [InitializeOnLoadMethod]
     private static void ScheduleProjectAssetSetup()
     {
         EditorApplication.delayCall += EnsureProjectAssets;

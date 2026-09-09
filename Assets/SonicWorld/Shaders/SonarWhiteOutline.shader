@@ -12,13 +12,16 @@ Shader "Hidden/Sonar/White Outline"
             Name "Sonar White Outline"
             Cull Front
             ZWrite Off
-            ZTest LEqual
+            ZTest Always
             Blend SrcAlpha OneMinusSrcAlpha
 
             HLSLPROGRAM
             #pragma vertex Vert
             #pragma fragment Frag
+            #pragma target 3.5
+            #pragma multi_compile_instancing
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
 
             CBUFFER_START(UnityPerMaterial)
                 float _OutlineWidth;
@@ -26,6 +29,7 @@ Shader "Hidden/Sonar/White Outline"
                 float4 _OutlineColor;
             CBUFFER_END
             float4 _SonarOutlineDrawColor;
+            float _SonarOutlineMaximumY;
 
             struct Attributes
             {
@@ -37,6 +41,7 @@ Shader "Hidden/Sonar/White Outline"
             struct Varyings
             {
                 float4 positionCS : SV_POSITION;
+                float worldY : TEXCOORD0;
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
@@ -45,14 +50,21 @@ Shader "Hidden/Sonar/White Outline"
                 Varyings output;
                 UNITY_SETUP_INSTANCE_ID(input);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
-                float3 expanded = input.positionOS.xyz + normalize(input.normalOS) * _OutlineWidth;
-                output.positionCS = TransformObjectToHClip(expanded);
+                float3 expandedWS = TransformObjectToWorld(input.positionOS.xyz) +
+                    TransformObjectToWorldNormal(input.normalOS) * _OutlineWidth;
+                output.positionCS = TransformWorldToHClip(expandedWS);
+                output.worldY = expandedWS.y;
                 return output;
             }
 
             half4 Frag(Varyings input) : SV_Target
             {
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
+                clip(_SonarOutlineMaximumY - input.worldY);
+                float sceneDepth = SampleSceneDepth(GetNormalizedScreenSpaceUV(input.positionCS.xy));
+                float sceneEyeDepth = LinearEyeDepth(sceneDepth, _ZBufferParams);
+                float outlineEyeDepth = LinearEyeDepth(input.positionCS.z, _ZBufferParams);
+                clip(sceneEyeDepth + 0.01 - outlineEyeDepth);
                 return half4(_SonarOutlineDrawColor.rgb, saturate(_SonarOutlineDrawColor.a * _OutlineStrength));
             }
             ENDHLSL

@@ -1,0 +1,69 @@
+Preserved saved 1-VR player/tracking/movement components and water parameters. Water surface Y=-2.400002
+Source root objects before migration: Directional Light, WebGPU Water, Plane, Cube, Global Volume, Player, Cube (1), Cube (2), Cube (5), Cube (4), Cube (3), Sonar Reveal Manager, Sonar Wave Visual System, Deep Sea Fish Demo School, __OilRigGenerated, Water Gameplay Props, UniStorm VR - Locked Thunderstorm, SubMarine, Terrain, SK_LeatherGlove, Deep Sea Stalker AI
+DISABLED (recoverable in copy): Plane
+DISABLED (recoverable in copy): Cube
+DISABLED (recoverable in copy): Cube (1)
+DISABLED (recoverable in copy): Cube (2)
+DISABLED (recoverable in copy): Cube (5)
+DISABLED (recoverable in copy): Cube (4)
+DISABLED (recoverable in copy): Cube (3)
+DISABLED (recoverable in copy): Sonar Reveal Manager
+DISABLED (recoverable in copy): Sonar Wave Visual System
+DISABLED (recoverable in copy): Deep Sea Fish Demo School
+DISABLED (recoverable in copy): Water Gameplay Props
+DISABLED (recoverable in copy): UniStorm VR - Locked Thunderstorm
+DISABLED (recoverable in copy): SK_LeatherGlove
+DISABLED (recoverable in copy): Deep Sea Stalker AI
+Disabled water test floor collider; authored gameplay seabed supplies collision.
+REUSED source SubMarine and actual Door group. Functional lock, hinge, blocker, shelf, recording and black box connected.
+PASS EXISTING PLATFORM retained at (1.30, -1.04, -1.50) scale=(1.00, 1.00, 1.00); no replacement deck, no resized rig, original colliders retained.
+ROOM anchors: equipment=(-12.70, 4.96, -7.50), logs=(-12.70, 4.96, 4.50), analysis=(-4.70, 8.96, 4.50)
+Copy-only water bounds extended to (75,45,75) to contain all routes. Surface and shader settings inherited.
+PASS Inherited XR rig, camera and InputAction adapter bound
+PASS All four checkpoint anchors
+PASS Unique physical item IDs
+PASS Physical prop flashlight
+PASS Physical prop locktool
+PASS Physical prop card
+PASS Physical prop blackbox
+PASS Physical prop sample
+PASS Readable evidence log01
+PASS Readable evidence log02
+PASS Readable evidence log03
+PASS Readable evidence log04
+PASS Readable evidence alarm
+PASS Readable evidence sensor
+PASS Readable evidence testimony
+PASS Readable evidence last_record
+PASS Suit station and return boarding interaction
+PASS Door QTE, mesh hinge and blocking collider
+PASS Repair tool skill check
+PASS Physical black-box playback dock and enemy binding
+PASS Exactly one active XR Origin
+PASS Exactly one active Water Volume
+PASS All active world-action text English
+ITEM flashlight at (-12.70, 6.01, -8.10) recovery=True
+ITEM locktool at (-16.00, -24.63, 11.00) recovery=True
+ITEM card at (-15.50, -24.75, 11.00) recovery=True
+ITEM sample at (1.00, -25.40, 30.00) recovery=True
+ITEM stone0 at (-2.00, -25.50, 6.00) recovery=True
+ITEM stone1 at (-1.45, -25.50, 6.00) recovery=True
+ITEM stone2 at (-0.90, -25.50, 6.00) recovery=True
+ITEM stone3 at (-0.35, -25.50, 6.00) recovery=True
+ITEM stone4 at (0.20, -25.50, 6.00) recovery=True
+ITEM blackbox at (20.00, -22.45, 19.14) recovery=True
+ACTION Document / log01 / (-13.80, 5.98, 3.90)
+ACTION Document / log02 / (-13.10, 5.98, 3.90)
+ACTION Document / log03 / (-12.40, 5.98, 3.90)
+ACTION Document / log04 / (-11.70, 5.98, 3.90)
+ACTION Alarm / alarm / (-10.90, 6.31, 3.90)
+ACTION Equip /  / (-11.45, 6.06, -7.50)
+ACTION EvidenceDock / sample / (-4.05, 10.11, 3.90)
+ACTION Board /  / (1.30, -2.05, 13.50)
+ACTION Dive /  / (-14.10, 6.16, -7.50)
+ACTION Terminal / sensor / (0.00, -24.70, 30.00)
+ACTION Document / testimony / (2.00, -24.90, 30.00)
+ACTION Terminal / last_record / (20.00, -21.80, 19.14)
+Reference audit only; does not claim input, rendering or end-to-end acceptance.
+PASS saved source scene SHA256 unchanged. Assembly saved to Assets/DeepSeaDemo/Scenes/DeepSeaInvestigation_1VR.unity
+NOT YET ACCEPTED: controller-driven end-to-end playthrough, hatch clearance, headset stereo/performance, official UniStorm RG support.

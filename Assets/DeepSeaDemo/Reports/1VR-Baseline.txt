@@ -1,0 +1,699 @@
+Source SHA256: 5D464BC9807B94609374DD8FC62766F278C60908862377F497003D2FCFB4BB44
+Copy: Assets/DeepSeaDemo/Scenes/DeepSeaInvestigation_1VR.unity
+No player scripts or scene objects removed.
+ROOT Directional Light position=(0.00, 3.00, 0.00) scale=(1.00, 1.00, 1.00) active=True
+ROOT WebGPU Water position=(0.00, -39.40, 0.00) scale=(1.00, 1.00, 1.00) active=True
+COMPONENT WaterVolume (0.00, -2.40, 0.00)
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "",
+        "m_EditorClassIdentifier": "AbstractOcclusion.WebGpuWater::AbstractOcclusion.WebGpuWater.WaterVolume",
+        "chunkFootprint": 0,
+        "chunkDensityBoost": 1.0,
+        "chunkRefraction": 0.5,
+        "chunkReflectivity": 0.6000000238418579,
+        "chunkMeniscus": 0.5,
+        "chunkFoamStrength": 1.0,
+        "chunkGodRayStrength": 0.0,
+        "chunkGodRayColor": {
+            "r": 1.0,
+            "g": 0.9700000286102295,
+            "b": 0.8500000238418579,
+            "a": 1.0
+        },
+        "chunkMesh": {
+            "instanceID": 0
+        },
+        "chunkFillLevel": 0.5,
+        "jerlovWaterType": 1,
+        "bedDepthSettings": {
+            "useBedDepth": true,
+            "bedTerrain": {
+                "instanceID": 0
+            },
+            "bedResolution": 256,
+            "deepWaterColor": {
+                "r": 0.019999999552965165,
+                "g": 0.10000000149011612,
+                "b": 0.15000000596046449,
+                "a": 1.0
+            },
+            "bedFadeDepth": 6.0,
+            "bedTintStrength": 0.800000011920929,
+            "clarityFromDepth": false,
+            "clarityShallowDepth": 0.5,
+            "clarityDeepDepth": 8.0,
+            "clarityShallow": 1.0,
+            "clarityDeep": 0.0,
+            "clarityStrength": 1.0,
+            "shoreShoalDepth": 4.0,
+            "shoreRefraction": 0.699999988079071,
+            "shoreCompression": 0.6000000238418579,
+            "shoreGreens": 1.350000023841858,
+            "surfEnabled": true,
+            "surfAmplitude": 0.800000011920929,
+            "surfWavelengthAuto": true,
+            "surfWavelength": 26.0,
+            "surfPeriod": 9.0,
+            "surfBandDepth": 6.0,
+            "surfSetStrength": 0.550000011920929,
+            "surfCrestLength": 60.0,
+            "surfCrestVariation": 0.6000000238418579,
+            "surfCrestPersistence": 0.0,
+            "surfDirectionality": 0.699999988079071,
+            "surfLean": 0.3499999940395355,
+            "surfAmbientFade": 0.800000011920929,
+            "surfSwashAmplitude": 1.0,
+            "surfSwashMaxSlopeDegrees": 35.0,
+            "surfFoamGain": 1.2000000476837159,
+            "surfWaterlineFoam": 0.5,
+            "surfSmallWaveFoam": 0.0,
+            "surfFoamStrength": 1.0,
+            "surfFoamFeather": 0.20000000298023225,
+            "surfFoamTileSize": 8.0,
+            "surfFoamColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "surfCrestFoamCurveEnabled": false,
+            "surfCrestFoamCurve": {
+                "serializedVersion": "2",
+                "m_Curve": [
+                    {
+                        "serializedVersion": "3",
+                        "time": 0.75,
+                        "value": 0.0,
+                        "inSlope": 0.0,
+                        "outSlope": 0.0,
+                        "tangentMode": 0,
+                        "weightedMode": 0,
+                        "inWeight": 0.0,
+                        "outWeight": 0.0
+                    },
+                    {
+                        "serializedVersion": "3",
+                        "time": 1.0499999523162842,
+                        "value": 1.0,
+                        "inSlope": 0.0,
+                        "outSlope": 0.0,
+                        "tangentMode": 0,
+                        "weightedMode": 0,
+                        "inWeight": 0.0,
+                        "outWeight": 0.0
+                    },
+                    {
+                        "serializedVersion": "3",
+                        "time": 1.5,
+                        "value": 0.0,
+                        "inSlope": 0.0,
+                        "outSlope": 0.0,
+                        "tangentMode": 0,
+                        "weightedMode": 0,
+                        "inWeight": 0.0,
+                        "outWeight": 0.0
+                    },
+                    {
+                        "serializedVersion": "3",
+                        "time": 2.0,
+                        "value": 0.0,
+                        "inSlope": 0.0,
+                        "outSlope": 0.0,
+                        "tangentMode": 0,
+                        "weightedMode": 0,
+                        "inWeight": 0.0,
+                        "outWeight": 0.0
+                    }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+            },
+            "surfCrestFoamGain": 1.0,
+            "surfFoamCrestCap": 0.0,
+            "surfFoamBoreGain": 1.0,
+            "surfFoamTrailGain": 1.0,
+            "surfFoamTrailLength": 1.0,
+            "surfFoamTrailDissolve": 0.0,
+            "surfSwashFoam": 0.800000011920929,
+            "surfSwashFoamWidth": 0.25,
+            "surfSwashFoamDissolve": 0.6000000238418579,
+            "surfSwashStreak": 0.5,
+            "surfSwashDepositGain": 0.0
+        },
+        "simCompute": {
+            "fileID": 7200000,
+            "guid": "a60aa7d5723d3024db489530955aad46",
+            "type": 3
+        },
+        "oceanFftCompute": {
+            "fileID": 7200000,
+            "guid": "a72790f9172cdc8418a85c91acdb0a2d",
+            "type": 3
+        },
+        "causticsShader": {
+            "fileID": 4800000,
+            "guid": "888f96058c2d336408ddb9b68453da11",
+            "type": 3
+        },
+        "largeBodyCausticsShader": {
+            "fileID": 4800000,
+            "guid": "20ef2245624802e47920d7462ca2609d",
+            "type": 3
+        },
+        "obstacleShader": {
+            "fileID": 4800000,
+            "guid": "f7773dcd41650a8469d01f11390d88e0",
+            "type": 3
+        },
+        "occluderShader": {
+            "fileID": 4800000,
+            "guid": "271a530771d546944a5b7d2242fbdc6c",
+            "type": 3
+        },
+        "waterMesh": {
+            "fileID": 4300000,
+            "guid": "8c41c836f8599fb489ef7aa8db1804d6",
+            "type": 2
+        },
+        "targetCamera": {
+            "instanceID": 0
+        },
+        "sun": {
+            "instanceID": 0
+        },
+        "tiles": {
+            "fileID": 2800000,
+            "guid": "fbca866c86c3fba419901b867625cd66",
+            "type": 3
+        },
+        "sky": {
+            "fileID": 8900000,
+            "guid": "970ce74970eb77a4e9720aec541e2f44",
+            "type": 2
+        },
+        "foamPatternTexture": {
+            "fileID": 2800000,
+            "guid": "a5f2ef87d189d12951522a62b6df8920",
+            "type": 3
+        },
+        "foamPatternGrid": {
+            "x": 1,
+            "y": 1
+        },
+        "foamPatternFps": 10.0,
+        "foamReliefStrength": 1.0,
+        "oceanWhitecapTexture": {
+            "fileID": 2800000,
+            "guid": "a374a10bbe76021021500e6b2fc9d34f",
+            "type": 3
+        },
+        "oceanWhitecapGrid": {
+            "x": 1,
+            "y": 1
+        },
+        "oceanWhitecapFps": 10.0,
+        "rippleQuality": 2,
+        "bodyType": 2,
+        "volumeExtent": {
+            "x": 30.0,
+            "y": 20.0,
+            "z": 30.0
+        },
+        "enableLargeBodyWindow": true,
+        "largeBodyThreshold": 48.0,
+        "simWindowMeters": 32.0,
+        "clampWindowToShore": false,
+        "simWindowFocus": {
+            "instanceID": 0
+        },
+        "simWindowOffset": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "_legacyWaveSpeed": 0.6000000238418579,
+        "_legacyDamping": 0.9900000095367432,
+        "_legacyStepsPerFrame": 2,
+        "_legacyRippleStrength": 0.02500000037252903,
+        "_legacyRippleRadius": 0.05000000074505806,
+        "_legacySeedRipplesOnStart": true,
+        "_legacyConserveVolume": true,
+        "_legacyConserveMaxCorrection": 0.05000000074505806,
+        "orbit": {
+            "instanceID": 0
+        },
+        "configureCamera": false,
+        "splashEmitter": {
+            "instanceID": 0
+        },
+        "provideSplashEmitter": true,
+        "_legacyWindWaves": true,
+        "_legacyWindSpeed": 3.0,
+        "_legacyWindFromDegrees": 0.0,
+        "_legacyPoolHalfExtentMeters": 10.0,
+        "_legacyWaveCount": 12,
+        "_legacyWaveAmplitudeScale": 4.0,
+        "_legacyWaveDirectionSpread": 2.0,
+        "_legacyWaveNormalStrength": 1.0,
+        "foamSettings": {
+            "foam": true,
+            "foamGenRate": 0.6000000238418579,
+            "foamDecay": 0.9599999785423279,
+            "foamDecayResidual": 0.9929999709129334,
+            "foamDecayRate": 1.0,
+            "wetnessMemory": true,
+            "wetnessDryTime": 3.0,
+            "foamSpread": 0.20000000298023225,
+            "foamGenThreshold": 0.15000000596046449,
+            "foamMinWaveHeight": 0.009999999776482582,
+            "foamAdvect": 3.0,
+            "foamFromSpeed": 6.0,
+            "foamFromCurvature": 30.0,
+            "foamDeposit": 0.5,
+            "foamBreakStrength": 0.0,
+            "foamBreakRange": 1.5,
+            "foamCrestBias": 0.0,
+            "foamWakeStrength": 0.0,
+            "foamWakeRadiusScale": 1.5,
+            "foamColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "foamPatternSize": 2.0,
+            "foamStrength": 1.0,
+            "foamFeather": 0.15000000596046449,
+            "foamCoreCut": 0.5,
+            "foamBorderWidth": 0.07999999821186066,
+            "foamContactDepth": 0.05999999865889549
+        },
+        "objectInteractionSettings": {
+            "objectInteraction": 0,
+            "obstacleStrength": 0.25,
+            "obstacleDeadband": 0.0006000000284984708,
+            "obstacleSmoothing": 0.6499999761581421,
+            "obstacleFlipY": true
+        },
+        "_legacyDepthDarken": false,
+        "_legacyDepthExtinction": {
+            "r": 0.44999998807907107,
+            "g": 0.15000000596046449,
+            "b": 0.07999999821186066,
+            "a": 1.0
+        },
+        "_legacyDepthDarkenStrength": 1.0,
+        "_legacyCausticDepthFade": 0.5,
+        "_legacyGodRayDepthFade": 0.5,
+        "_legacyLinkDepthToFog": false,
+        "_settingsVersion": 9,
+        "simWindowEdgeFadeTexels": 8.0,
+        "ocean": {
+            "openWater": true,
+            "largeWaveAmplitude": 1.0,
+            "largeWaveChoppiness": 0.0,
+            "swellHeight": 0.0,
+            "swellWavelength": 140.0,
+            "unboundedOcean": true,
+            "edgeFeatherMeters": 10.0,
+            "clipmapGridResolution": 64,
+            "clipmapOuterRadius": 10000.0,
+            "oceanDetailFalloff": 0.029999999329447748,
+            "horizonFadeDistance": 0.0,
+            "horizonHazeColor": {
+                "r": 0.699999988079071,
+                "g": 0.800000011920929,
+                "b": 0.8999999761581421,
+                "a": 0.0
+            },
+            "horizonHazeDensity": 1.0,
+            "largeGodRayColor": {
+                "r": 1.0,
+                "g": 0.9700000286102295,
+                "b": 0.8500000238418579,
+                "a": 1.0
+            },
+            "largeGodRayDensity": 0.800000011920929,
+            "largeGodRayFromAir": 0.0,
+            "largeGodRaySteps": 24,
+            "largeGodRayAnisotropy": 0.6000000238418579,
+            "largeGodRayExtinction": 0.0,
+            "largeGodRayCausticStrength": 4.0,
+            "largeGodRayCausticSmooth": 2.0,
+            "largeGodRayCausticDepthSoften": 0.25,
+            "largeCausticTimeScale": 0.5,
+            "largeCausticRippleScale": 3.0,
+            "largeCausticRippleStrength": 1.0,
+            "largeCausticProjectionSoften": 0.0,
+            "oceanFoamWindThreshold": 4.0,
+            "oceanFoamCoverage": 1.0,
+            "oceanFoamStrength": 1.0,
+            "oceanFoamFadeRate": 0.5,
+            "oceanFoamColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "oceanFoamTileSize": 8.0,
+            "oceanFoamFeather": 0.25,
+            "oceanFoamDeposit": 0.8500000238418579,
+            "oceanFoamDrift": 0.07999999821186066,
+            "oceanFoamMaxBuildup": 1.0
+        },
+        "_legacyOpenWater": false,
+        "_legacyLargeWaveAmplitude": 1.0,
+        "_legacyLargeWaveChoppiness": 0.0,
+        "_legacySwellHeight": 0.0,
+        "_legacySwellWavelength": 140.0,
+        "_legacyUnboundedOcean": false,
+        "_legacyClipmapOuterRadius": 10000.0,
+        "_legacyOceanDetailFalloff": 0.029999999329447748,
+        "_legacyHorizonFadeDistance": 0.0,
+        "_legacyHorizonHazeColor": {
+            "r": 0.699999988079071,
+            "g": 0.800000011920929,
+            "b": 0.8999999761581421,
+            "a": 0.0
+        },
+        "_legacyHorizonHazeDensity": 0.0,
+        "_legacyLargeGodRayColor": {
+            "r": 1.0,
+            "g": 0.9700000286102295,
+            "b": 0.8500000238418579,
+            "a": 1.0
+        },
+        "_legacyLargeGodRayDensity": 0.0,
+        "_legacyLargeGodRaySteps": 24,
+        "_legacyLargeGodRayAnisotropy": 0.6000000238418579,
+        "_legacyLargeGodRayExtinction": 0.0,
+        "_legacyLargeGodRayCausticStrength": 4.0,
+        "_legacyOceanFoamWindThreshold": 4.0,
+        "_legacyOceanFoamCoverage": 1.0,
+        "_legacyOceanFoamStrength": 1.0,
+        "_legacyOceanFoamFadeRate": 0.5,
+        "_legacyOceanFoamColor": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+        },
+        "_legacyOceanFoamTileSize": 8.0,
+        "_legacyOceanFoamFeather": 0.25,
+        "surfaceAbove": {
+            "instanceID": 0
+        },
+        "surfaceUnder": {
+            "instanceID": 0
+        },
+        "poolRenderer": {
+            "instanceID": 0
+        },
+        "godRayRenderer": {
+            "instanceID": 0
+        },
+        "isPrimary": true,
+        "autoLinkReceivers": true,
+        "quality": {
+            "fileID": 11400000,
+            "guid": "709c90e06b6f5b14f8f7e181d16d64e0",
+            "type": 2
+        },
+        "enableCulling": true,
+        "activationDistance": 100.0,
+        "reflectionSettings": {
+            "useScreenSpaceReflection": true,
+            "usePlanarReflection": true,
+            "reflectUrpProbe": false,
+            "realRefraction": true,
+            "planarExcludeLayers": {
+                "serializedVersion": "2",
+                "m_Bits": 0
+            },
+            "planarResolutionScale": 0.5,
+            "planarFrameInterval": 1,
+            "reflectionStrength": 1.0,
+            "envReflectionIntensity": 0.44999998807907107,
+            "fresnelFloor": 0.0,
+            "fresnelPower": 5.0,
+            "sunRoughness": 0.07999999821186066,
+            "roughnessFar": 0.20000000298023225,
+            "roughnessFarDistance": 1000.0,
+            "roughnessFalloff": 1.0,
+            "reflectionAnisoStretch": 0.5,
+            "sunSheen": 0.0,
+            "sunSheenRoughness": 0.6000000238418579,
+            "sunGrazeBoost": 0.0,
+            "reflectionDistortion": 0.05000000074505806,
+            "ssrStrength": 1.0,
+            "ssrStepSize": 0.029999999329447748,
+            "ssrMaxSteps": 24,
+            "ssrThickness": 0.20000000298023225,
+            "refractionDistortion": 0.05000000074505806,
+            "refractionStrength": 1.0
+        },
+        "detailNormalSettings": {
+            "texture": {
+                "fileID": 2800000,
+                "guid": "62664aadf524b76e2b375fdbd6c85003",
+                "type": 3
+            },
+            "strength": 0.43799999356269839,
+            "tileMeters": 18.0,
+            "scrollSpeed": 0.25,
+            "windResponse": 1.0,
+            "crestBoost": 0.5
+        },
+        "_legacyFoam": false,
+        "_legacyFoamGenRate": 0.6000000238418579,
+        "_legacyFoamDecay": 0.9599999785423279,
+        "_legacyFoamDecayRate": 1.0,
+        "_legacyFoamSpread": 0.20000000298023225,
+        "_legacyFoamAdvect": 3.0,
+        "_legacyFoamFromSpeed": 6.0,
+        "_legacyFoamFromCurvature": 30.0,
+        "_legacyFoamColor": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+        },
+        "_legacyFoamStrength": 1.0,
+        "_legacyFoamFeather": 0.15000000596046449,
+        "_legacyFoamCoreCut": 0.5,
+        "_legacyFoamBorderWidth": 0.07999999821186066,
+        "_legacyFoamContactDepth": 0.05999999865889549,
+        "rippleSettings": {
+            "waveSpeed": 0.6000000238418579,
+            "damping": 0.9900000095367432,
+            "stepsPerFrame": 2,
+            "rippleStrength": 0.02500000037252903,
+            "rippleRadius": 0.05000000074505806,
+            "rippleChoppiness": 0.0,
+            "seedRipplesOnStart": true,
+            "conserveVolume": true,
+            "conserveMaxCorrection": 0.05000000074505806
+        },
+        "underwaterSurfaceSettings": {
+            "physicalFresnel": true,
+            "tirEdgeSoftness": 0.07999999821186066,
+            "fresnelFloor": 0.0,
+            "reflectionStrength": 1.0,
+            "mirrorWaterBlend": 0.5,
+            "foamSilhouetteDarken": 0.6000000238418579,
+            "foamSunGlow": 0.4000000059604645,
+            "detailNormalStrength": 0.0,
+            "meniscus": true,
+            "meniscusWidthPixels": 5.0,
+            "meniscusStrength": 0.699999988079071,
+            "meniscusWarp": 0.3499999940395355
+        },
+        "_legacyReflectionMode": 1,
+        "_legacyEnvironmentSource": 0,
+        "timeScale": 1.0,
+        "lightDir": {
+            "x": 2.0,
+            "y": 2.0,
+            "z": -1.0
+        },
+        "causticResolution": 1024,
+        "_legacyObjectInteraction": 0,
+        "_legacyObstacleStrength": 0.25,
+        "_legacyObstacleDeadband": 0.0006000000284984708,
+        "_legacyObstacleSmoothing": 0.6499999761581421,
+        "_legacyObstacleFlipY": true,
+        "waterFogSettings": {
+            "waterFog": true,
+            "fogColor": {
+                "r": 0.0,
+                "g": 0.03480000048875809,
+                "b": 0.1143999993801117,
+                "a": 1.0
+            },
+            "fogExtinction": {
+                "r": 0.6189000010490418,
+                "g": 0.05869999900460243,
+                "b": 0.037300001829862598,
+                "a": 1.0
+            },
+            "fogDensity": 1.0,
+            "waterOpacity": 0.0
+        },
+        "_legacyWaterFog": false,
+        "_legacyFogColor": {
+            "r": 0.10000000149011612,
+            "g": 0.30000001192092898,
+            "b": 0.4000000059604645,
+            "a": 1.0
+        },
+        "_legacyFogExtinction": {
+            "r": 0.44999998807907107,
+            "g": 0.15000000596046449,
+            "b": 0.07999999821186066,
+            "a": 1.0
+        },
+        "_legacyFogDensity": 2.0,
+        "_legacyWaterOpacity": 0.0,
+        "volumeScatterSettings": {
+            "volumeScatter": true,
+            "scatterColor": {
+                "r": 0.0,
+                "g": 0.03480000048875809,
+                "b": 0.1143999993801117,
+                "a": 1.0
+            },
+            "scatterIntensity": 1.0,
+            "scatterAnisotropy": 0.5,
+            "scatterAmbientTerm": 1.0,
+            "scatterSunTerm": 1.0,
+            "crestScatter": false,
+            "sssIntensity": 3.0,
+            "sssSunFalloff": 2.0,
+            "sssPinchMin": 0.10000000149011612,
+            "sssPinchMax": 0.6000000238418579,
+            "sssPinchFalloff": 1.5
+        },
+        "refractShadows": true,
+        "refractShadowSoftness": 0.5,
+        "depthAttenuation": {
+            "depthDarken": true,
+            "depthExtinction": {
+                "r": 0.44999998807907107,
+                "g": 0.15000000596046449,
+                "b": 0.07999999821186066,
+                "a": 1.0
+            },
+            "depthDarkenStrength": 0.05000000074505806,
+            "causticDepthFade": 0.5,
+            "screenSpaceCaustics": true,
+            "screenCausticIntensity": 1.0,
+            "godRayDepthFade": 0.05000000074505806,
+            "linkDepthToFog": false
+        },
+        "_legacyUseBedDepth": false,
+        "_legacyBedTerrain": {
+            "instanceID": 0
+        },
+        "_legacyBedResolution": 256,
+        "_legacyDeepWaterColor": {
+            "r": 0.019999999552965165,
+            "g": 0.10000000149011612,
+            "b": 0.15000000596046449,
+            "a": 1.0
+        },
+        "_legacyShorelineFadeDepth": 6.0,
+        "_legacyShorelineStrength": 0.800000011920929,
+        "windWaveSettings": {
+            "windWaves": true,
+            "windSpeed": 3.0,
+            "windFromDegrees": 0.0,
+            "waveScaleMeters": 30.0,
+            "waveCount": 12,
+            "waveAmplitudeScale": 4.0,
+            "waveDirectionSpread": 2.0,
+            "waveNormalStrength": 1.0
+        },
+        "discSurface": false
+    }
+}
+ROOT Plane position=(-3.37, -7.50, 0.91) scale=(10.00, 10.00, 10.00) active=True
+ROOT Cube position=(0.00, 0.00, 0.00) scale=(3.00, 3.00, 3.00) active=True
+ROOT Global Volume position=(-5.25, -9.82, -23.43) scale=(1.00, 1.00, 1.00) active=True
+ROOT Player position=(2.57, 1.25, 39.77) scale=(1.00, 1.00, 1.00) active=True
+COMPONENT XROrigin (1.76, -2.63, 40.30)
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "",
+        "m_EditorClassIdentifier": "Unity.XR.CoreUtils::Unity.XR.CoreUtils.XROrigin",
+        "m_Camera": {
+            "instanceID": 0
+        },
+        "m_OriginBaseGameObject": {
+            "instanceID": 0
+        },
+        "m_CameraFloorOffsetObject": {
+            "instanceID": 0
+        },
+        "m_RequestedTrackingOriginMode": 0,
+        "m_CameraYOffset": 1.1175999641418458
+    }
+}
+COMPONENT QuestLeftStickLocomotion (1.76, -2.63, 40.30)
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "",
+        "m_EditorClassIdentifier": "Assembly-CSharp::QuestLeftStickLocomotion",
+        "moveSpeed": 2.200000047683716,
+        "deadZone": 0.15000000596046449,
+        "headRelative": true,
+        "disableWhenAnotherMoveProviderExists": true,
+        "verticalSwimSpeed": 1.5,
+        "verticalAcceleration": 4.0,
+        "underwaterSinkAcceleration": 0.800000011920929,
+        "maximumSinkSpeed": 0.6000000238418579,
+        "airGravity": -9.8100004196167,
+        "maximumAirFallSpeed": 25.0,
+        "surfaceEyeHeight": 0.15000000596046449,
+        "surfaceSnapSpeed": 4.0,
+        "surfaceCaptureDistance": 0.800000011920929,
+        "diveInputThreshold": 0.44999998807907107,
+        "allowDesktopDiveKey": true,
+        "desktopDiveKey": 31,
+        "capsuleRadius": 0.25,
+        "minimumCapsuleHeight": 0.800000011920929,
+        "maximumCapsuleHeight": 2.200000047683716,
+        "headClearance": 0.05000000074505806,
+        "useSnapTurn": true,
+        "snapTurnDegrees": 45.0,
+        "turnDeadZone": 0.699999988079071,
+        "snapTurnCooldown": 0.20000000298023225,
+        "smoothTurnDegreesPerSecond": 120.0
+    }
+}
+ROOT Cube (1) position=(1.31, 0.63, 7.48) scale=(1.00, 1.00, 1.00) active=True
+ROOT Cube (2) position=(5.23, 0.63, 7.48) scale=(1.00, 1.00, 1.00) active=True
+ROOT Cube (5) position=(5.23, 0.63, 0.08) scale=(1.00, 0.35, 1.90) active=True
+ROOT Cube (4) position=(6.88, 0.63, 0.56) scale=(0.30, 0.30, 0.30) active=True
+ROOT Cube (3) position=(5.23, 0.63, -0.01) scale=(0.68, 1.46, 0.48) active=True
+ROOT Sonar Reveal Manager position=(0.00, 0.00, 0.00) scale=(1.00, 1.00, 1.00) active=True
+ROOT Sonar Wave Visual System position=(0.00, 0.00, 0.00) scale=(1.00, 1.00, 1.00) active=True
+ROOT Deep Sea Fish Demo School position=(1.76, 1.08, 16.75) scale=(1.00, 1.00, 1.00) active=True
+ROOT __OilRigGenerated position=(1.30, -1.04, -1.50) scale=(1.00, 1.00, 1.00) active=True
+BOUNDS __OilRigGenerated Center: (4.87, 22.50, -8.31), Extents: (23.62, 27.34, 18.86)
+ROOT Water Gameplay Props position=(0.00, 0.00, 0.00) scale=(1.00, 1.00, 1.00) active=True
+ROOT UniStorm VR - Locked Thunderstorm position=(0.00, 0.00, 0.00) scale=(1.00, 1.00, 1.00) active=False
+ROOT SubMarine position=(-21.79, 1.49, -23.24) scale=(1.00, 1.00, 1.00) active=True
+BOUNDS SubMarine Center: (-21.79, 1.64, -23.25), Extents: (1.62, 1.64, 4.06)
+DOOR Center: (-21.79, 3.03, -23.19), Extents: (0.52, 0.18, 0.58)
+ROOT Terrain position=(-199.40, -122.20, -224.90) scale=(1.00, 1.00, 1.00) active=True
+TERRAIN Terrain size=(504.00, 60.76, 504.00) pos=(-199.40, -122.20, -224.90)
+ROOT SK_LeatherGlove position=(84.93, -88.30, -23.29) scale=(1.00, 1.00, 1.00) active=True
+ROOT Deep Sea Stalker AI position=(0.00, 0.00, 0.00) scale=(1.00, 1.00, 1.00) active=True
+PASS: saved source scene hash unchanged.

@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: MF_Davis3D_WorldAlignedGlowWave
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor\n// Available at the Unity
+    Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=18935\n0;73;932;632;2306.638;149.5935;1.348234;True;False\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;4;-596.0664,45.04226;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;256;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionNode;37;-1009.008,141.9538;Inherit;False;MF_Davis3D_CustomPanner;-1;;31;b171e5815fdcc0848ba54bb090ffc787;0;4;4;FLOAT2;0,0;False;12;FLOAT;0;False;13;FLOAT;0;False;11;FLOAT;0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.SimpleDivideOpNode;5;-747.9551,45.33969;Inherit;False;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;12;-1290.294,216.0836;Inherit;False;SpeedY;1;3;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;7;-890.4453,64.31131;Inherit;False;Scale;1;1;False;1;0;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.BreakToComponentsNode;16;-1465.902,337.218;Inherit;False;FLOAT3;1;0;FLOAT3;0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15\nNode;AmplifyShaderEditor.RangedFloatNode;28;-1187.99,-25.25952;Inherit;False;Property;_Glow_MASTER_SCALE;Glow_MASTER_SCALE;0;0;Create;True;0;0;0;False;0;False;400;256;0;0;0;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionNode;15;-1746.902,332.218;Inherit;False;WorldToAbsoluteWorld;-1;;32;6d428b11c6ab4974e8382ebacb8c51f1;0;1;5;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;13;-1226.937,281.0069;Inherit;False;GlowWaveSpeed;1;4;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;21;-623.0118,-99.72314;Inherit;False;GlowWave;9;0;False;1;0;SAMPLER2D;0;False;1;SAMPLER2D;0\nNode;AmplifyShaderEditor.WorldPosInputsNode;33;-1948.526,342.4006;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3\nNode;AmplifyShaderEditor.BreakToComponentsNode;18;-721.6312,139.4967;Inherit;False;FLOAT2;1;0;FLOAT2;0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15\nNode;AmplifyShaderEditor.FunctionInput;11;-1290.294,142.0837;Inherit;False;SpeedX;1;2;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.DynamicAppendNode;14;-1146.294,82.08377;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.DynamicAppendNode;8;-596.4453,137.3113;Inherit;False;FLOAT3;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionNode;34;-340.2013,-63.9302;Inherit;False;WorldAlignedTexture;-1;;28;a77f34b5ad6e0ef4a909a9d4c5632eca;0;5;14;SAMPLER2D;0;False;6;FLOAT3;64,64,64;False;42;INT;0;False;50;FLOAT;1;False;58;FLOAT3;0,0,0;False;3;COLOR;48;COLOR;49;COLOR;0\nNode;AmplifyShaderEditor.FunctionOutput;0;103,-41;Inherit;True;True;-1;Output;0;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0\nWireConnection;4;0;5;0\nWireConnection;4;1;28;0\nWireConnection;37;4;14;0\nWireConnection;37;12;11;0\nWireConnection;37;13;12;0\nWireConnection;37;11;13;0\nWireConnection;5;1;7;0\nWireConnection;16;0;33;0\nWireConnection;15;5;33;0\nWireConnection;18;0;37;0\nWireConnection;14;0;16;0\nWireConnection;14;1;16;1\nWireConnection;8;0;18;0\nWireConnection;8;1;18;1\nWireConnection;8;2;16;2\nWireConnection;34;14;21;0\nWireConnection;34;6;4;0\nWireConnection;34;58;8;0\nWireConnection;0;0;34;49\nASEEND*/\n//CHKSM=036EBF4F9A5CAB43A185E4224EA871C5335F3AD6"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 3
+  m_customNodeCategory: 
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 

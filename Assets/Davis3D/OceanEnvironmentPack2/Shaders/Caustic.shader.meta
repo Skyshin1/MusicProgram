@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 3775df7369576cc4e8acd2a380addcba
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _Waves: {fileID: 2800000, guid: 735a87291da227b4984d1e4537caf58e, type: 3}
+  - _Flowmap: {fileID: 2800000, guid: 4654e94b4e40073449f6d04ada3f8467, type: 3}
+  - _BluredWaves: {fileID: 2800000, guid: 2e979c9c8942f6f439ec8e51459baf8e, type: 3}
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
