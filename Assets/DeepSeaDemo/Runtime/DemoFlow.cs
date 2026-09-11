@@ -13,6 +13,8 @@ namespace DeepSeaDemo
     {
         public DemoConfig config;
         public XROrigin player;
+        [Tooltip("New Game head position and facing. Falls back to checkpoints[0] when unassigned.")]
+        public Transform initialSpawn;
         public Transform[] checkpoints;
         public DemoProp[] props;
         public DemoDoor door;
@@ -29,12 +31,14 @@ namespace DeepSeaDemo
         public bool Busy { get; private set; }
         public bool Equipped => State.Has("suit");
         [NonSerialized] public bool suppressSaveForTests;
+        [NonSerialized] public float ladderTestInput = float.NaN;
         public event Action StateChanged;
         DemoSave checkpoint, initial;
         QuestLeftStickLocomotion movement;
         WaterSurfaceStateTracker water;
         PlayerOxygen oxygen;
         PlayerRespawnController respawn;
+        Coroutine ladderRoutine;
         string SavePath => Path.Combine(Application.persistentDataPath,
             string.IsNullOrWhiteSpace(config.saveFileName) ? "DeepSeaInvestigation.checkpoint.json" : Path.GetFileName(config.saveFileName));
         public bool HasSave => File.Exists(SavePath);
@@ -53,25 +57,51 @@ namespace DeepSeaDemo
         void Awake()
         {
             Instance = this;
+            foreach (var body in FindObjectsByType<AbstractOcclusion.WebGpuWater.WaterVolume>(FindObjectsSortMode.None))
+                if (body.IsPrimary)
+                {
+                    body.SurfaceAbsorptionScale = config.waterSurfaceAbsorptionScale;
+                    body.UnderwaterSurfaceOpacity = config.waterUnderSurfaceOpacity;
+                }
+            // The water sample's orbit controller writes camera WORLD position
+            // every LateUpdate, undoing XR tracking/teleports and putting the head
+            // inside the platform floor. Only the XR rig owns this camera.
+            var orbit = player.Camera.GetComponent<AbstractOcclusion.WebGpuWater.OrbitCamera>();
+            if (orbit != null) orbit.enabled = false;
             movement = player.GetComponent<QuestLeftStickLocomotion>();
             water = player.GetComponent<WaterSurfaceStateTracker>();
             oxygen = player.GetComponent<PlayerOxygen>();
             respawn = player.GetComponent<PlayerRespawnController>();
             if (respawn != null) respawn.Respawned += OnRespawned;
+            if (respawn != null) respawn.BiteReceived += OnBiteReceived;
         }
-        void Start()
+        IEnumerator Start()
         {
             props ??= FindObjectsByType<DemoProp>(FindObjectsSortMode.None);
-            State.spawn = checkpoints[0].position;
-            State.yaw = checkpoints[0].eulerAngles.y;
+            Transform start = initialSpawn != null ? initialSpawn : checkpoints[0];
+            State.spawn = start.position;
+            State.yaw = start.eulerAngles.y;
             CaptureProps(State);
             initial = State.Copy(); checkpoint = initial.Copy();
-            SetPaused(true); ui.ShowMain();
+            SetPaused(true);
+            // Let tracked poses initialize, then show the menu at the same
+            // position and heading New Game will restore. Previously the click
+            // itself moved/turned the view, abruptly changing visible lighting.
+            yield return null;
+            if (!Running) { SafeTeleport(State.spawn, State.yaw); ui.ShowMain(); }
         }
         void OnDestroy()
         {
             if (respawn != null) respawn.Respawned -= OnRespawned;
+            if (respawn != null) respawn.BiteReceived -= OnBiteReceived;
             if (Instance == this) { Instance = null; Time.timeScale = 1f; }
+        }
+        void OnDisable() => CancelLadder();
+        void CancelLadder()
+        {
+            if (ladderRoutine == null) return;
+            StopCoroutine(ladderRoutine);
+            ladderRoutine = null;
         }
         void Update()
         {
@@ -202,9 +232,15 @@ namespace DeepSeaDemo
             Restore(checkpoint); ui.SetFade(0f); Busy = false; SetPaused(false); ui.ShowHUD();
         }
         void OnRespawned() { if (Running) Restore(checkpoint); }
+        void OnBiteReceived(int remaining)
+        {
+            if (remaining > 0) ui.Toast("BITTEN - Health " + remaining + "/4. Move away from the fish!");
+        }
         void Restore(DemoSave source)
         {
+            CancelLadder();
             State = source.Copy();
+            respawn?.ResetBiteHealth();
             foreach (var prop in props)
             {
                 var saved = State.props.Find(p => p.id == prop.id);
@@ -227,8 +263,15 @@ namespace DeepSeaDemo
             var safety = player.GetComponent<DemoPlayerSafety>();
             if (safety != null && !safety.CanPlaceHead(headPosition)) { ui.Toast(DemoTextCatalog.Get("runtime.023")); return false; }
             var cc = player.GetComponent<CharacterController>(); bool was = cc.enabled; cc.enabled = false;
+            Pose before = new Pose(player.transform.position, player.transform.rotation);
+            var input = player.GetComponent<DemoInputRouter>();
+            var left = input != null ? input.HeldProp(false) : null;
+            var right = input != null ? input.HeldProp(true) : null;
             player.MatchOriginUpCameraForward(Vector3.up, Quaternion.Euler(0, yaw, 0) * Vector3.forward);
             player.MoveCameraToWorldLocation(headPosition); cc.enabled = was;
+            Pose after = new Pose(player.transform.position, player.transform.rotation);
+            if (left != null) left.MoveWithPlayer(before, after);
+            if (right != null && right != left) right.MoveWithPlayer(before, after);
             movement.ResetVerticalMotion(); water.TryRefreshNow(); return true;
         }
         public void ReturnToSafePosition() { if (!Busy) SafeTeleport(checkpoint.spawn, checkpoint.yaw); }
@@ -240,6 +283,73 @@ namespace DeepSeaDemo
             SafeTeleport(destination.position, destination.eulerAngles.y);
             yield return new WaitForSecondsRealtime(.15f);
             ui.SetFade(0); Busy = false; SetPaused(false);
+        }
+        public void ClimbLadder(DemoLadderClimb ladder)
+        {
+            if (Busy || ladder == null || !ladder.IsConfigured) return;
+            if (Vector3.Distance(player.Camera.transform.position, ladder.ClosestPoint(player.Camera.transform.position)) > ladder.activationDistance)
+            { ui.Toast("Move closer to the ladder."); return; }
+            ladderRoutine = StartCoroutine(LadderRoutine(ladder));
+        }
+        IEnumerator LadderRoutine(DemoLadderClimb ladder)
+        {
+            Busy = true;
+            movement.SetMovementEnabled(false);
+            var cc = player.GetComponent<CharacterController>();
+            bool ccWasEnabled = cc != null && cc.enabled;
+            if (cc != null) cc.enabled = false;
+            try
+            {
+            Vector3 start = player.Camera.transform.position;
+            Vector3 bottom = ladder.bottomAnchor.position;
+            Vector3 top = ladder.topAnchor.position;
+            Vector3 entry = ladder.ClosestPoint(start);
+            float align = Mathf.Max(.05f, ladder.alignmentSeconds);
+            for (float t = 0; t < align; t += Time.unscaledDeltaTime)
+            {
+                float eased = Mathf.SmoothStep(0, 1, t / align);
+                if (ladder == null || !ladder.isActiveAndEnabled) yield break;
+                player.MoveCameraToWorldLocation(Vector3.Lerp(start, entry, eased));
+                yield return null;
+            }
+            player.MoveCameraToWorldLocation(entry);
+            float totalLength = Mathf.Max(.1f, Vector3.Distance(bottom, top));
+            float travelled = Vector3.Distance(bottom, entry);
+            while (travelled < totalLength)
+            {
+                if (ladder == null || !ladder.isActiveAndEnabled || !ladder.IsConfigured) yield break;
+                Vector3 head = player.Camera.transform.position;
+                if (Vector3.Distance(head, ladder.ClosestPoint(head)) > ladder.releaseDistance) yield break;
+                // A walk input releases the ladder instead of trapping the player
+                // on the path while ordinary locomotion is disabled.
+                var controls = player.GetComponent<DemoXRInput>();
+                if (controls != null && controls.left.Stick.sqrMagnitude > .25f) yield break;
+                float input = LadderVerticalInput();
+                if (Mathf.Abs(input) < ladder.stickDeadZone) input = 0f;
+                travelled = Mathf.Clamp(travelled + input * ladder.climbSpeed * Time.unscaledDeltaTime, 0f, totalLength);
+                Vector3 position = Vector3.Lerp(bottom, top, travelled / totalLength);
+                player.MoveCameraToWorldLocation(position);
+                if (travelled <= 0f && input < 0f) break;
+                if (travelled >= totalLength) break;
+                yield return null;
+            }
+            }
+            finally
+            {
+            if (cc != null) cc.enabled = ccWasEnabled;
+            if (movement != null) { movement.ResetVerticalMotion(); movement.SetMovementEnabled(!Paused); }
+            if (water != null) water.TryRefreshNow();
+            Busy = false;
+            ladderRoutine = null;
+            }
+        }
+        float LadderVerticalInput()
+        {
+            if (!float.IsNaN(ladderTestInput)) return Mathf.Clamp(ladderTestInput, -1f, 1f);
+            var input = player.GetComponent<DemoXRInput>();
+            if (input != null && input.isActiveAndEnabled) return input.right.Stick.y;
+            var device = UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand);
+            return device.isValid && device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 stick) ? stick.y : 0f;
         }
         public void SetPaused(bool paused)
         {

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Attachment;
 using UnityEngine.XR.Interaction.Toolkit.Interactors.Casters;
 using UnityEngine.XR.Interaction.Toolkit.Filtering;
 using UnityEngine.EventSystems;
@@ -30,6 +31,7 @@ namespace DeepSeaDemo
         LineRenderer leftLine, rightLine;
         Material lineMaterial;
         XRSelectFilterDelegate leftFilter, rightFilter;
+        RaycastHit[] worldHits = new RaycastHit[32];
         void Awake()
         {
             Instance = this;
@@ -45,6 +47,7 @@ namespace DeepSeaDemo
         }
         void Start()
         {
+            ConfigureHandAttachment();
             // XRI passes the caster mask to TrackedDeviceGraphicRaycaster as well
             // as physics. Excluding UI here prevents even button hover/clicks.
             // Start runs after NearFarInteractor has created its default casters.
@@ -52,6 +55,24 @@ namespace DeepSeaDemo
                 caster.raycastMask |= config.uiMask;
             foreach (var ray in GetComponentsInChildren<XRRayInteractor>(true))
                 ray.raycastMask |= config.uiMask;
+        }
+        public void ConfigureHandAttachment()
+        {
+            foreach (var interactor in GetComponentsInChildren<NearFarInteractor>(true))
+            {
+                interactor.farAttachMode = InteractorFarAttachMode.Near;
+                if (interactor.interactionAttachController is not InteractionAttachController attach) continue;
+                // Sticks belong to locomotion. Starter Assets also bind them to
+                // twisting/pushing a remote held object, which corrupts its grip.
+                attach.useManipulationInput = false;
+                attach.useDistanceBasedVelocityScaling = false;
+                attach.useMomentum = false;
+            }
+            foreach (var ray in GetComponentsInChildren<XRRayInteractor>(true))
+            {
+                ray.useForceGrab = true;
+                ray.manipulateAttachTransform = false;
+            }
         }
         LineRenderer Line(Transform hand)
         {
@@ -101,7 +122,11 @@ namespace DeepSeaDemo
             for (int side = 0; side < 2; side++)
             {
                 var prop = Instance.HeldProp(side == 1);
-                if (prop != null && (item == prop.transform || item.IsChildOf(prop.transform)) && Instance.OverUI(side == 1)) return true;
+                if (prop == null || (item != prop.transform && !item.IsChildOf(prop.transform))) continue;
+                if (Instance.OverUI(side == 1)) return true;
+                var device = InputDevices.GetDeviceAtXRNode(side == 1 ? XRNode.RightHand : XRNode.LeftHand);
+                var aim = Instance.HandAim(side == 1, device, out _);
+                if (Instance.FindWorldAction(aim, out _)?.kind == DemoActionKind.Board) return true;
             }
             return false;
         }
@@ -141,22 +166,18 @@ namespace DeepSeaDemo
         bool Route(bool right, bool pressed, UnityEngine.XR.InputDevice device, LineRenderer line)
         {
             var flow = DemoFlow.Instance; Transform hand = right ? rightHand : leftHand;
-            Vector3 origin = hand.position, forward = hand.forward;
-            bool tracked = device.isValid && device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.isTracked, out bool t) && t;
-            if (Actions != null) tracked = Actions.Hand(right).Tracked;
-            if (!tracked && flow.player.Camera != null) { origin = flow.player.Camera.transform.position; forward = flow.player.Camera.transform.forward; }
-            int mask = config.worldMask | config.interactMask | config.uiMask;
+            Ray aim = HandAim(right, device, out bool tracked);
+            Vector3 origin = aim.origin;
             if (OverUI(right) || flow.ui.Modal)
             { line.enabled = false; if (pressed) ReportSonar("sonar.ui", right, origin, false); return true; }
-            DemoWorldAction action = null; Vector3 end = origin + forward * config.grabRange;
-            if (Physics.Raycast(origin, forward, out RaycastHit hit, config.grabRange, mask, QueryTriggerInteraction.Collide))
-            { action = hit.collider.GetComponentInParent<DemoWorldAction>(); end = hit.point; }
+            DemoWorldAction action = FindWorldAction(aim, out Vector3 end);
             line.enabled = action != null || flow.ui.Modal;
             line.SetPosition(0, origin); line.SetPosition(1, end);
             if (action != null)
             {
                 HoverTarget = action.title; flow.ui.SetHover(action.Prompt);
-                if (pressed && !Holding(right)) { ReportSonar("sonar.interaction", right, origin, false); action.Interact(right); }
+                if (pressed && (!Holding(right) || action.kind == DemoActionKind.Board))
+                { ReportSonar("sonar.interaction", right, origin, false); action.Interact(right); }
                 return true;
             }
             if (!pressed) return false;
@@ -173,6 +194,38 @@ namespace DeepSeaDemo
             VolumetricFogPulseEmitter.EmitPlayerAt(origin, 1f, tracked ? hand : flow.player.Camera.transform);
             nextPulse = Time.time + config.sonarCooldown;
             ReportSonar("sonar.sent", right, origin, true); return true;
+        }
+        Ray HandAim(bool right, UnityEngine.XR.InputDevice device, out bool tracked)
+        {
+            Transform hand = right ? rightHand : leftHand;
+            tracked = device.isValid && device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.isTracked, out bool t) && t;
+            if (Actions != null) tracked = Actions.Hand(right).Tracked;
+            Transform source = !tracked && DemoFlow.Instance.player.Camera != null ? DemoFlow.Instance.player.Camera.transform : hand;
+            return new Ray(source.position, source.forward);
+        }
+        DemoWorldAction FindWorldAction(Ray aim, out Vector3 end)
+        {
+            int count;
+            int mask = config.worldMask | config.interactMask | config.uiMask;
+            while ((count = Physics.RaycastNonAlloc(aim, worldHits, config.grabRange, mask, QueryTriggerInteraction.Collide)) == worldHits.Length)
+                System.Array.Resize(ref worldHits, worldHits.Length * 2);
+            var left = HeldProp(false); var right = HeldProp(true);
+            float nearest = float.PositiveInfinity;
+            DemoWorldAction action = null;
+            end = aim.GetPoint(config.grabRange);
+            for (int i = 0; i < count; i++)
+            {
+                var hit = worldHits[i];
+                if (hit.collider.transform.IsChildOf(transform)) continue;
+                var prop = hit.collider.GetComponentInParent<DemoProp>();
+                // A carried evidence box must not hide the boarding target.
+                // All other geometry still occludes interactions normally.
+                if (prop != null && (prop == left || prop == right)) continue;
+                if (hit.distance >= nearest) continue;
+                nearest = hit.distance; end = hit.point;
+                action = hit.collider.GetComponentInParent<DemoWorldAction>();
+            }
+            return action;
         }
         internal static string SonarBlockReason(bool running, bool paused, bool busy, bool underwater, bool holding, bool qte, bool coolingDown)
         {

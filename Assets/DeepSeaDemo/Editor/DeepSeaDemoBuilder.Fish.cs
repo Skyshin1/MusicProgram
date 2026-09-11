@@ -47,7 +47,6 @@ namespace DeepSeaDemo.Editor
             flow.enemy = enemy.AddComponent<DeepSeaStalkerController>();
             Set(flow.enemy, "listenToRawPulses", false); Set(flow.enemy, "useStimulusSonarRadius", true); Set(flow.enemy, "validateAttackReach", true);
             flow.enemy.Configure(cfg, bindings.route, flow.player.transform, flow.player.GetComponent<PlayerRespawnController>(), bindings.enemyAnimator);
-            enemy.AddComponent<DeepSeaStalkerAlertIndicator>();
             for (int species = 0; species < 2; species++)
             {
                 var school = Make("Fish School " + (species + 1), parent); school.transform.position = new Vector3(species == 0 ? -9 : 6, -19, species == 0 ? 1 : 27);

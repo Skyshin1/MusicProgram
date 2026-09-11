@@ -18,6 +18,49 @@ public sealed class SonarRevealManager : MonoBehaviour
     public static float OutlineStrength => Instance != null ? Instance.outlineStrength : 0f;
 
     private static readonly Renderer[] EmptyRenderers = new Renderer[0];
+    private static readonly HashSet<Renderer> SuppressedRenderers = new();
+    private const int ExclusionCapacity = 16;
+    private readonly Vector4[] excludedMin = new Vector4[ExclusionCapacity];
+    private readonly Vector4[] excludedMax = new Vector4[ExclusionCapacity];
+    private static readonly int ExcludedCountId = Shader.PropertyToID("_WaterSonarExcludedCount");
+    private static readonly int ExcludedMinId = Shader.PropertyToID("_WaterSonarExcludedMin");
+    private static readonly int ExcludedMaxId = Shader.PropertyToID("_WaterSonarExcludedMax");
+
+    public static bool IsSuppressed(Renderer renderer) => renderer != null && SuppressedRenderers.Contains(renderer);
+
+    public static void SetSuppressed(Renderer renderer, bool suppressed)
+    {
+        if (renderer == null) return;
+        if (suppressed)
+        {
+            SuppressedRenderers.Add(renderer);
+            // Picking up an already revealed item removes the outline immediately.
+            if (Instance != null) { Instance.activeRenderers.Remove(renderer); Instance.surfaceLimits.Remove(renderer); }
+        }
+        else SuppressedRenderers.Remove(renderer);
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetExclusions()
+    {
+        SuppressedRenderers.Clear(); Shader.SetGlobalInt(ExcludedCountId, 0);
+    }
+
+    private void LateUpdate()
+    {
+        int count = 0;
+        foreach (var renderer in SuppressedRenderers)
+        {
+            if (renderer == null || !renderer.enabled || !renderer.gameObject.activeInHierarchy || count >= ExclusionCapacity) continue;
+            if (!(renderer is MeshRenderer) && !(renderer is SkinnedMeshRenderer)) continue;
+            var bounds = renderer.bounds; bounds.Expand(.006f);
+            excludedMin[count] = bounds.min; excludedMax[count] = bounds.max; count++;
+        }
+        Shader.SetGlobalInt(ExcludedCountId, count);
+        if (count == 0) return;
+        Shader.SetGlobalVectorArray(ExcludedMinId, excludedMin);
+        Shader.SetGlobalVectorArray(ExcludedMaxId, excludedMax);
+    }
 
     [Header("Reveal Target Filter")]
     [SerializeField] private LayerMask targetLayers = ~0;
@@ -55,7 +98,7 @@ public sealed class SonarRevealManager : MonoBehaviour
 
     public static void RevealRenderer(Renderer renderer, float duration)
     {
-        if (renderer == null)
+        if (renderer == null || IsSuppressed(renderer))
             return;
         if (Instance == null)
             EnsureInstance();
@@ -104,7 +147,10 @@ public sealed class SonarRevealManager : MonoBehaviour
         VolumetricFogPulseEmitter.PulseEnded -= OnPulseEnded;
         VolumetricFogPulseEmitter.AllPulsesEnded -= OnAllPulsesEnded;
         if (Instance == this)
+        {
+            Shader.SetGlobalInt(ExcludedCountId, 0);
             Instance = null;
+        }
     }
 
     private void Update()
@@ -191,7 +237,7 @@ public sealed class SonarRevealManager : MonoBehaviour
     private bool EligibleSurface(Renderer renderer, VolumetricFogPulseEmitter.PulseState pulse, out float maxY)
     {
         maxY = 1e20f;
-        if (renderer == null || !renderer.enabled || !renderer.gameObject.activeInHierarchy) return false;
+        if (renderer == null || IsSuppressed(renderer) || !renderer.enabled || !renderer.gameObject.activeInHierarchy) return false;
         if (!(renderer is MeshRenderer) && !(renderer is SkinnedMeshRenderer)) return false;
         int layer = 1 << renderer.gameObject.layer;
         if ((targetLayers.value & layer) == 0 || (ignoredLayers.value & layer) != 0) return false;
@@ -290,7 +336,7 @@ public sealed class SonarRevealManager : MonoBehaviour
         {
             Renderer renderer = pair.Key;
             bool expired = !float.IsPositiveInfinity(pair.Value) && now >= pair.Value;
-            if (renderer == null || expired)
+            if (renderer == null || IsSuppressed(renderer) || expired)
             {
                 removed ??= new List<Renderer>();
                 removed.Add(renderer);

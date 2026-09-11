@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Clears WebGPU Water's underwater fog and depth darkening inside a
+/// Clears WebGPU Water's view-path fog, preserving depth darkening, inside a
 /// configurable, forward-facing horizontal cylinder. It intentionally does
 /// not alter sonar hits or white outlines. The legacy component name remains
 /// so configured player prefabs stay valid.

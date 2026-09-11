@@ -10,6 +10,18 @@
 int _WaterSonarPulseCount;
 float4 _WaterSonarPulseOrigins[WATER_SONAR_PULSE_CAPACITY]; // xyz origin, w radius
 float4 _WaterSonarPulseParams[WATER_SONAR_PULSE_CAPACITY];  // x width, y strength, z end fade
+int _WaterSonarExcludedCount;
+float4 _WaterSonarExcludedMin[16];
+float4 _WaterSonarExcludedMax[16];
+
+bool WaterSonarExcluded(float3 worldPosition)
+{
+    [loop]
+    for (int i = 0; i < min(_WaterSonarExcludedCount, 16); i++)
+        if (all(worldPosition >= _WaterSonarExcludedMin[i].xyz) && all(worldPosition <= _WaterSonarExcludedMax[i].xyz))
+            return true;
+    return false;
+}
 
 float _WaterSonarLanternEnabled;
 float3 _WaterSonarLanternPosition;
@@ -37,6 +49,7 @@ float WaterSonarPulseClearAt(float3 worldPosition, float rawDepth)
 {
     if (_WaterSonarPulseCount <= 0 || !WaterSonarHasSceneSurface(rawDepth))
         return 0.0;
+    if (WaterSonarExcluded(worldPosition)) return 0.0;
 
     float clearAmount = 0.0;
     [unroll]

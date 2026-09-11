@@ -17,7 +17,7 @@ namespace DeepSeaDemo
         public string Prompt => kind switch
         {
             DemoActionKind.Document => "Read Log", DemoActionKind.Alarm => "Check Alarm Record",
-            DemoActionKind.Equip => "Equip Suit", DemoActionKind.Board => "Board Platform",
+            DemoActionKind.Equip => "Equip Suit", DemoActionKind.Board => "Climb Ladder / Right stick up-down",
             DemoActionKind.Dive => "Begin Dive",
             DemoActionKind.BlackBoxDock => "Insert Black Box", DemoActionKind.EvidenceDock => "Submit Evidence",
             _ => "Read Terminal"
@@ -37,7 +37,9 @@ namespace DeepSeaDemo
                     if (!flow.State.Has("flashlight")) { flow.ui.Toast(DemoTextCatalog.Get("runtime.078")); return; }
                     flow.Record("suit"); flow.ui.Toast(DemoTextCatalog.Get("runtime.079")); break;
                 case DemoActionKind.Board:
-                    if (destination != null) flow.Board(destination);
+                    var ladder = GetComponent<DemoLadderClimb>();
+                    if (ladder != null && ladder.IsConfigured) flow.ClimbLadder(ladder);
+                    else if (destination != null) flow.Board(destination);
                     break;
                 case DemoActionKind.Dive:
                     if (!flow.Equipped || flow.State.stage == DemoStage.Platform) { flow.ui.Toast("Read the first log, check the alarm, take a flashlight and equip your suit first."); return; }

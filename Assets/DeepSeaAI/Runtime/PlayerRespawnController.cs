@@ -23,6 +23,33 @@ namespace DeepSeaAI
         private Vector3 fallbackForward;
         private bool isRespawning;
         private float protectedUntil;
+        private int bitesTaken;
+        private float nextBiteAt;
+        public const int MaximumBites = 4;
+        public int BitesRemaining => Mathf.Max(0, MaximumBites - bitesTaken);
+        public event Action<int> BiteReceived;
+
+        public bool ReceiveBite(Transform source)
+        {
+            if (!RegisterBite(Time.time)) return false;
+            BiteReceived?.Invoke(BitesRemaining);
+            if (BitesRemaining == 0) Kill(source);
+            return true;
+        }
+
+        internal bool RegisterBite(float now)
+        {
+            if (IsProtected || BitesRemaining == 0 || now < nextBiteAt) return false;
+            bitesTaken++;
+            nextBiteAt = now + 1f;
+            return true;
+        }
+
+        public void ResetBiteHealth()
+        {
+            bitesTaken = 0;
+            nextBiteAt = float.NegativeInfinity;
+        }
 
         public event Action Respawned;
         public bool IsProtected => isRespawning || Time.unscaledTime < protectedUntil;
@@ -68,6 +95,7 @@ namespace DeepSeaAI
             ReleaseHeldObjects();
             TeleportToRespawn();
             ClearPlayerVelocity();
+            ResetBiteHealth();
             NoiseSystem.Emit(new NoiseStimulus(
                 RespawnCameraPosition(),
                 0f,

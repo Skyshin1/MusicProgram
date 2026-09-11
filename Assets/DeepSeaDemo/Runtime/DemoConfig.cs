@@ -5,6 +5,11 @@ namespace DeepSeaDemo
     [CreateAssetMenu(menuName = "Deep Sea Demo/Configuration")]
     public sealed class DemoConfig : ScriptableObject
     {
+        [Header("Water surface visibility")]
+        [Tooltip("Absorption while viewing submerged objects from above water. Higher values hide distant underwater detail sooner.")]
+        [Range(1f, 8f)] public float waterSurfaceAbsorptionScale = 3f;
+        [Tooltip("Obscures platform details through the underside of the water surface.")]
+        [Range(0f, 1f)] public float waterUnderSurfaceOpacity = .98f;
         public DemoTextCatalog text;
         [Tooltip("A filename only, isolated from other demo scenes.")]
         public string saveFileName = "DeepSeaInvestigation.checkpoint.json";

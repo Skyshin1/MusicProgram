@@ -57,6 +57,10 @@ namespace AbstractOcclusion.WebGpuWater
         /// <summary>Beer-Lambert depth fog, shared by the surface, objects and pool.</summary>
         public bool WaterFog { get => waterFogSettings.waterFog; set => waterFogSettings.waterFog = value; }
 
+        [Tooltip("Additional absorption when looking through the water surface from air. Does not change the submerged camera fog or sonar visibility.")]
+        [SerializeField, Range(1f, 8f)] float surfaceAbsorptionScale = 1f;
+        public float SurfaceAbsorptionScale { get => surfaceAbsorptionScale; set => surfaceAbsorptionScale = Mathf.Clamp(value, 1f, 8f); }
+
         // Legacy capture (pre-Phase-2 scenes) -> copied once by MigrateWaterFogV3. Hidden; do not edit.
         [SerializeField, HideInInspector, FormerlySerializedAs("waterFog")] bool _legacyWaterFog = false;
         [SerializeField, HideInInspector, FormerlySerializedAs("fogColor")] Color _legacyFogColor = new Color(0.10f, 0.30f, 0.40f);
@@ -151,6 +155,8 @@ namespace AbstractOcclusion.WebGpuWater
             public Color depthExtinction = new Color(0.45f, 0.15f, 0.08f);
             [Tooltip("Master multiplier on the depth term (acts like the fog density).")]
             [Range(0f, 8f)] public float depthDarkenStrength = 1f;
+            [Tooltip("Minimum diffuse visibility retained at extreme depth. Prevents submerged geometry from collapsing to absolute black.")]
+            [Range(0f, 0.25f)] public float minimumDepthLight = 0.06f;
             [Tooltip("Extra softening of projected caustics on objects, per world unit of depth.")]
             [Range(0f, 8f)] public float causticDepthFade = 0.5f;
             [Tooltip("Paint projected caustics onto ANY submerged surface (terrain, Standard Lit props, a " +
@@ -174,10 +180,31 @@ namespace AbstractOcclusion.WebGpuWater
         internal bool depthDarken => depthAttenuation.depthDarken;
         internal Color depthExtinction => depthAttenuation.depthExtinction;
         internal float depthDarkenStrength => depthAttenuation.depthDarkenStrength;
+        internal float minimumDepthLight => depthAttenuation.minimumDepthLight;
         internal float causticDepthFade => depthAttenuation.causticDepthFade;
         internal bool screenSpaceCaustics => depthAttenuation.screenSpaceCaustics;
         internal float screenCausticIntensity => depthAttenuation.screenCausticIntensity;
         internal float godRayDepthFade => depthAttenuation.godRayDepthFade;
         internal bool linkDepthToFog => depthAttenuation.linkDepthToFog;
+
+        public void ConfigureDeepSeaVisibility(Color newFogColor, Color newFogExtinction, float newFogDensity,
+            Color newDepthExtinction, float newDepthStrength, float minimumLight,
+            float ambientScatter, float sunScatter, float scatterStrength)
+        {
+            waterFogSettings.waterFog = true;
+            waterFogSettings.fogColor = newFogColor;
+            waterFogSettings.fogExtinction = newFogExtinction;
+            waterFogSettings.fogDensity = Mathf.Max(0f, newFogDensity);
+            depthAttenuation.depthDarken = true;
+            depthAttenuation.linkDepthToFog = false;
+            depthAttenuation.depthExtinction = newDepthExtinction;
+            depthAttenuation.depthDarkenStrength = Mathf.Max(0f, newDepthStrength);
+            depthAttenuation.minimumDepthLight = Mathf.Clamp(minimumLight, 0f, .25f);
+            volumeScatterSettings.volumeScatter = true;
+            volumeScatterSettings.scatterColor = newFogColor;
+            volumeScatterSettings.scatterAmbientTerm = Mathf.Max(0f, ambientScatter);
+            volumeScatterSettings.scatterSunTerm = Mathf.Max(0f, sunScatter);
+            volumeScatterSettings.scatterIntensity = Mathf.Max(0f, scatterStrength);
+        }
     }
 }

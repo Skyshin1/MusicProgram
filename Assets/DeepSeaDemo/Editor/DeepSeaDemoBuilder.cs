@@ -66,6 +66,20 @@ namespace DeepSeaDemo.Editor
             else if (command == "sonarrender") DemoHandsUIRegression.RunSonarRendering();
             else if (command == "doorinspect") DemoDoorwayRepair.Inspect();
             else if (command == "doorrepair") DemoDoorwayRepair.Repair();
+            else if (command == "modelinspect") DemoModelRegression.Inspect();
+            else if (command == "wristrepair") DemoGloveWristRepair.Generate();
+            else if (command == "modeltest") DemoModelRegression.Verify();
+            else if (command == "gameplayinspect") DemoGameplayRegression.Inspect();
+            else if (command == "environmentplay") DemoGameplayRegression.BeginEnvironmentPlay();
+            else if (command == "qteplay") DemoGameplayRegression.BeginQtePlay();
+            else if (command == "audiosetup") DemoAudioSetup.Generate();
+            else if (command == "surfaceplay") DemoGameplayRegression.BeginSurfacePlay();
+            else if (command == "waterlineplay") DemoGameplayRegression.BeginWaterlinePlay();
+            else if (command == "interactionplay") DemoGameplayRegression.BeginInteractionPlay();
+            else if (command == "boardingplay") DemoGameplayRegression.BeginBoardingPlay();
+            else if (command == "repairplay") DemoGameplayRegression.BeginRepairPlay();
+            else if (command == "gameplaytest") DemoGameplayRegression.Verify();
+            else if (command == "gameplayplay") DemoGameplayRegression.BeginPlay();
         }
         [MenuItem("Tools/Deep Sea Demo/01 Build Isolated Demo")]
         public static void Build()

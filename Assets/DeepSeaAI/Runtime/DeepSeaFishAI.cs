@@ -1,4 +1,5 @@
 using UnityEngine;
+using DeepSeaDemo;
 
 namespace DeepSeaAI
 {
@@ -99,11 +100,13 @@ namespace DeepSeaAI
         private void OnEnable()
         {
             VolumetricFogPulseEmitter.PulseUpdated += OnPulseUpdated;
+            if (audioSource != null) audioSource.UnPause();
         }
 
         private void OnDisable()
         {
             VolumetricFogPulseEmitter.PulseUpdated -= OnPulseUpdated;
+            if (audioSource != null) audioSource.Pause();
         }
 
         private void Start()
@@ -268,12 +271,18 @@ namespace DeepSeaAI
         {
             if (!playSwimLoopSound || audioSource == null || audioSource.isPlaying)
                 return;
-            AudioClip clip = swimLoopClip != null ? swimLoopClip : GetGeneratedSwimLoop();
+            var cue = DemoAudioBank.Default != null ? DemoAudioBank.Default.Get(DemoSound.FishSwim) : null;
+            AudioClip clip = swimLoopClip != null ? swimLoopClip : cue?.clip != null ? cue.clip : GetGeneratedSwimLoop();
             if (clip == null)
                 return;
             audioSource.clip = clip;
             audioSource.loop = true;
             audioSource.volume = swimVolume;
+            if (swimLoopClip == null && cue?.clip != null)
+            {
+                audioSource.volume = cue.volume * DemoAudioBank.Default.masterVolume;
+                ApplyBankSpatial(cue);
+            }
             audioSource.Play();
         }
 
@@ -281,12 +290,24 @@ namespace DeepSeaAI
         {
             if (audioSource == null)
                 return;
-            AudioClip clip = fleeClip != null ? fleeClip : GetGeneratedFleeClip();
+            var cue = DemoAudioBank.Default != null ? DemoAudioBank.Default.Get(DemoSound.FishFlee) : null;
+            AudioClip clip = fleeClip != null ? fleeClip : cue?.clip != null ? cue.clip : GetGeneratedFleeClip();
             if (clip == null)
                 return;
             audioSource.Stop();
             audioSource.loop = false;
-            audioSource.PlayOneShot(clip, fleeVolume);
+            // One-shot gain should not be multiplied by the quiet swim-loop gain.
+            audioSource.volume = 1;
+            if (fleeClip == null && cue?.clip != null) ApplyBankSpatial(cue);
+            audioSource.PlayOneShot(clip, fleeClip == null && cue?.clip != null ? cue.volume * DemoAudioBank.Default.masterVolume : fleeVolume);
+        }
+
+        private void ApplyBankSpatial(DemoAudioBank.Cue cue)
+        {
+            audioSource.outputAudioMixerGroup = DemoAudioBank.Default.output;
+            audioSource.spatialBlend = cue.spatialBlend;
+            audioSource.minDistance = Mathf.Max(.1f, cue.minDistance);
+            audioSource.maxDistance = Mathf.Max(audioSource.minDistance, cue.maxDistance);
         }
 
         private AudioClip GetGeneratedSwimLoop()

@@ -32,6 +32,7 @@ namespace AbstractOcclusion.WebGpuWater
         static readonly int ID_FogDensity = WaterShaderProps.WaterFogDensity;
         static readonly int ID_FogEnabled = WaterShaderProps.WaterFogEnabled;
         static readonly int ID_WaterOpacity = Shader.PropertyToID("_WaterOpacity");
+        static readonly int ID_SurfaceAbsorptionScale = Shader.PropertyToID("_SurfaceAbsorptionScale");
         static readonly int ID_ScatterEnabled = Shader.PropertyToID("_ScatterEnabled");
         static readonly int ID_ScatterColor = Shader.PropertyToID("_ScatterColor");
         static readonly int ID_ScatterIntensity = Shader.PropertyToID("_ScatterIntensity");
@@ -47,6 +48,7 @@ namespace AbstractOcclusion.WebGpuWater
         static readonly int ID_SssPinchFalloff = Shader.PropertyToID("_SssPinchFalloff");
         static readonly int ID_DepthExt = Shader.PropertyToID("_DepthExtinction");
         static readonly int ID_DepthStrength = Shader.PropertyToID("_DepthDarkenStrength");
+        static readonly int ID_DepthMinimumLight = Shader.PropertyToID("_DepthMinimumLight");
         static readonly int ID_DepthEnabled = Shader.PropertyToID("_DepthDarkenEnabled");
         static readonly int ID_CausticDepthFade = Shader.PropertyToID("_CausticDepthFade");
         static readonly int ID_GodRayDepthFade = Shader.PropertyToID("_GodRayDepthFade");
@@ -161,6 +163,7 @@ namespace AbstractOcclusion.WebGpuWater
         static readonly int ID_UnderFresnelFloor = Shader.PropertyToID("_UnderFresnelFloor");
         static readonly int ID_UnderReflectionStrength = Shader.PropertyToID("_UnderReflectionStrength");
         static readonly int ID_UnderMirrorWaterBlend = Shader.PropertyToID("_UnderMirrorWaterBlend");
+        static readonly int ID_UnderSurfaceOpacity = Shader.PropertyToID("_UnderSurfaceOpacity");
         static readonly int ID_FoamUndersideDarken = Shader.PropertyToID("_FoamUndersideDarken");
         static readonly int ID_FoamUndersideGlow = Shader.PropertyToID("_FoamUndersideGlow");
         static readonly int ID_UnderDetailNormalStrength = Shader.PropertyToID("_UnderDetailNormalStrength");
@@ -470,6 +473,7 @@ namespace AbstractOcclusion.WebGpuWater
             sink.SetFloat(ID_FogDensity, _body.fogDensity);
             sink.SetFloat(ID_FogEnabled, _body.WaterFog ? 1f : 0f);
             sink.SetFloat(ID_WaterOpacity, _body.waterOpacity);
+            sink.SetFloat(ID_SurfaceAbsorptionScale, _body.SurfaceAbsorptionScale);
 
             // Lit volume scattering: turns the flat fog colour into a sun-lit in-scatter.
             sink.SetFloat(ID_ScatterEnabled, _body.volumeScatter ? 1f : 0f);
@@ -487,6 +491,7 @@ namespace AbstractOcclusion.WebGpuWater
 
             sink.SetColor(ID_DepthExt, _body.EffectiveDepthExtinction);
             sink.SetFloat(ID_DepthStrength, _body.depthDarkenStrength);
+            sink.SetFloat(ID_DepthMinimumLight, _body.minimumDepthLight);
             sink.SetFloat(ID_DepthEnabled, _body.depthDarken ? 1f : 0f);
             sink.SetFloat(ID_CausticDepthFade, _body.causticDepthFade);
             sink.SetFloat(ID_GodRayDepthFade, _body.godRayDepthFade);
@@ -538,6 +543,7 @@ namespace AbstractOcclusion.WebGpuWater
             sink.SetFloat(ID_UnderFresnelFloor, _body.UnderwaterFresnelFloor);
             sink.SetFloat(ID_UnderReflectionStrength, _body.UnderwaterReflectionStrength);
             sink.SetFloat(ID_UnderMirrorWaterBlend, _body.UnderwaterMirrorWaterBlend);
+            sink.SetFloat(ID_UnderSurfaceOpacity, _body.UnderwaterSurfaceOpacity);
             sink.SetFloat(ID_FoamUndersideDarken, _body.FoamUndersideDarken);
             sink.SetFloat(ID_FoamUndersideGlow, _body.FoamUndersideGlow);
             sink.SetFloat(ID_UnderDetailNormalStrength, _body.UnderwaterDetailNormalStrength);

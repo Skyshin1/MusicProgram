@@ -61,6 +61,10 @@ namespace AbstractOcclusion.WebGpuWater
 
         [SerializeField] UnderwaterSurfaceSettings underwaterSurfaceSettings = new UnderwaterSurfaceSettings();
 
+        [SerializeField, Range(0f, 1f), Tooltip("Obscures above-water scene detail when looking through the surface from below. Zero preserves the clear Snell window.")]
+        float underwaterSurfaceOpacity;
+        public float UnderwaterSurfaceOpacity { get => underwaterSurfaceOpacity; set => underwaterSurfaceOpacity = Mathf.Clamp01(value); }
+
         internal bool UnderwaterPhysicalFresnel => underwaterSurfaceSettings.physicalFresnel;
         internal float UnderwaterTirEdgeSoftness => underwaterSurfaceSettings.tirEdgeSoftness;
         internal float UnderwaterFresnelFloor => underwaterSurfaceSettings.fresnelFloor;

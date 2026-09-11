@@ -43,6 +43,7 @@ namespace DeepSeaAI
         [Header("Attack")]
         [Min(0.1f)] public float killDistance = 0.85f;
         [Min(0f)] public float attackWindup = 0.35f;
+        [Min(0.1f)] public float attackRecovery = 1.0f;
 
         [Header("Sonar Reveal")]
         public Color monsterOutlineColor = new Color(1f, 0.035f, 0.02f, 1f);

@@ -21,7 +21,12 @@ namespace DeepSeaDemo
         bool reported, unlocked;
         float nextBlockedNotice;
         readonly Collider[] hits = new Collider[24];
-        void Awake() { closedRotation = hinge.localRotation; }
+        void Awake()
+        {
+            closedRotation = hinge.localRotation;
+            // The repair collider is authored in the scene. Preserve its Center
+            // and Size so entering Play never replaces the designer's settings.
+        }
         void Update()
         {
             if (repair == null || !repair.IsRepaired || progress >= 1f) return;
@@ -32,6 +37,7 @@ namespace DeepSeaDemo
                 { nextBlockedNotice = Time.unscaledTime + 3f; DemoFlow.Instance?.ui.Toast("Lock repaired. Move yourself and loose objects away from the hatch so it can open safely."); }
                 return;
             }
+            if (progress == 0 && Time.deltaTime > 0) DemoAudioEmitter.Play(this, DemoSound.HatchOpen);
             progress = Mathf.MoveTowards(progress, 1f, Time.deltaTime / Mathf.Max(.2f, seconds));
             hinge.localRotation = Quaternion.Slerp(closedRotation, closedRotation * Quaternion.Euler(openEuler), Mathf.SmoothStep(0, 1, progress));
             if (progress >= 1f && !reported)

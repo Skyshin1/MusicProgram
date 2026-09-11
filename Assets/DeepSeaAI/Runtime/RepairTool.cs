@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using AbstractOcclusion.WebGpuWater;
+using DeepSeaDemo;
 
 namespace DeepSeaAI
 {
@@ -33,7 +34,7 @@ namespace DeepSeaAI
         [SerializeField] private LineRenderer repairBeam;
         [SerializeField] private Color beamColor = new(0.4f, 1f, 0.95f, 1f);
 
-        private readonly Collider[] nearby = new Collider[HitCapacity];
+        private Collider[] nearby = new Collider[HitCapacity];
         private XRGrabInteractable grabInteractable;
         private bool activateHeld;
         private RepairableFacility currentTarget;
@@ -82,6 +83,7 @@ namespace DeepSeaAI
             grabInteractable.deactivated.RemoveListener(OnDeactivated);
             activateHeld = false;
             SetBeam(false, null);
+            DemoAudioEmitter.SetLoop(this, DemoSound.RepairLoop, false);
         }
 
         private void Update()
@@ -97,6 +99,9 @@ namespace DeepSeaAI
             currentTarget = repairing ? FindNearestTarget() : null;
             if (currentTarget == null)
             {
+                if (grabbed && repairing)
+                    DemoFlow.Instance?.ui.SetHover("Move the repair tool closer to the hatch surface.");
+                DemoAudioEmitter.SetLoop(this, DemoSound.RepairLoop, false);
                 skillCheck?.Tick(null, false, false);
                 SetBeam(false, null);
                 return;
@@ -106,6 +111,10 @@ namespace DeepSeaAI
                 ? skillCheck.Tick(currentTarget, true, IsHeldByRightHand())
                 : 1f;
             currentTarget.Repair(toolId, Time.deltaTime * multiplier);
+            DemoFlow.Instance?.ui.SetHover(skillCheck != null && skillCheck.IsCheckActive
+                ? "Repair check: press the OTHER empty hand's Grip in the green zone."
+                : "Repairing hatch: " + Mathf.RoundToInt(currentTarget.RepairProgress * 100f) + "% — keep holding Trigger.");
+            DemoAudioEmitter.SetLoop(this, DemoSound.RepairLoop, multiplier > 0 && !currentTarget.IsRepaired);
             SetBeam(true, currentTarget);
         }
 
@@ -128,6 +137,15 @@ namespace DeepSeaAI
                 nearby,
                 repairLayers,
                 QueryTriggerInteraction.Collide);
+
+            // A detailed hatch can fill the small buffer with its mesh colliders
+            // before the lock trigger is returned. Never treat a truncated query
+            // as the complete set of possible repair targets.
+            while (count == nearby.Length)
+            {
+                System.Array.Resize(ref nearby, nearby.Length * 2);
+                count = Physics.OverlapSphereNonAlloc(origin, repairRadius, nearby, repairLayers, QueryTriggerInteraction.Collide);
+            }
 
             RepairableFacility best = null;
             float bestDistance = float.PositiveInfinity;

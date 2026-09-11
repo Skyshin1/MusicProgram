@@ -12,11 +12,11 @@ namespace DeepSeaDemo
         public DemoFlow flow;
         public DemoConfig config;
         public bool Modal { get; private set; }
-        RectTransform panel, hud;
+        RectTransform panel, hud, noticeStrip, interactionStrip;
         Text hudText, toast;
         CanvasGroup fade;
         Font font;
-        float toastUntil, nextHud;
+        float toastUntil;
         bool messagePaused;
         bool subtitles = true;
         string documentTitle, documentBody;
@@ -25,15 +25,24 @@ namespace DeepSeaDemo
         Text hover;
         float hoverUntil;
         public bool SubtitlesEnabled => subtitles;
-        readonly Color ink = new(.025f, .06f, .09f, .97f);
-        readonly Color accent = new(.3f, .92f, .86f);
+        readonly Color ink = new(.012f, .045f, .065f, .95f);
+        readonly Color panelInk = new(.022f, .085f, .115f, .94f);
+        readonly Color accent = new(.22f, .9f, .91f);
+        readonly Color amber = new(1f, .67f, .18f);
         void Awake()
         {
             font = config.chineseFont != null ? config.chineseFont : Font.CreateDynamicFontFromOSFont(new[] { "Microsoft YaHei", "Noto Sans CJK SC", "Arial" }, 36);
             hud = CanvasRoot("Diver HUD", flow.player.Camera.transform, new Vector3(0, -.31f, .9f), new Vector2(880, 140));
-            hudText = TextAt(hud, "HUD", "", new Vector2(0, 20), new Vector2(850, 110), 23, Color.white);
-            toast = TextAt(hud, "Notice", "", new Vector2(0, -92), new Vector2(950, 90), 25, accent);
-            hover = TextAt(hud, "Interaction", "", new Vector2(0, -160), new Vector2(900, 60), 25, accent);
+            hudText = TextAt(hud, "HUD", "", new Vector2(0, 9), new Vector2(820, 104), 22, Color.white);
+            // The lower-gaze objective/oxygen block was visually persistent and
+            // distracting in VR. Keep only temporary notices and hover prompts.
+            hudText.gameObject.SetActive(false);
+            noticeStrip = Strip(hud, "Notice Strip", new Vector2(0, -22), new Vector2(940, 72), new Color(.02f, .08f, .1f, .9f));
+            toast = TextAt(noticeStrip, "Notice", "", Vector2.zero, new Vector2(900, 64), 24, amber);
+            interactionStrip = Strip(hud, "Interaction Strip", new Vector2(0, -95), new Vector2(820, 58), new Color(.02f, .12f, .14f, .92f));
+            hover = TextAt(interactionStrip, "Interaction", "", Vector2.zero, new Vector2(790, 52), 24, accent);
+            noticeStrip.gameObject.SetActive(false);
+            interactionStrip.gameObject.SetActive(false);
             var fadeRoot = CanvasRoot("Safety Fade", flow.player.Camera.transform, new Vector3(0, 0, .18f), new Vector2(3000, 3000));
             var canvas = fadeRoot.GetComponent<Canvas>(); canvas.sortingOrder = 30000;
             var image = fadeRoot.gameObject.AddComponent<Image>(); image.color = Color.black; image.raycastTarget = false;
@@ -46,6 +55,24 @@ namespace DeepSeaDemo
             var actions = flow.player.GetComponent<DemoXRInput>();
             xr.enableMouseInput = actions != null && actions.DesktopUI;
             xr.enableTouchInput = false; xr.enableGamepadInput = false; xr.enableJoystickInput = false;
+        }
+        RectTransform Strip(Transform parent, string name, Vector2 pos, Vector2 size, Color color)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Outline));
+            go.transform.SetParent(parent, false); go.layer = LayerIndex(config.uiMask);
+            var rt = (RectTransform)go.transform; rt.anchoredPosition = pos; rt.sizeDelta = size;
+            go.GetComponent<Image>().color = color; go.GetComponent<Image>().raycastTarget = false;
+            var outline = go.GetComponent<Outline>(); outline.effectColor = new Color(accent.r, accent.g, accent.b, .55f); outline.effectDistance = new Vector2(2, -2);
+            return rt;
+        }
+        void Frame(RectTransform root, Color fill, Color border)
+        {
+            var bg = root.gameObject.GetComponent<Image>() ?? root.gameObject.AddComponent<Image>();
+            bg.color = fill; bg.raycastTarget = false;
+            var shadow = root.gameObject.GetComponent<Shadow>() ?? root.gameObject.AddComponent<Shadow>();
+            shadow.effectColor = new Color(0, 0, 0, .72f); shadow.effectDistance = new Vector2(10, -10);
+            var outline = root.gameObject.GetComponent<Outline>() ?? root.gameObject.AddComponent<Outline>();
+            outline.effectColor = border; outline.effectDistance = new Vector2(3, -3); outline.useGraphicAlpha = false;
         }
         RectTransform CanvasRoot(string name, Transform parent, Vector3 position, Vector2 size)
         {
@@ -78,24 +105,43 @@ namespace DeepSeaDemo
             // Start and during BeforeRender; parenting keeps both position and direction
             // correct without an Update-order race or changing the headset's transform.
             panel = CanvasRoot("Investigation Panel", head, Vector3.forward * 1.25f, new Vector2(1120, 790));
-            var bg = panel.gameObject.AddComponent<Image>(); bg.color = ink; bg.raycastTarget = false;
+            Frame(panel, ink, new Color(accent.r, accent.g, accent.b, .88f));
             panel.gameObject.layer = LayerIndex(config.uiMask);
             TextAt(panel, "Section", subtitle, new Vector2(0, 335), new Vector2(1040, 55), 21, accent);
             TextAt(panel, "Title", heading, new Vector2(0, 270), new Vector2(1040, 78), 43, Color.white);
+            var header = Strip(panel, "Header Divider", new Vector2(0, 226), new Vector2(1010, 4), accent);
+            header.GetComponent<Image>().color = new Color(accent.r, accent.g, accent.b, .72f);
+            var body = Strip(panel, "Content Well", new Vector2(0, -28), new Vector2(1020, 470), new Color(panelInk.r, panelInk.g, panelInk.b, .72f));
+            body.SetAsFirstSibling();
         }
         void Button(string label, string command, float y, float x = 0, float width = 770)
         {
-            var go = new GameObject("Button " + command, typeof(RectTransform), typeof(Image), typeof(UnityEngine.UI.Button));
+            var go = new GameObject("Button " + command, typeof(RectTransform), typeof(Image), typeof(DemoUIButton));
             go.transform.SetParent(panel, false); var rt = (RectTransform)go.transform;
             rt.anchoredPosition = new Vector2(x, y); rt.sizeDelta = new Vector2(width, 70);
-            go.GetComponent<Image>().color = new Color(.075f, .19f, .24f, 1); go.layer = LayerIndex(config.uiMask);
-            var button = go.GetComponent<UnityEngine.UI.Button>();
+            // Selectable tints multiply the Image color; use white here so the
+            // highlighted fill can actually become bright instead of darker.
+            go.GetComponent<Image>().color = Color.white; go.layer = LayerIndex(config.uiMask);
+            var button = go.GetComponent<DemoUIButton>();
             button.targetGraphic = go.GetComponent<Image>();
-            var colors = button.colors; colors.normalColor = Color.white; colors.highlightedColor = new Color(.45f, 1f, .9f);
-            colors.selectedColor = colors.highlightedColor; colors.pressedColor = new Color(1f, .8f, .35f); colors.fadeDuration = .08f;
+            var colors = button.colors; colors.normalColor = new Color(.045f, .16f, .2f, 1);
+            colors.highlightedColor = accent;
+            colors.selectedColor = colors.normalColor; colors.pressedColor = amber; colors.fadeDuration = .06f;
             button.colors = colors; button.navigation = new Navigation { mode = Navigation.Mode.None };
             button.onClick.AddListener(() => Command(command));
-            TextAt(rt, "Label", label, Vector2.zero, new Vector2(width - 18, 68), 28, Color.white);
+            button.label = TextAt(rt, "Label", label, Vector2.zero, new Vector2(width - 18, 68), 28, Color.white);
+            button.hoverOutline = go.AddComponent<Outline>();
+            button.hoverOutline.effectColor = Color.white;
+            button.hoverOutline.effectDistance = new Vector2(3, -3);
+            button.hoverOutline.useGraphicAlpha = false;
+            var marker = new GameObject("Hover Marker", typeof(RectTransform), typeof(Image));
+            marker.transform.SetParent(rt, false); marker.layer = LayerIndex(config.uiMask);
+            var markerRect = (RectTransform)marker.transform; markerRect.anchorMin = new Vector2(0, 0); markerRect.anchorMax = new Vector2(0, 1);
+            markerRect.pivot = new Vector2(0, .5f); markerRect.anchoredPosition = new Vector2(9, 0); markerRect.sizeDelta = new Vector2(9, -12);
+            marker.GetComponent<Image>().color = amber; marker.GetComponent<Image>().raycastTarget = false;
+            button.hoverMarker = marker.GetComponent<Image>(); marker.SetActive(false);
+            var shadow = go.AddComponent<Shadow>(); shadow.effectColor = new Color(0, 0, 0, .55f); shadow.effectDistance = new Vector2(5, -5);
+            button.RefreshVisual();
         }
         public static int LayerIndex(LayerMask mask)
         { for (int i = 0; i < 32; i++) if ((mask.value & (1 << i)) != 0) return i; return 0; }
@@ -195,21 +241,14 @@ namespace DeepSeaDemo
                 case "quit": Application.Quit(); break;
             }
         }
-        public void Toast(string value) { if (toast != null) { toast.text = value; toastUntil = Time.unscaledTime + 6; } }
-        public void SetHover(string value) { if (hover != null) { hover.text = value; hoverUntil = Time.unscaledTime + .1f; } }
+        public void Toast(string value) { if (toast != null) { toast.text = value; toastUntil = Time.unscaledTime + 6; noticeStrip.gameObject.SetActive(!string.IsNullOrEmpty(value)); } }
+        public void SetHover(string value) { if (hover != null) { hover.text = value; hoverUntil = Time.unscaledTime + .1f; interactionStrip.gameObject.SetActive(!string.IsNullOrEmpty(value)); } }
         public void SetFade(float value) { if (fade != null) fade.alpha = Mathf.Clamp01(value); }
         void Update()
         {
-            if (toast != null && Time.unscaledTime > toastUntil) toast.text = "";
-            if (hover != null && Time.unscaledTime > hoverUntil) hover.text = "";
-            if (Time.unscaledTime < nextHud) return; nextHud = Time.unscaledTime + .2f;
+            if (toast != null && Time.unscaledTime > toastUntil) { toast.text = ""; noticeStrip.gameObject.SetActive(false); }
+            if (hover != null && Time.unscaledTime > hoverUntil) { hover.text = ""; interactionStrip.gameObject.SetActive(false); }
             hud.gameObject.SetActive(flow.Running && !Modal);
-            if (flow.Running)
-            {
-                float oxygen = flow.player.GetComponent<PlayerOxygen>().NormalizedOxygen * 100f;
-                float exposure = FindFirstObjectByType<DemoAcoustics>()?.Exposure ?? 0;
-                hudText.text = flow.Objective + DemoTextCatalog.Get("runtime.076") + oxygen.ToString("0") + DemoTextCatalog.Get("runtime.077") + exposure.ToString("0") + "/100";
-            }
         }
     }
 }

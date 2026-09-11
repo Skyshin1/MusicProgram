@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f426b8a4c1e22d44683d571a90d74957, type: 3}
+  m_Name: DeepSeaAudio
+  m_EditorClassIdentifier: Assembly-CSharp::DeepSeaDemo.DemoAudioBank
+  masterVolume: 0.8
+  output: {fileID: 0}
+  cues:
+  - sound: 0
+    clip: {fileID: 8300000, guid: 219ddb76712252e4ab65e35e14d3b2e7, type: 3}
+    volume: 0.16
+    spatialBlend: 1
+    minDistance: 1
+    maxDistance: 18
+  - sound: 1
+    clip: {fileID: 8300000, guid: 54b023921d3275843867104311d04f97, type: 3}
+    volume: 0.5
+    spatialBlend: 1
+    minDistance: 1
+    maxDistance: 18
+  - sound: 2
+    clip: {fileID: 8300000, guid: fd2c10708e4f17c438306412becaf916, type: 3}
+    volume: 0.5
+    spatialBlend: 1
+    minDistance: 1
+    maxDistance: 18
+  - sound: 3
+    clip: {fileID: 8300000, guid: 996544fb0ca8d1d458bd019bdc01c102, type: 3}
+    volume: 0.5
+    spatialBlend: 1
+    minDistance: 1
+    maxDistance: 18
+  - sound: 4
+    clip: {fileID: 8300000, guid: f95c3bcab5c900b45b03df5238f2bd69, type: 3}
+    volume: 0.5
+    spatialBlend: 1
+    minDistance: 1
+    maxDistance: 18
+  - sound: 5
+    clip: {fileID: 8300000, guid: 6b313664b894c3d409f6d139df039df6, type: 3}
+    volume: 0.5
+    spatialBlend: 1
+    minDistance: 1
+    maxDistance: 28
+  - sound: 6
+    clip: {fileID: 8300000, guid: 80b60228db2e29e41adfbb42bd0f9756, type: 3}
+    volume: 0.07
+    spatialBlend: 1
+    minDistance: 1
+    maxDistance: 7
+  - sound: 7
+    clip: {fileID: 8300000, guid: ae4245f0fe7fb7648b4de8a135e945e2, type: 3}
+    volume: 0.5
+    spatialBlend: 1
+    minDistance: 1
+    maxDistance: 18
+  - sound: 8
+    clip: {fileID: 8300000, guid: 307a9a593e0a09b468b7c7689b78b9d3, type: 3}
+    volume: 0.5
+    spatialBlend: 1
+    minDistance: 1
+    maxDistance: 18
+  - sound: 9
+    clip: {fileID: 8300000, guid: b6cd43b6c0efdc841b802008c8a7a619, type: 3}
+    volume: 0.5
+    spatialBlend: 1
+    minDistance: 1
+    maxDistance: 18

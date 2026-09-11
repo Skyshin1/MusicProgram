@@ -244,6 +244,7 @@ float4 UnderwaterStage(v2f i, WaterGeomStage g, float waterClarity)
     }
 
     refractedColor = ApplyWaterOpacityTintedClarity(refractedColor, bodyInscatterUnder, waterClarity); // turbidity from below too
+    refractedColor = lerp(refractedColor, bodyInscatterUnder, saturate(_UnderSurfaceOpacity));
 
     // The underside mirror strength is its OWN knob (it used to ride the above-water
     // _ReflectionStrength): 0 = fully refracted, a glass-clear ceiling.
@@ -466,7 +467,7 @@ float3 RefractionStage(v2f i, WaterGeomStage g, float waterClarity, out float3 b
         float waterSpan = max(0.0, sceneEyeR - surfEyeR);
         if (_ChunkFogClamp > 0.5)
             waterSpan = min(waterSpan, ChunkRefractionSpan(i.position, refractedRay));
-        refractedColor = ApplyWaterVolumeClarity(refractedColor, waterSpan, bodyInscatter, waterClarity);
+        refractedColor = ApplyWaterVolumeClarity(refractedColor, waterSpan * max(1.0, _SurfaceAbsorptionScale), bodyInscatter, waterClarity);
     }
     else if (_LargeBody < 0.5)
     {
@@ -481,7 +482,7 @@ float3 RefractionStage(v2f i, WaterGeomStage g, float waterClarity, out float3 b
         if (_ChunkFogClamp > 0.5)
             exitTFog = min(exitTFog, max(ChunkIntersect(_ChunkShape, i.position, pdFog).y, 0.0));
         float3 exitWorld = PoolToWorld(i.position + pdFog * exitTFog);
-        refractedColor = ApplyWaterVolumeClarity(refractedColor, length(exitWorld - i.worldPos), bodyInscatter, waterClarity);
+        refractedColor = ApplyWaterVolumeClarity(refractedColor, length(exitWorld - i.worldPos) * max(1.0, _SurfaceAbsorptionScale), bodyInscatter, waterClarity);
     }
 
     refractedColor = ApplyWaterOpacityTintedClarity(refractedColor, bodyInscatter, waterClarity); // turbidity toward the body colour

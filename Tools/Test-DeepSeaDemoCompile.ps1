@@ -20,9 +20,12 @@ foreach ($relative in @(
  'Assets/SonicWorld/Runtime/SurfaceDocumentReader.cs',
  'Assets/SonicWorld/Runtime/GrabFlashlight.cs',
  'Assets/DeepSeaAI/Runtime/RepairTool.cs',
+ 'Assets/DeepSeaAI/Runtime/RepairableFacility.cs',
  'Assets/DeepSeaAI/Runtime/SonarRevealStyle.cs',
  'Assets/DeepSeaAI/Runtime/RepairSkillCheckController.cs',
  'Assets/DeepSeaAI/Runtime/DeepSeaStalkerController.cs',
+ 'Assets/DeepSeaAI/Runtime/DeepSeaStalkerConfig.cs',
+ 'Assets/DeepSeaAI/Runtime/PlayerRespawnController.cs',
  'Assets/DeepSeaAI/Runtime/DeepSeaFishAI.cs',
  'Assets/DeepSeaAI/Runtime/NoiseSystem.cs')) { $sources += Join-Path $projectRoot $relative }
 if ($Editor -and (Test-Path "$projectRoot/Assets/DeepSeaDemo/Editor")) {

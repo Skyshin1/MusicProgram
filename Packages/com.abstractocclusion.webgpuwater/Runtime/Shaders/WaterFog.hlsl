@@ -10,6 +10,7 @@ float4 _WaterExtinction;  // per-channel extinction (red highest -> dies first)
 float  _WaterFogDensity;   // overall multiplier
 float  _WaterFogEnabled;   // 0 / 1
 float  _WaterOpacity;      // 0..1 depth-independent turbidity (lerp view toward fog colour)
+float  _SurfaceAbsorptionScale; // surface transmission only; underwater view keeps its own absorption
 
 // Absorb 'color' over 'dist' world units of water. No-op when disabled.
 // Absorption toward the water's OWN colour over 'dist' metres of water.
@@ -24,6 +25,7 @@ float  _WaterOpacity;      // 0..1 depth-independent turbidity (lerp view toward
 //
 // The in-scatter is passed IN rather than computed here, matching ApplyWaterVolumeClarity below, so
 // a caller that already has one (the surface) cannot end up with two subtly different values.
+float _UnderSurfaceOpacity;
 float3 ApplyWaterFog(float3 color, float dist, float3 inscatter)
 {
     if (_WaterFogEnabled < 0.5) return color;
@@ -134,6 +136,7 @@ float3 ApplyWaterOpacityTintedClarity(float3 color, float3 inscatter, float clar
 // values in when its "link" toggle is on.
 float4 _DepthExtinction;     // per-channel downwelling coefficient (rgb used; float4 to match SetColor)
 float  _DepthDarkenStrength; // master multiplier (density) on the depth term
+float  _DepthMinimumLight;   // retained visibility at extreme depth
 float  _DepthDarkenEnabled;  // 0 / 1 master switch for the whole depth feature
 float  _CausticDepthFade;    // extra depth softening for projected caustics (objects)
 float  _GodRayDepthFade;     // how fast god-ray shafts fade with depth
@@ -144,7 +147,7 @@ float3 DownwellingAttenuation(float pointY, float level)
 {
     if (_DepthDarkenEnabled < 0.5) return float3(1.0, 1.0, 1.0);
     float depth = max(0.0, level - pointY);
-    return exp(-_DepthExtinction.rgb * (_DepthDarkenStrength * depth));
+    return max(exp(-_DepthExtinction.rgb * (_DepthDarkenStrength * depth)), _DepthMinimumLight.xxx);
 }
 
 // Scalar depth fade for intensity-only effects (caustics, god-ray shafts). Gated by the

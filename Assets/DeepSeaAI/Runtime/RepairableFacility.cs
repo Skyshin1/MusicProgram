@@ -88,7 +88,9 @@ namespace DeepSeaAI
             if (!AcceptsTool(toolId) || deltaTime <= 0f)
                 return false;
 
-            return AdjustRepairProgress(deltaTime / repairSeconds);
+            bool completed = AdjustRepairProgress(deltaTime / repairSeconds);
+            if (completed) DeepSeaDemo.DemoAudioEmitter.Play(this, DeepSeaDemo.DemoSound.RepairComplete);
+            return completed;
         }
 
         /// <summary>Applies a normalized progress delta. Negative values are used by failed QTE checks.</summary>

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using DeepSeaDemo;
 
 namespace DeepSeaAI
 {
@@ -50,6 +51,8 @@ namespace DeepSeaAI
         private float lastNoiseTime = -100f;
         private Vector3 previousPosition;
         private bool configured;
+        private Transform orientedVisual;
+        private bool attackResolved;
 
         public StalkerState State => state;
         public bool CanSeePlayer => canSeePlayer;
@@ -80,6 +83,8 @@ namespace DeepSeaAI
             playerRoot = player;
             playerRespawn = respawn;
             animator = modelAnimator;
+            AlignVisualForward();
+            ConfigureSonarStyle();
             configured = true;
             ResolvePlayerReferences();
             ConfigureAgent();
@@ -90,8 +95,6 @@ namespace DeepSeaAI
             agent = GetComponent<NavMeshAgent>();
             ConfigureAgent();
             previousPosition = transform.position;
-            if (GetComponent<DeepSeaStalkerAlertIndicator>() == null)
-                gameObject.AddComponent<DeepSeaStalkerAlertIndicator>();
         }
 
         private void OnEnable()
@@ -114,11 +117,44 @@ namespace DeepSeaAI
 
         private void Start()
         {
+            AlignVisualForward();
+            ConfigureSonarStyle();
             ResolvePlayerReferences();
             BindRespawn();
             if (!configured)
                 configured = patrolPoints != null && patrolPoints.Length > 0;
             ResetToPatrol(false);
+        }
+
+        private void ConfigureSonarStyle()
+        {
+            var style = GetComponent<SonarRevealStyle>();
+            if (style == null) style = gameObject.AddComponent<SonarRevealStyle>();
+            style.Configure(CurrentConfig.monsterOutlineColor, CurrentConfig.revealDuration, false);
+        }
+
+        private void AlignVisualForward()
+        {
+            if (animator == null || orientedVisual == animator.transform) return;
+            if (AlignImportedFish(animator.transform, transform)) orientedVisual = animator.transform;
+        }
+
+        // The supplied Enemy.fbx is authored head-first along -X. Keep the
+        // navigation root's +Z (also used for sight) and rotate only its visual.
+        public static bool AlignImportedFish(Transform visual, Transform navigationRoot)
+        {
+            if (visual == null || navigationRoot == null || visual == navigationRoot || !visual.IsChildOf(navigationRoot)) return false;
+            Transform head = null, body = null;
+            foreach (var bone in visual.GetComponentsInChildren<Transform>(true))
+            {
+                if (bone.name == "atama") head = bone;
+                if (bone.name == "kosi") body = bone;
+            }
+            if (head == null || body == null) return false;
+            var forward = Vector3.ProjectOnPlane(head.position - body.position, navigationRoot.up);
+            if (forward.sqrMagnitude < .000001f) return false;
+            visual.rotation = Quaternion.AngleAxis(Vector3.SignedAngle(forward, navigationRoot.forward, navigationRoot.up), navigationRoot.up) * visual.rotation;
+            return true;
         }
 
         private void Update()
@@ -464,6 +500,8 @@ namespace DeepSeaAI
 
         private void EnterChase()
         {
+            if (state != StalkerState.Chase && state != StalkerState.Attack)
+                DemoAudioEmitter.Play(this, DemoSound.EnemyChase);
             state = StalkerState.Chase;
             stateTimer = 0f;
             currentNoiseScore = 0f;
@@ -488,6 +526,7 @@ namespace DeepSeaAI
         {
             state = StalkerState.Attack;
             stateTimer = 0f;
+            attackResolved = false;
             SetAgentStopped(true);
             if (animator != null)
                 animator.SetTrigger("Attack");
@@ -500,12 +539,17 @@ namespace DeepSeaAI
             if (stateTimer < CurrentConfig.attackWindup)
                 return;
 
-            stateTimer = float.NegativeInfinity;
-            if (validateAttackReach && !CanReachAttack()) { EnterReturnToPatrol(); return; }
-            if (playerRespawn != null)
-                playerRespawn.Kill(transform);
-            else
-                ResetToPatrol(true);
+            if (!attackResolved)
+            {
+                attackResolved = true;
+                if ((!validateAttackReach || CanReachAttack()) && playerRespawn != null)
+                {
+                    if (playerRespawn.ReceiveBite(transform)) DemoAudioEmitter.Play(this, DemoSound.EnemyBite);
+                }
+            }
+            if (stateTimer < CurrentConfig.attackWindup + Mathf.Max(.1f, CurrentConfig.attackRecovery)) return;
+            if (playerRespawn != null && !playerRespawn.IsProtected && canSeePlayer) EnterChase();
+            else EnterReturnToPatrol();
         }
 
         private void EnterReturnToPatrol()

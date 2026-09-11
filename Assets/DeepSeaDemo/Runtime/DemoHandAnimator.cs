@@ -22,6 +22,7 @@ namespace DeepSeaDemo
             var byName = new Dictionary<string, Transform>();
             foreach (Transform bone in GetComponentsInChildren<Transform>(true)) byName[bone.name] = bone;
             if (!right && calibrateLeftPalm) AlignLeftPalm(byName);
+            ApplyStableWristSkin(byName);
             joints = new Transform[poses.joints.Length]; rest = new Quaternion[joints.Length];
             bendAxes = new Vector3[joints.Length];
             Vector3 dorsal = Vector3.zero;
@@ -43,6 +44,31 @@ namespace DeepSeaDemo
                     var axis = Vector3.Cross(localAlong, localPalm).normalized;
                     if (axis.sqrMagnitude > .5f) bendAxes[i] = axis * Mathf.Sign(poses.joints[i].curlDegrees);
                 }
+            }
+        }
+        void ApplyStableWristSkin(Dictionary<string, Transform> bones)
+        {
+            if (!bones.TryGetValue(right ? "hand_r" : "hand_l", out var wrist)) return;
+            var mesh = Resources.Load<Mesh>("DeepSeaDemo/LeatherGlove" + (right ? "Right" : "Left") + "Wrist");
+            if (mesh == null) return;
+            foreach (var skin in GetComponentsInChildren<SkinnedMeshRenderer>(true))
+            {
+                // Only the supplied leather glove mesh uses this corrected binding.
+                if (skin.sharedMesh == null || skin.sharedMesh.vertexCount != mesh.vertexCount || skin.name != "Leather_glove_lowpoly:Group2") continue;
+                var bound = new List<Transform>(skin.bones);
+                if (!bound.Contains(wrist)) bound.Add(wrist);
+                if (bound.Count != mesh.bindposes.Length) continue;
+                skin.bones = bound.ToArray(); skin.sharedMesh = mesh; skin.rootBone = wrist;
+                // Skinned bounds follow rootBone. The left mesh is exported in
+                // centimetres, so copying its mesh-local bounds here is incorrect.
+                float radius = 0;
+                var bounds = mesh.bounds;
+                for (int corner = 0; corner < 8; corner++)
+                {
+                    var offset = Vector3.Scale(bounds.extents, new Vector3((corner & 1) == 0 ? -1 : 1, (corner & 2) == 0 ? -1 : 1, (corner & 4) == 0 ? -1 : 1));
+                    radius = Mathf.Max(radius, wrist.InverseTransformPoint(skin.transform.TransformPoint(bounds.center + offset)).magnitude);
+                }
+                skin.localBounds = new Bounds(Vector3.zero, Vector3.one * radius * 2.5f);
             }
         }
         void AlignLeftPalm(Dictionary<string, Transform> bones)

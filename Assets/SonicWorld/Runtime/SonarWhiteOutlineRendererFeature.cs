@@ -69,7 +69,7 @@ public sealed class SonarWhiteOutlineRendererFeature : ScriptableRendererFeature
             renderers.Clear();
             foreach (Renderer renderer in SonarRevealManager.ActiveRenderers)
             {
-                if (renderer != null && renderer.enabled && renderer.gameObject.activeInHierarchy && renderer.isVisible &&
+                if (renderer != null && !SonarRevealManager.IsSuppressed(renderer) && renderer.enabled && renderer.gameObject.activeInHierarchy && renderer.isVisible &&
                     (renderer is MeshRenderer || renderer is SkinnedMeshRenderer))
                     renderers.Add(renderer);
             }
@@ -142,6 +142,10 @@ public sealed class SonarWhiteOutlineRendererFeature : ScriptableRendererFeature
 
         private static Color ResolveOutlineColor(Renderer renderer)
         {
+            // WaterMembership can replace property blocks each frame. The style
+            // component remains authoritative for enemy color.
+            var style = renderer.GetComponentInParent<DeepSeaAI.SonarRevealStyle>();
+            if (style != null && style.isActiveAndEnabled) return style.OutlineColor;
             ColorPropertyBlock.Clear();
             renderer.GetPropertyBlock(ColorPropertyBlock);
             Color color = ColorPropertyBlock.GetColor(RendererColorId);

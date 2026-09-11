@@ -770,12 +770,59 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
             // shell. A sky pixel has no scene surface, therefore a pulse must not clear it.
             float rawSceneDepth = SampleSceneDepth(uv);
             float3 sceneWorld = ComputeWorldSpacePosition(uv, rawSceneDepth, UNITY_MATRIX_I_VP);
+            // A near-clipped ocean triangle can disappear before the analytic
+            // wave mask considers the lens wet. Cover that narrow handoff band
+            // only for submerged scene points. Drawn air-side sheets still own
+            // their pixels through OceanPrepassPath, so this never double-fogs them.
+#ifdef WATER_FOG_SIMPLE
+            float eyeGap = _WorldSpaceCameraPos.y - _UnderwaterSurfaceY;
+#else
+            // Use the live GPU wave for this optical handoff; CPU height readback
+            // is deliberately delayed and is only suitable for arming the pass.
+            float eyeGap = SurfaceSignedGap(_WorldSpaceCameraPos);
+#endif
+            float sceneGap = sceneWorld.y - (_WorldSpaceCameraPos.y - eyeGap);
+            // At the camera the CPU prediction is conservative across wave
+            // readback/mesh sampling differences; retain coverage while either
+            // representation still places the eye below the interface.
+            float crossingEyeGap = min(eyeGap, _WorldSpaceCameraPos.y - _UnderwaterSurfaceY);
+            float entryHandoff = 0.0;
+            if (_UnderwaterUnbounded > .5 && _CameraDryVolume < .5)
+            {
+                entryHandoff = (1.0 - smoothstep(.1, .3, abs(_WorldSpaceCameraPos.y - _UnderwaterSurfaceY)))
+                             * (1.0 - smoothstep(-.3, -.15, sceneGap));
+                float entryCoverage = (1.0 - smoothstep(0.0, .15, classifyGap))
+                                    * (1.0 - smoothstep(-.3, -.15, sceneGap));
+                float eyeCoverage = 1.0 - smoothstep(-.02, 0.0, crossingEyeGap);
+                armWeight = max(armWeight, max(entryHandoff, max(entryCoverage, eyeCoverage)));
+                rayStartsWet = armWeight >= WATERLINE_COVERAGE_WET_MIN;
+            }
             float pathLen;
             float deepestY;
             float surfaceRefY;
             float3 wetStart;
             UnderwaterSegment(uv, sceneWorld, rayStartsWet, pathLen, deepestY, surfaceRefY,
                               wetStart);
+            // In the lens crossing band, an air-side DEPTH sheet is not proof
+            // that its colour pass covered the pixel. Integrate the water column
+            // here as well so that prepass ownership cannot leave a clear frame.
+            // Fade this fallback out away from the lens; exclusions below still
+            // remove dry spans, and it never applies to above-water scene points.
+            if (entryHandoff > 0.0)
+            {
+                float3 eye = _WorldSpaceCameraPos;
+                float entryT = eye.y > _UnderwaterSurfaceY
+                    ? saturate((eye.y - _UnderwaterSurfaceY) / max(eye.y - sceneWorld.y, 1e-5)) : 0.0;
+                float3 fallbackStart = lerp(eye, sceneWorld, entryT);
+                float fallbackLength = length(sceneWorld - fallbackStart) * entryHandoff;
+                if (fallbackLength > pathLen)
+                {
+                    pathLen = fallbackLength;
+                    wetStart = fallbackStart;
+                    deepestY = min(fallbackStart.y, sceneWorld.y);
+                    surfaceRefY = _UnderwaterSurfaceY;
+                }
+            }
             // Dry-interior exclusion: the part of the wet span that crosses an exclusion volume is
             // AIR, so carve it out of the fog integral. Zero volumes = the loops never run. When
             // the whole span is dry (camera in a submerged room looking at its own wall), the
@@ -843,11 +890,23 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
             float3 transmittance = exp(-_WaterExtinction.rgb * (density * pathLen));
             // The pulse only clears the exact visible surface swept by its shell.
             // The lantern applies the same correction over its soft, player-facing cylinder.
-            // Both restore the whole water visibility term: Beer-Lambert absorption,
-            // in-scatter (derived from transmittance below), and depth darkening.
-            float visibilityClear = WaterSonarVisibilityClearAt(sceneWorld, rawSceneDepth);
+            // The proximity lantern clears view-path fog only. It must not restore
+            // sunlight lost with depth, otherwise nearby surfaces stay equally bright
+            // at the surface and on the seabed. Active sonar and the flashlight can
+            // still reveal surfaces in the depths.
+            float depthClear = max(WaterSonarPulseClearAt(sceneWorld, rawSceneDepth), WaterFlashlightClearAt(sceneWorld));
+            float visibilityClear = max(depthClear, WaterSonarLanternClearAt(sceneWorld));
             transmittance = lerp(transmittance, float3(1.0, 1.0, 1.0), visibilityClear);
-            depthAttenuation = lerp(depthAttenuation, float3(1.0, 1.0, 1.0), visibilityClear);
+            depthAttenuation = lerp(depthAttenuation, float3(1.0, 1.0, 1.0), depthClear);
+            // Keep above-water geometry obscured across the entire handoff.
+            // The depth-only sheet may rasterize even when the colour sheet is
+            // near-clipped, so its sign cannot prove the colour was shaded.
+            // Apply the water's transmitted-view veil independently of that sign.
+            if (_UnderwaterUnbounded > .5 && _CameraDryVolume < .5
+                && crossingEyeGap < 0.0 && sceneGap > .15)
+            {
+                transmittance *= 1.0 - saturate(_UnderSurfaceOpacity);
+            }
             // Instrument LAST, off the finished numbers rather than off a re-derivation: this
             // pixel's span BEFORE the carve (wetSpanLen), what survived it (pathLen), and what the
             // waterline mask let through (armWeight). debugColor.a stays 0 - and every caller
