@@ -729,7 +729,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
         // the sun visibility of the wet span past the exclusion volumes (1 = unshadowed), and the
         // per-pixel waterline mask (see ArmWeight).
         float3 UnderwaterFog(float2 uv, out float3 depthAttenuation, out float sunVisibility,
-                             out float armWeight, out float4 debugColor)
+                             out float armWeight, out float4 debugColor, out float3 fogDepthAttenuation)
         {
             // FIRST, ahead of every per-pixel march below: the waterline mask takes a screen
             // derivative and must be evaluated in uniform control flow.
@@ -888,6 +888,14 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
             float clarity = WaterDepthClarity(ShoreShoalDepth(sceneWorld.xz));
             float density = _WaterFogDensity * lerp(CLARITY_FOG_DENSITY_MAX, 1.0, clarity);
             float3 transmittance = exp(-_WaterExtinction.rgb * (density * pathLen));
+            // The medium is lit along the visible path, NOT at the deepest
+            // opaque/far-plane endpoint. Endpoint lighting produced a blue/black
+            // horizon seam and silhouettes of scene geometry in otherwise dense fog.
+            fogDepthAttenuation = PathAveragedDownwelling(wetStart.y, segDir.y,
+                pathLen, surfaceRefY, _WaterExtinction.rgb * density);
+            if (_ExclusionCount > 0.5 && wetSpanLen > 0.0)
+                fogDepthAttenuation *= ExclusionBoundaryPaneShade(wetStart, segDir, wetSpanLen, _LightDir);
+
             // The pulse only clears the exact visible surface swept by its shell.
             // The lantern applies the same correction over its soft, player-facing cylinder.
             // The proximity lantern clears view-path fog only. It must not restore
@@ -906,6 +914,16 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
                 && crossingEyeGap < 0.0 && sceneGap > .15)
             {
                 transmittance *= 1.0 - saturate(_UnderSurfaceOpacity);
+            }
+            // Surface-entry comfort is a separate composite weight shared by
+            // absorption and scattering. Never modulate the blue source colour:
+            // doing so changed the established underwater depth gradient.
+            // Retain most water opacity at the interface to avoid a clear frame;
+            // the complete path-integrated gradient is restored within 45 cm.
+            if (_UnderwaterUnbounded > .5 && _CameraDryVolume < .5)
+            {
+                float entryBlend = smoothstep(-0.15, 0.45, -eyeGap);
+                armWeight *= lerp(0.8, 1.0, entryBlend);
             }
             // Instrument LAST, off the finished numbers rather than off a re-derivation: this
             // pixel's span BEFORE the carve (wetSpanLen), what survived it (pathLen), and what the
@@ -961,11 +979,12 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
                 return half4(1.0, 1.0, 1.0, 1.0); // Blend Zero SrcColor identity: dst *= 1
 #else
                 float3 depthAttenuation;
+                float3 fogDepthAttenuation;
                 float sunVisibilityUnused; // absorption is sun-independent; only the in-scatter shadows
                 float armWeight;
                 float4 debugColor;
                 float3 pathTransmittance = UnderwaterFog(input.uv, depthAttenuation, sunVisibilityUnused,
-                                                         armWeight, debugColor);
+                                                         armWeight, debugColor, fogDepthAttenuation);
                 // Debug view: WIPE the frame. This pass blends Zero SrcColor (dst *= src), so
                 // returning 0 clears the target and the in-scatter pass immediately after - Blend
                 // One One - writes the false colour into it. The two passes that already exist ARE
@@ -1003,11 +1022,12 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
                 return half4(0.0, 0.0, 0.0, 1.0); // Blend One One identity: dst += 0
 #else
                 float3 depthAttenuation;
+                float3 fogDepthAttenuation;
                 float sunVisibility;
                 float armWeight;
                 float4 debugColor;
                 float3 pathTransmittance = UnderwaterFog(input.uv, depthAttenuation, sunVisibility,
-                                                         armWeight, debugColor);
+                                                         armWeight, debugColor, fogDepthAttenuation);
                 // Additive onto the target the absorb pass just cleared: this IS the view.
                 if (debugColor.a > 0.5) return half4(debugColor.rgb, 1.0);
                 // Lit in-scatter target: the same WaterInscatterColor the surface uses, so the fog colour
@@ -1027,7 +1047,7 @@ Shader "AbstractOcclusion/WebGpuWater/WaterUnderwaterFog"
                 float3 inscatter = fogColor * (1.0 - pathTransmittance);
                 // Per-pixel arm fade: additive term scales straight to 0, mirroring the absorb pass.
                 inscatter *= armWeight;
-                return half4(inscatter * depthAttenuation + FogDither(input.positionCS.xy), 1.0);
+                return half4(inscatter * fogDepthAttenuation + FogDither(input.positionCS.xy), 1.0);
 #endif
             }
             ENDHLSL

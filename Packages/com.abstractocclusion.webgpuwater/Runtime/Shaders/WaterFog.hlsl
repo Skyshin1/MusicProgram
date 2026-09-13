@@ -150,6 +150,28 @@ float3 DownwellingAttenuation(float pointY, float level)
     return max(exp(-_DepthExtinction.rgb * (_DepthDarkenStrength * depth)), _DepthMinimumLight.xxx);
 }
 
+// Integrate depth lighting over the fog contribution along a viewing ray.
+// Equal-probability samples of Beer-Lambert scattering stay near the viewer
+// even when the depth buffer contains the far plane, avoiding horizon steps.
+float3 PathAveragedDownwelling(float startY, float directionY, float length,
+                             float level, float3 extinction)
+{
+    if (_DepthDarkenEnabled < 0.5) return float3(1.0, 1.0, 1.0);
+    float3 sigma = max(extinction, float3(0.0001, 0.0001, 0.0001));
+    float3 scattered = 1.0 - exp(-sigma * max(length, 0.0));
+    float3 illumination = 0.0;
+    [unroll]
+    for (int index = 0; index < 12; index++)
+    {
+        float u = (index + 0.5) / 12.0;
+        float3 distanceAlongRay = -log(max(1.0 - u * scattered, 0.00001)) / sigma;
+        float3 depth = max(0.0, level - (startY + directionY * distanceAlongRay));
+        illumination += max(exp(-_DepthExtinction.rgb * (_DepthDarkenStrength * depth)),
+                            _DepthMinimumLight.xxx);
+    }
+    return illumination / 12.0;
+}
+
 // Scalar depth fade for intensity-only effects (caustics, god-ray shafts). Gated by the
 // same master switch so one toggle governs every depth effect. 'coeff' is the per-effect rate.
 float DepthFadeScalar(float pointY, float level, float coeff)
