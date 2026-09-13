@@ -44,6 +44,7 @@ namespace DeepSeaDemo.Editor
                 Float(so, "depthAttenuation.minimumDepthLight", profile.minimumDepthLight);
                 Float(so, "depthAttenuation.screenCausticIntensity", profile.causticIntensity);
                 Float(so, "depthAttenuation.causticDepthFade", profile.causticDepthFade); Float(so, "depthAttenuation.godRayDepthFade", profile.causticDepthFade);
+                Bool(so, "volumeScatterSettings.volumeScatter", profile.volumeScatter);
                 Color(so, "volumeScatterSettings.scatterColor", profile.fogColor);
                 Float(so, "volumeScatterSettings.scatterAmbientTerm", profile.scatterAmbient); Float(so, "volumeScatterSettings.scatterSunTerm", profile.scatterSun);
                 Float(so, "volumeScatterSettings.scatterIntensity", profile.scatterIntensity); so.ApplyModifiedProperties();

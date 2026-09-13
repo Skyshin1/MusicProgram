@@ -1,0 +1,1 @@
+PASS: 80 added nested prefabs; all original 2109 objects preserved; only root child list extended. All local fileID references resolve. Room footprints checked before saving.

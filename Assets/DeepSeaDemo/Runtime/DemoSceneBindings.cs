@@ -77,13 +77,8 @@ namespace DeepSeaDemo
             ConfigureLadder();
             HidePersistentWorldGuides();
 
-            foreach (var body in FindObjectsByType<WaterVolume>(FindObjectsSortMode.None))
-                if (body.IsPrimary)
-                    body.GetType().GetMethod("ConfigureDeepSeaVisibility")?.Invoke(body, new object[]
-                    {
-                        new Color(.008f, .035f, .065f), new Color(.48f, .34f, .26f), .9f,
-                        new Color(.16f, .11f, .08f), .9f, .075f, .6f, .16f, .7f
-                    });
+            // Water appearance is authored on the scene's WaterVolume. Do not
+            // overwrite its colour/depth settings when entering Play Mode.
         }
 
         static void HidePersistentWorldGuides()

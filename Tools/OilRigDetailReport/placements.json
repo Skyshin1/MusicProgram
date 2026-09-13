@@ -1,0 +1,1122 @@
+[
+  {
+    "name": "Prep_Storage_0",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -16.5,
+      6,
+      -9
+    ],
+    "footprint": [
+      1.0538047051350252,
+      1.15
+    ],
+    "height": 0.7729980171982239
+  },
+  {
+    "name": "Prep_Upper_Storage_0",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -16.5,
+      6.85,
+      -9
+    ],
+    "footprint": [
+      0.7497982852854278,
+      0.8182427198099846
+    ],
+    "height": 0.55
+  },
+  {
+    "name": "Prep_Storage_1",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -15,
+      6,
+      -9
+    ],
+    "footprint": [
+      1.0538047051350252,
+      1.15
+    ],
+    "height": 0.7729980171982239
+  },
+  {
+    "name": "Prep_Upper_Storage_1",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -15,
+      6.85,
+      -9
+    ],
+    "footprint": [
+      0.7497982852854278,
+      0.8182427198099846
+    ],
+    "height": 0.55
+  },
+  {
+    "name": "Prep_Storage_2",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -13.5,
+      6,
+      -9
+    ],
+    "footprint": [
+      1.0538047051350252,
+      1.15
+    ],
+    "height": 0.7729980171982239
+  },
+  {
+    "name": "Prep_Upper_Storage_2",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -13.5,
+      6.85,
+      -9
+    ],
+    "footprint": [
+      0.7497982852854278,
+      0.8182427198099846
+    ],
+    "height": 0.55
+  },
+  {
+    "name": "Prep_Service_Cabinet",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -17.2,
+      6,
+      -3.3
+    ],
+    "footprint": [
+      1.1,
+      0.34196451095828956
+    ],
+    "height": 0.5500249563571219
+  },
+  {
+    "name": "Prep_Barrel_Trolley",
+    "asset": "Barrel_Trolley/Barrel_Trolley_Assembled_01_.prefab",
+    "position": [
+      -11.3,
+      6,
+      -8.7
+    ],
+    "footprint": [
+      0.3906647289272915,
+      0.49721875938153914
+    ],
+    "height": 1.2
+  },
+  {
+    "name": "Switchgear_0",
+    "asset": "Electrical_Structures/ElectricBox_Module_3.prefab",
+    "position": [
+      -9.3,
+      6,
+      -9
+    ],
+    "footprint": [
+      1.0,
+      0.3088447000000001
+    ],
+    "height": 0.5000001
+  },
+  {
+    "name": "Switchgear_1",
+    "asset": "Electrical_Structures/ElectricBox_Module_3.prefab",
+    "position": [
+      -9.3,
+      6,
+      -7.6
+    ],
+    "footprint": [
+      1.0,
+      0.3088447000000001
+    ],
+    "height": 0.5000001
+  },
+  {
+    "name": "Switchgear_2",
+    "asset": "Electrical_Structures/ElectricBox_Module_3.prefab",
+    "position": [
+      -9.3,
+      6,
+      -6.2
+    ],
+    "footprint": [
+      1.0,
+      0.3088447000000001
+    ],
+    "height": 0.5000001
+  },
+  {
+    "name": "Spares_Crate",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -7,
+      6,
+      -9.1
+    ],
+    "footprint": [
+      0.9542887267269078,
+      1.0413998252127075
+    ],
+    "height": 0.7
+  },
+  {
+    "name": "03_Monitoring_Room_Window_Console_0",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -16.8,
+      6,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "03_Monitoring_Room_Window_Console_1",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -15.4,
+      6,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "03_Monitoring_Room_Window_Console_2",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -14,
+      6,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "03_Monitoring_Room_Window_Console_3",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -12.6,
+      6,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "03_Monitoring_Room_Window_Console_4",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -11.2,
+      6,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "03_Monitoring_Room_Data_Cabinet_0",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -17.3,
+      6,
+      3.1
+    ],
+    "footprint": [
+      0.95,
+      0.29533298673670455
+    ],
+    "height": 0.4750215532175142
+  },
+  {
+    "name": "03_Monitoring_Room_Data_Cabinet_1",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -17.3,
+      6,
+      4.5
+    ],
+    "footprint": [
+      0.95,
+      0.29533298673670455
+    ],
+    "height": 0.4750215532175142
+  },
+  {
+    "name": "03_Monitoring_Room_Data_Cabinet_2",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -17.3,
+      6,
+      5.9
+    ],
+    "footprint": [
+      0.95,
+      0.29533298673670455
+    ],
+    "height": 0.4750215532175142
+  },
+  {
+    "name": "04_Control_Room_Window_Console_0",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -16.8,
+      10,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "04_Control_Room_Window_Console_1",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -15.4,
+      10,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "04_Control_Room_Window_Console_2",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -14,
+      10,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "04_Control_Room_Window_Console_3",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -12.6,
+      10,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "04_Control_Room_Window_Console_4",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -11.2,
+      10,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "04_Control_Room_Data_Cabinet_0",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -17.3,
+      10,
+      3.1
+    ],
+    "footprint": [
+      0.95,
+      0.29533298673670455
+    ],
+    "height": 0.4750215532175142
+  },
+  {
+    "name": "04_Control_Room_Data_Cabinet_1",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -17.3,
+      10,
+      4.5
+    ],
+    "footprint": [
+      0.95,
+      0.29533298673670455
+    ],
+    "height": 0.4750215532175142
+  },
+  {
+    "name": "04_Control_Room_Data_Cabinet_2",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -17.3,
+      10,
+      5.9
+    ],
+    "footprint": [
+      0.95,
+      0.29533298673670455
+    ],
+    "height": 0.4750215532175142
+  },
+  {
+    "name": "Analysis_Instrument_0",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -8.6,
+      10,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "Analysis_Instrument_1",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -7.2,
+      10,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "Analysis_Instrument_2",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -5.8,
+      10,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "Analysis_Instrument_3",
+    "asset": "Control_Console/Control_Console_B.prefab",
+    "position": [
+      -4.4,
+      10,
+      9
+    ],
+    "footprint": [
+      0.5836187896887879,
+      1.0
+    ],
+    "height": 0.9062770966956961
+  },
+  {
+    "name": "Analysis_Sample_Store_0",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -2.9,
+      10,
+      3.2
+    ],
+    "footprint": [
+      1.0079871092595896,
+      1.1
+    ],
+    "height": 0.7393894077548231
+  },
+  {
+    "name": "Analysis_Sample_Store_1",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -2.9,
+      10,
+      4.7
+    ],
+    "footprint": [
+      1.0079871092595896,
+      1.1
+    ],
+    "height": 0.7393894077548231
+  },
+  {
+    "name": "Analysis_Sample_Store_2",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -2.9,
+      10,
+      6.2
+    ],
+    "footprint": [
+      1.0079871092595896,
+      1.1
+    ],
+    "height": 0.7393894077548231
+  },
+  {
+    "name": "Roof_Stores_0",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -16.5,
+      10,
+      -8.8
+    ],
+    "footprint": [
+      1.431433090090362,
+      1.5620997378190615
+    ],
+    "height": 1.05
+  },
+  {
+    "name": "Roof_Stores_1",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -14.2,
+      10,
+      -8.8
+    ],
+    "footprint": [
+      1.431433090090362,
+      1.5620997378190615
+    ],
+    "height": 1.05
+  },
+  {
+    "name": "Roof_Stores_2",
+    "asset": "Crate_Metal/BarrelCrate_Square_02_.prefab",
+    "position": [
+      -11.9,
+      10,
+      -8.8
+    ],
+    "footprint": [
+      1.431433090090362,
+      1.5620997378190615
+    ],
+    "height": 1.05
+  },
+  {
+    "name": "South_Cargo_0",
+    "asset": "Crate_Metal/BarrelCrate_Rectangular_01_Tarp.prefab",
+    "position": [
+      1,
+      6,
+      -9
+    ],
+    "footprint": [
+      1.3100278776962784,
+      1.7
+    ],
+    "height": 0.3857089479842348
+  },
+  {
+    "name": "South_Cargo_1",
+    "asset": "Crate_Metal/BarrelCrate_Rectangular_01_Tarp.prefab",
+    "position": [
+      3.4,
+      6,
+      -9
+    ],
+    "footprint": [
+      1.3100278776962784,
+      1.7
+    ],
+    "height": 0.3857089479842348
+  },
+  {
+    "name": "South_Cargo_2",
+    "asset": "Crate_Metal/BarrelCrate_Rectangular_01_Tarp.prefab",
+    "position": [
+      5.8,
+      6,
+      -9
+    ],
+    "footprint": [
+      1.3100278776962784,
+      1.7
+    ],
+    "height": 0.3857089479842348
+  },
+  {
+    "name": "Fuel_Service_Barrel_0",
+    "asset": "Barrel_Metal/Barrel_Oil_Metal_02_02_.prefab",
+    "position": [
+      17.8,
+      6,
+      -8.8
+    ],
+    "footprint": [
+      0.6423777681740905,
+      0.6436730423867202
+    ],
+    "height": 0.95
+  },
+  {
+    "name": "Fuel_Service_Barrel_1",
+    "asset": "Barrel_Metal/Barrel_Oil_Metal_02_02_.prefab",
+    "position": [
+      17.8,
+      6,
+      -7.5
+    ],
+    "footprint": [
+      0.6423777681740905,
+      0.6436730423867202
+    ],
+    "height": 0.95
+  },
+  {
+    "name": "Fuel_Service_Barrel_2",
+    "asset": "Barrel_Metal/Barrel_Oil_Metal_02_02_.prefab",
+    "position": [
+      17.8,
+      6,
+      -6.2
+    ],
+    "footprint": [
+      0.6423777681740905,
+      0.6436730423867202
+    ],
+    "height": 0.95
+  },
+  {
+    "name": "Fuel_Service_Barrel_3",
+    "asset": "Barrel_Metal/Barrel_Oil_Metal_02_02_.prefab",
+    "position": [
+      16.6,
+      6,
+      -8.8
+    ],
+    "footprint": [
+      0.6423777681740905,
+      0.6436730423867202
+    ],
+    "height": 0.95
+  },
+  {
+    "name": "Fuel_Handling_Trolley",
+    "asset": "Barrel_Trolley/Barrel_Trolley_Assembled_01_.prefab",
+    "position": [
+      16.4,
+      6,
+      -6.2
+    ],
+    "footprint": [
+      0.49721875938153914,
+      0.39066472892729154
+    ],
+    "height": 1.2
+  },
+  {
+    "name": "Roof_HVAC_0",
+    "asset": "Electrical_Structures/ACunit_Small_Module_3_.prefab",
+    "position": [
+      -8,
+      14,
+      8
+    ],
+    "footprint": [
+      0.666356718425655,
+      1.312707819008883
+    ],
+    "height": 1.3
+  },
+  {
+    "name": "Roof_HVAC_1",
+    "asset": "Electrical_Structures/ACunit_Small_Module_3_.prefab",
+    "position": [
+      -5,
+      14,
+      8
+    ],
+    "footprint": [
+      0.666356718425655,
+      1.312707819008883
+    ],
+    "height": 1.3
+  },
+  {
+    "name": "Exterior_Switchboard_0",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -9,
+      6,
+      -10.65
+    ],
+    "footprint": [
+      0.3108768281438996,
+      1.0
+    ],
+    "height": 0.5000226875973834
+  },
+  {
+    "name": "Exterior_Switchboard_1",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -7.2,
+      6,
+      -10.65
+    ],
+    "footprint": [
+      0.3108768281438996,
+      1.0
+    ],
+    "height": 0.5000226875973834
+  },
+  {
+    "name": "Process_Line_0_0",
+    "asset": "Pipes_Small/Pipe_Sml_Strt_4m_01_.prefab",
+    "position": [
+      1.8,
+      6.55,
+      10.8
+    ],
+    "footprint": [
+      4.0,
+      0.40921412543238167
+    ],
+    "height": 0.4100230212159726
+  },
+  {
+    "name": "Process_Line_0_1",
+    "asset": "Pipes_Small/Pipe_Sml_Strt_4m_01_.prefab",
+    "position": [
+      5.8,
+      6.55,
+      10.8
+    ],
+    "footprint": [
+      4.0,
+      0.40921412543238167
+    ],
+    "height": 0.4100230212159726
+  },
+  {
+    "name": "Process_Line_0_2",
+    "asset": "Pipes_Small/Pipe_Sml_Strt_4m_01_.prefab",
+    "position": [
+      9.8,
+      6.55,
+      10.8
+    ],
+    "footprint": [
+      4.0,
+      0.40921412543238167
+    ],
+    "height": 0.4100230212159726
+  },
+  {
+    "name": "Process_Line_0_3",
+    "asset": "Pipes_Small/Pipe_Sml_Strt_4m_01_.prefab",
+    "position": [
+      13.8,
+      6.55,
+      10.8
+    ],
+    "footprint": [
+      4.0,
+      0.40921412543238167
+    ],
+    "height": 0.4100230212159726
+  },
+  {
+    "name": "Isolation_Valve_0_0",
+    "asset": "Valves_Small/Valve_Small_01_.prefab",
+    "position": [
+      1,
+      6.5,
+      10.8
+    ],
+    "footprint": [
+      0.28566577146738287,
+      0.5
+    ],
+    "height": 0.32789907768073784
+  },
+  {
+    "name": "Pipe_Support_0_0",
+    "asset": "Pipes_Brackets/Pipe_Bracket_Medium_LBeam_Uniform.prefab",
+    "position": [
+      1,
+      6,
+      10.8
+    ],
+    "footprint": [
+      0.04691175661773806,
+      0.5500138185945409
+    ],
+    "height": 0.55
+  },
+  {
+    "name": "Isolation_Valve_0_1",
+    "asset": "Valves_Small/Valve_Small_01_.prefab",
+    "position": [
+      7,
+      6.5,
+      10.8
+    ],
+    "footprint": [
+      0.28566577146738287,
+      0.5
+    ],
+    "height": 0.32789907768073784
+  },
+  {
+    "name": "Pipe_Support_0_1",
+    "asset": "Pipes_Brackets/Pipe_Bracket_Medium_LBeam_Uniform.prefab",
+    "position": [
+      7,
+      6,
+      10.8
+    ],
+    "footprint": [
+      0.04691175661773806,
+      0.5500138185945409
+    ],
+    "height": 0.55
+  },
+  {
+    "name": "Isolation_Valve_0_2",
+    "asset": "Valves_Small/Valve_Small_01_.prefab",
+    "position": [
+      13,
+      6.5,
+      10.8
+    ],
+    "footprint": [
+      0.28566577146738287,
+      0.5
+    ],
+    "height": 0.32789907768073784
+  },
+  {
+    "name": "Pipe_Support_0_2",
+    "asset": "Pipes_Brackets/Pipe_Bracket_Medium_LBeam_Uniform.prefab",
+    "position": [
+      13,
+      6,
+      10.8
+    ],
+    "footprint": [
+      0.04691175661773806,
+      0.5500138185945409
+    ],
+    "height": 0.55
+  },
+  {
+    "name": "Process_Line_1_0",
+    "asset": "Pipes_Small/Pipe_Sml_Strt_4m_01_.prefab",
+    "position": [
+      1.8,
+      6.55,
+      11.3
+    ],
+    "footprint": [
+      4.0,
+      0.40921412543238167
+    ],
+    "height": 0.4100230212159726
+  },
+  {
+    "name": "Process_Line_1_1",
+    "asset": "Pipes_Small/Pipe_Sml_Strt_4m_01_.prefab",
+    "position": [
+      5.8,
+      6.55,
+      11.3
+    ],
+    "footprint": [
+      4.0,
+      0.40921412543238167
+    ],
+    "height": 0.4100230212159726
+  },
+  {
+    "name": "Process_Line_1_2",
+    "asset": "Pipes_Small/Pipe_Sml_Strt_4m_01_.prefab",
+    "position": [
+      9.8,
+      6.55,
+      11.3
+    ],
+    "footprint": [
+      4.0,
+      0.40921412543238167
+    ],
+    "height": 0.4100230212159726
+  },
+  {
+    "name": "Process_Line_1_3",
+    "asset": "Pipes_Small/Pipe_Sml_Strt_4m_01_.prefab",
+    "position": [
+      13.8,
+      6.55,
+      11.3
+    ],
+    "footprint": [
+      4.0,
+      0.40921412543238167
+    ],
+    "height": 0.4100230212159726
+  },
+  {
+    "name": "Isolation_Valve_1_0",
+    "asset": "Valves_Small/Valve_Small_01_.prefab",
+    "position": [
+      1,
+      6.5,
+      11.3
+    ],
+    "footprint": [
+      0.28566577146738287,
+      0.5
+    ],
+    "height": 0.32789907768073784
+  },
+  {
+    "name": "Pipe_Support_1_0",
+    "asset": "Pipes_Brackets/Pipe_Bracket_Medium_LBeam_Uniform.prefab",
+    "position": [
+      1,
+      6,
+      11.3
+    ],
+    "footprint": [
+      0.04691175661773806,
+      0.5500138185945409
+    ],
+    "height": 0.55
+  },
+  {
+    "name": "Isolation_Valve_1_1",
+    "asset": "Valves_Small/Valve_Small_01_.prefab",
+    "position": [
+      7,
+      6.5,
+      11.3
+    ],
+    "footprint": [
+      0.28566577146738287,
+      0.5
+    ],
+    "height": 0.32789907768073784
+  },
+  {
+    "name": "Pipe_Support_1_1",
+    "asset": "Pipes_Brackets/Pipe_Bracket_Medium_LBeam_Uniform.prefab",
+    "position": [
+      7,
+      6,
+      11.3
+    ],
+    "footprint": [
+      0.04691175661773806,
+      0.5500138185945409
+    ],
+    "height": 0.55
+  },
+  {
+    "name": "Isolation_Valve_1_2",
+    "asset": "Valves_Small/Valve_Small_01_.prefab",
+    "position": [
+      13,
+      6.5,
+      11.3
+    ],
+    "footprint": [
+      0.28566577146738287,
+      0.5
+    ],
+    "height": 0.32789907768073784
+  },
+  {
+    "name": "Pipe_Support_1_2",
+    "asset": "Pipes_Brackets/Pipe_Bracket_Medium_LBeam_Uniform.prefab",
+    "position": [
+      13,
+      6,
+      11.3
+    ],
+    "footprint": [
+      0.04691175661773806,
+      0.5500138185945409
+    ],
+    "height": 0.55
+  },
+  {
+    "name": "External_Junction_0",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -18.7,
+      7.7,
+      -8
+    ],
+    "footprint": [
+      0.45,
+      0.13989457266475483
+    ],
+    "height": 0.22501020941882255
+  },
+  {
+    "name": "External_Junction_1",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -18.7,
+      7.7,
+      -4
+    ],
+    "footprint": [
+      0.45,
+      0.13989457266475483
+    ],
+    "height": 0.22501020941882255
+  },
+  {
+    "name": "External_Junction_2",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -18.7,
+      7.7,
+      4
+    ],
+    "footprint": [
+      0.45,
+      0.13989457266475483
+    ],
+    "height": 0.22501020941882255
+  },
+  {
+    "name": "External_Junction_3",
+    "asset": "Electrical_Structures/ElectricBox_Module_1.prefab",
+    "position": [
+      -18.7,
+      7.7,
+      8
+    ],
+    "footprint": [
+      0.45,
+      0.13989457266475483
+    ],
+    "height": 0.22501020941882255
+  },
+  {
+    "name": "Deck_Worklight_0",
+    "asset": "Flood_Lights/Floodlights_01_Empty.prefab",
+    "position": [
+      -16.5,
+      10,
+      -8.7
+    ],
+    "footprint": [
+      0.06870896262062337,
+      0.1165392361444892
+    ],
+    "height": 1.4
+  },
+  {
+    "name": "Deck_Worklight_1",
+    "asset": "Flood_Lights/Floodlights_01_Empty.prefab",
+    "position": [
+      -12,
+      10,
+      -8.7
+    ],
+    "footprint": [
+      0.06870896262062337,
+      0.1165392361444892
+    ],
+    "height": 1.4
+  },
+  {
+    "name": "Deck_Worklight_2",
+    "asset": "Flood_Lights/Floodlights_01_Empty.prefab",
+    "position": [
+      -16.5,
+      14,
+      8.7
+    ],
+    "footprint": [
+      0.06870896262062337,
+      0.1165392361444892
+    ],
+    "height": 1.4
+  },
+  {
+    "name": "Deck_Worklight_3",
+    "asset": "Flood_Lights/Floodlights_01_Empty.prefab",
+    "position": [
+      -5,
+      14,
+      8.7
+    ],
+    "footprint": [
+      0.06870896262062337,
+      0.1165392361444892
+    ],
+    "height": 1.4
+  },
+  {
+    "name": "Deck_Worklight_4",
+    "asset": "Flood_Lights/Floodlights_01_Empty.prefab",
+    "position": [
+      17,
+      6,
+      -9
+    ],
+    "footprint": [
+      0.06870896262062337,
+      0.1165392361444892
+    ],
+    "height": 1.4
+  },
+  {
+    "name": "Deck_Worklight_5",
+    "asset": "Flood_Lights/Floodlights_01_Empty.prefab",
+    "position": [
+      17,
+      6,
+      9
+    ],
+    "footprint": [
+      0.06870896262062337,
+      0.1165392361444892
+    ],
+    "height": 1.4
+  }
+]
